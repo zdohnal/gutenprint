@@ -2,7 +2,7 @@
 <tagfile>
   <compound kind="file">
     <name>curve.h</name>
-    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gutenprint-5.2/include/gutenprintui2/</path>
     <filename>curve_8h</filename>
     <class kind="struct">_StpuiCurve</class>
     <class kind="struct">_StpuiCurveClass</class>
@@ -146,7 +146,7 @@
   </compound>
   <compound kind="file">
     <name>gammacurve.h</name>
-    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gutenprint-5.2/include/gutenprintui2/</path>
     <filename>gammacurve_8h</filename>
     <class kind="struct">_StpuiGammaCurve</class>
     <class kind="struct">_StpuiGammaCurveClass</class>
@@ -223,7 +223,7 @@
   </compound>
   <compound kind="file">
     <name>gutenprintui.h</name>
-    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gutenprint-5.2/include/gutenprintui2/</path>
     <filename>gutenprintui_8h</filename>
     <includes id="curve_8h" name="curve.h" local="no" imported="no">gutenprintui2/curve.h</includes>
     <includes id="gammacurve_8h" name="gammacurve.h" local="no" imported="no">gutenprintui2/gammacurve.h</includes>
@@ -673,7 +673,7 @@
   </compound>
   <compound kind="file">
     <name>typebuiltins.h</name>
-    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gutenprint-5.2/include/gutenprintui2/</path>
     <filename>typebuiltins_8h</filename>
     <member kind="define">
       <type>#define</type>

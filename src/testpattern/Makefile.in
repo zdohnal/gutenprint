@@ -87,9 +87,9 @@ host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/scripts/global.mk $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(srcdir)/run-testpattern-2.in \
 	$(srcdir)/compare-checksums.in $(srcdir)/compress-checksums.in \
-	$(srcdir)/uncompress-checksums.in testpatterny.h \
-	testpatterny.c testpatternl.c $(top_srcdir)/scripts/depcomp \
-	$(top_srcdir)/scripts/ylwrap $(top_srcdir)/scripts/test-driver
+	testpatterny.h testpatterny.c testpatternl.c \
+	$(top_srcdir)/scripts/depcomp $(top_srcdir)/scripts/ylwrap \
+	$(top_srcdir)/scripts/test-driver
 @BUILD_TESTPATTERN_TRUE@bin_PROGRAMS = testpattern$(EXEEXT)
 @BUILD_TESTPATTERN_TRUE@noinst_PROGRAMS = printers$(EXEEXT) \
 @BUILD_TESTPATTERN_TRUE@	printer_options$(EXEEXT)
@@ -110,7 +110,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES = run-testpattern-2 compare-checksums \
-	compress-checksums uncompress-checksums
+	compress-checksums
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkgdatadir)"
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
@@ -430,9 +430,11 @@ BZIP2 = @BZIP2@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+COMPRESS = @COMPRESS@
 CONVERT = @CONVERT@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
+CSUF = @CSUF@
 CUPS_CFLAGS = @CUPS_CFLAGS@
 CUPS_CONFIG = @CUPS_CONFIG@
 CUPS_LIBS = @CUPS_LIBS@
@@ -491,6 +493,7 @@ GUTENPRINT_MICRO_VERSION = @GUTENPRINT_MICRO_VERSION@
 GUTENPRINT_MINOR_VERSION = @GUTENPRINT_MINOR_VERSION@
 GUTENPRINT_RELEASE_VERSION = @GUTENPRINT_RELEASE_VERSION@
 GUTENPRINT_VERSION = @GUTENPRINT_VERSION@
+GZIP = @GZIP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -516,6 +519,7 @@ LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
 LIPO = @LIPO@
 LN_S = @LN_S@
+LRZIP = @LRZIP@
 LTALLOCA = @LTALLOCA@
 LTLIBICONV = @LTLIBICONV@
 LTLIBINTL = @LTLIBINTL@
@@ -543,6 +547,7 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+PKGROOT = @PKGROOT@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
@@ -551,6 +556,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 RELEASE_DATE = @RELEASE_DATE@
 RM = @RM@
+RZIP = @RZIP@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -563,6 +569,7 @@ VERSION = @VERSION@
 WHICH_PPDS = @WHICH_PPDS@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
+XZ = @XZ@
 YACC = @YACC@
 YFLAGS = @YFLAGS@
 abs_builddir = @abs_builddir@
@@ -634,7 +641,7 @@ top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_builddir)/include $(LOCAL_CPPFLAGS) $(GNUCFLAGS)
 GUTENPRINTUI_LIBS = $(top_builddir)/src/gutenprintui/libgutenprintui.la
 @BUILD_TESTPATTERN_TRUE@TESTS = run-testpattern-1 run-testpattern-2
-@BUILD_TESTPATTERN_TRUE@noinst_SCRIPTS = run-testpattern-2 compare-checksums compress-checksums uncompress-checksums
+@BUILD_TESTPATTERN_TRUE@noinst_SCRIPTS = run-testpattern-2 compare-checksums compress-checksums
 AM_LFLAGS = -i
 AM_YFLAGS = -d
 testpattern_SOURCES = testpattern.c testpatterny.y testpatternl.l testpattern.h
@@ -642,6 +649,12 @@ testpattern_LDADD = $(GUTENPRINT_LIBS) $(LIBM)
 printers_LDADD = $(GUTENPRINT_LIBS)
 printer_options_LDADD = $(GUTENPRINT_LIBS)
 @INSTALL_SAMPLES_TRUE@pkgdata_DATA = testpattern.sample extended.sample
+
+# This suffix is *not* static during development!
+@BUILD_TESTPATTERN_TRUE@CSUM_SUFFIX = `@PKGROOT@/scripts/gversion`
+@BUILD_TESTPATTERN_TRUE@CSUM_RELEASE_SUFFIX = @GUTENPRINT_VERSION@
+@BUILD_TESTPATTERN_TRUE@CSUM_FILE = Checksums/sums.$(SPREFIX)$(CSUM_SUFFIX)
+@BUILD_TESTPATTERN_TRUE@CSUM_RELEASE_FILE = Checksums/sums.$(CSUM_RELEASE_SUFFIX)
 MAINTAINERCLEANFILES = Makefile.in testpatternl.c testpatterny.c testpatterny.h
 EXTRA_DIST = \
 	testpatterny.h \
@@ -649,8 +662,7 @@ EXTRA_DIST = \
 	run-testpattern \
 	run-testpattern-1 \
 	compare-checksums.in \
-	compress-checksums.in \
-	uncompress-checksums.in
+	compress-checksums.in
 
 all: all-am
 
@@ -692,8 +704,6 @@ run-testpattern-2: $(top_builddir)/config.status $(srcdir)/run-testpattern-2.in
 compare-checksums: $(top_builddir)/config.status $(srcdir)/compare-checksums.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 compress-checksums: $(top_builddir)/config.status $(srcdir)/compress-checksums.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-uncompress-checksums: $(top_builddir)/config.status $(srcdir)/uncompress-checksums.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -1241,11 +1251,16 @@ $(top_builddir)/src/gutenprintui2/libgutenprintui2.la:
 testpatternl.o: testpatterny.o
 testpattern.o: testpatterny.o
 
-@BUILD_TESTPATTERN_TRUE@checksums: testpattern run-testpattern-2 ./compress-checksums
+@BUILD_TESTPATTERN_TRUE@.PHONY: checksums checksums-release
+
+@BUILD_TESTPATTERN_TRUE@Checksums:
 @BUILD_TESTPATTERN_TRUE@	$(MKDIR_P) Checksums
-@BUILD_TESTPATTERN_TRUE@	./run-testpattern-2 -q -M Checksums/sums.$(SPREFIX)@GUTENPRINT_VERSION@.in
-@BUILD_TESTPATTERN_TRUE@	./compress-checksums < Checksums/sums.@GUTENPRINT_VERSION@.in |$(BZIP2) -c > Checksums/sums.@GUTENPRINT_VERSION@.bz2
-@BUILD_TESTPATTERN_TRUE@	rm -f Checksums/sums.@GUTENPRINT_VERSION@.in
+
+@BUILD_TESTPATTERN_TRUE@checksums: testpattern run-testpattern-2 ./compress-checksums Checksums
+@BUILD_TESTPATTERN_TRUE@	./run-testpattern-2 -q -M - | ./compress-checksums | $(COMPRESS) > "$(CSUM_FILE)@CSUF@"
+
+@BUILD_TESTPATTERN_TRUE@checksums-release: testpattern run-testpattern-2 ./compress-checksums Checksums
+@BUILD_TESTPATTERN_TRUE@	./run-testpattern-2 -q -M - | ./compress-checksums | $(COMPRESS) > "$(CSUM_RELEASE_FILE)@CSUF@"
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

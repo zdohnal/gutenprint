@@ -1088,14 +1088,14 @@ compute_user_correction(lut_t *lut)
       else
 	pixel = 1.0 - pow(1.0 - pixel, 1.0 / brightness);
       tmp[i] = floor((pixel * 65535) + .5);
-      
+
       pixel = (double) i / (double) (isteps - 1);
       if (brightness < 1)
 	pixel = pow(pixel, brightness);
       else
 	pixel = 1.0 - pow(1.0 - pixel, 1.0 / brightness);
       tmp_brightness[i] = floor((pixel * 65535) + .5);
-    }  
+    }
   stp_curve_set_data(curve, isteps, tmp);
   if (isteps != lut->steps)
     stp_curve_resample(curve, lut->steps);
@@ -1380,7 +1380,7 @@ stpi_dump_lut_to_file(stp_vars_t *v, const char *dump_file)
     return;
   fp = fopen(dump_file, "w");
   if (fp)
-    {    
+    {
       stp_dprintf(STP_DBG_LUT, v, "Dumping LUT to %s\n", dump_file);
       stpi_do_dump_lut_to_file(v, fp);
       (void) fclose(fp);
@@ -1693,18 +1693,17 @@ stpi_color_traditional_describe_parameter(const stp_vars_t *v,
 		{
 		  stp_parameter_t ink_limit_desc;
 		  stp_describe_parameter(v, "InkChannels", &ink_limit_desc);
-		  if (ink_limit_desc.p_type == STP_PARAMETER_TYPE_INT)
+		  if (ink_limit_desc.p_type == STP_PARAMETER_TYPE_INT &&
+		      ink_limit_desc.deflt.integer > 1)
 		    {
-		      if (ink_limit_desc.deflt.integer > 1)
-			{
-			  description->bounds.dbl.upper =
-			    ink_limit_desc.deflt.integer;
-			  description->deflt.dbl =
-			    ink_limit_desc.deflt.integer;
-			}
-		      else
-			description->is_active = 0;
+		      description->bounds.dbl.upper =
+			ink_limit_desc.deflt.integer;
+		      description->deflt.dbl =
+			ink_limit_desc.deflt.integer;
 		    }
+		  else
+		    description->is_active = 0;
+
 		  stp_parameter_description_destroy(&ink_limit_desc);
 		}
 	      break;

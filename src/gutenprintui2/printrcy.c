@@ -1623,7 +1623,7 @@ yyreduce:
 #line 165 "printrcy.y"
     {
 	  if (current_printer)
-	    current_printer->scaling = (yyvsp[(2) - (2)].dval); 
+	    current_printer->scaling = (yyvsp[(2) - (2)].dval);
 	}
     break;
 
@@ -1650,7 +1650,7 @@ yyreduce:
 #line 186 "printrcy.y"
     {
 	  if (current_printer)
-	    current_printer->unit = (yyvsp[(2) - (2)].ival); 
+	    current_printer->unit = (yyvsp[(2) - (2)].ival);
 	}
     break;
 

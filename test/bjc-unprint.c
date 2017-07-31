@@ -62,7 +62,7 @@ typedef struct bitimage_t_ {
 } bitimage_t;
 
 typedef struct level_t_ {
-  /* Max number of bits per ink so far known is 8 
+  /* Max number of bits per ink so far known is 8
      Thus max number of levels is 256 (including value 0)
   */
   int levelvals[256]; /* number of occurrences of each level */
@@ -176,8 +176,8 @@ int rle_decode(unsigned char *inbuf, int n, unsigned char *outbuf,int max, level
   int o= 0;
   int i=0,j,num;
 
-  /* Results of the decoding are in the output buffer already. 
-     We want to organize the decoded numbers to see 
+  /* Results of the decoding are in the output buffer already.
+     We want to organize the decoded numbers to see
      the total number of levels, and their values.
   */
   /*fprintf(stderr,"rle_decode: decoding scanline\n");*/
@@ -446,7 +446,7 @@ int process(FILE *infile,scanline_t *sf[7],int *xmin_,int *xmax_,int *ymin_,int 
       case 0x6d: col= 5; break; /* lightmagenta */
       case 0x63: col= 6; break; /* lightcyan    */
       default:
-	fprintf(stderr,"unkown color component 0x%02x\n",inbuff[0]);
+	fprintf(stderr,"unknown color component 0x%02x\n",inbuff[0]);
 	exit(-1);
       }
 
@@ -553,4 +553,3 @@ int main(int argc, char **argv)
 
   return 0;
 }
-

@@ -92,7 +92,7 @@ struct printer_data {
 	int16_t pgcode_offset;  /* Offset into printjob for paper type */
 	int16_t paper_code_offset; /* Offset in readback for paper type */
 	int   (*error_detect)(uint8_t *rdbuf);
-	char  *(*pgcode_names)(uint8_t pgcode);	
+	char  *(*pgcode_names)(uint8_t pgcode);
 };
 
 static char *generic_pgcode_names(uint8_t pgcode)
@@ -137,7 +137,7 @@ static int es2_error_detect(uint8_t *rdbuf)
 		ERROR("Printer cover open!\n");
 		return 1;
 	}
-		
+
 	if (rdbuf[0] == 0x02 &&
 	    rdbuf[4] == 0x05 &&
 	    rdbuf[5] == 0x05 &&
@@ -165,13 +165,13 @@ static int es3_error_detect(uint8_t *rdbuf)
 			ATTR("marker-levels=%d\n", 0);
 			ERROR("No media loaded!\n");
 		} else {
-			ERROR("Unknown error - %02x + %02x\n", 
+			ERROR("Unknown error - %02x + %02x\n",
 			      rdbuf[8], rdbuf[10]);
 		}
 		return 1;
 	} else if (rdbuf[8] == 0x03 &&
 		   rdbuf[10] == 0x02) {
-		ATTR("marker-levels=%d\n", 0);		
+		ATTR("marker-levels=%d\n", 0);
 		ERROR("No media loaded!\n");
 		return 1;
 	} else if (rdbuf[8] == 0x08 &&
@@ -185,11 +185,11 @@ static int es3_error_detect(uint8_t *rdbuf)
 	}
 
 	if (rdbuf[8] || rdbuf[10]) {
-		ERROR("Unknown error - %02x + %02x\n", 
+		ERROR("Unknown error - %02x + %02x\n",
 		      rdbuf[8], rdbuf[10]);
 		return 1;
 	}
-	
+
 	return 0;
 }
 
@@ -198,7 +198,7 @@ static int es40_error_detect(uint8_t *rdbuf)
 	/* ES40 */
 	if (!rdbuf[3])
 		return 0;
-	
+
 	if (rdbuf[3] == 0x01)
 		ERROR("Generic communication error\n");
 	else if (rdbuf[3] == 0x32) {
@@ -206,7 +206,7 @@ static int es40_error_detect(uint8_t *rdbuf)
 		ERROR("Cover open or media empty!\n");
 	} else
 		ERROR("Unknown error - %02x\n", rdbuf[3]);
-	
+
 
 	return 1;
 }
@@ -224,7 +224,7 @@ static int cp790_error_detect(uint8_t *rdbuf)
 		if ((rdbuf[3] & 0xf) == 0x02) { // 0x12 0x22
 			ATTR("marker-levels=%d\n", 0);
 			ERROR("No paper tray loaded!\n");
-		} else if ((rdbuf[3] & 0xf) == 0x03) { // 0x13 0x23 
+		} else if ((rdbuf[3] & 0xf) == 0x03) { // 0x13 0x23
 			ATTR("marker-levels=%d\n", 0);
 			ERROR("Empty paper tray or feed error!\n");
 		} else if (rdbuf[3] == 0x11)
@@ -253,7 +253,7 @@ static int cp10_error_detect(uint8_t *rdbuf)
 		return 0;
 
 	if (rdbuf[2] == 0x80) {
-		ATTR("marker-levels=%d\n", 0); 
+		ATTR("marker-levels=%d\n", 0);
 		ERROR("No ribbon loaded\n");
 	} else if (rdbuf[2] == 0x08) {
 		ATTR("marker-levels=%d\n", 0);
@@ -272,7 +272,7 @@ static int cpxxx_error_detect(uint8_t *rdbuf)
 		return 0;
 
 	if (rdbuf[2] == 0x01) {
-		ATTR("marker-levels=%d\n", 0);		
+		ATTR("marker-levels=%d\n", 0);
 		ERROR("Paper feed problem!\n");
 	} else if (rdbuf[2] == 0x04)
 		ERROR("Ribbon problem!\n");
@@ -363,23 +363,23 @@ static struct printer_data selphy_printers[] = {
 	  .pgcode_offset = 2,
 	  .paper_code_offset = -1, /* Uses a different technique */
 	  .error_detect = cp790_error_detect,
-	  .pgcode_names = generic_pgcode_names,	  
+	  .pgcode_names = generic_pgcode_names,
 	},
 	{ .type = P_CP_XXX,
 	  .model = "SELPHY CP Series (!CP-10/CP790)",
 	  .init_length = 12,
 	  .foot_length = 0,  /* CP900 has four-byte NULL footer that can be safely ignored */
-	  .init_readback = { 0x01, 0x00, 0x00, 0x00, -1, 0x00, -1, 0x00, 0x00, 0x00, 0x00, -1 },
-	  .ready_y_readback = { 0x02, 0x00, 0x00, 0x00, 0x70, 0x00, -1, 0x00, 0x00, 0x00, 0x00, -1 },
-	  .ready_m_readback = { 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, -1, 0x00, 0x00, 0x00, 0x00, -1 },
-	  .ready_c_readback = { 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, -1, 0x00, 0x00, 0x00, 0x00, -1 },
-	  .done_c_readback = { 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, -1, 0x00, 0x00, 0x00, 0x00, -1 },
+	  .init_readback = { 0x01, 0x00, 0x00, 0x00, -1, 0x00, -1, -1, 0x00, 0x00, 0x00, -1 },
+	  .ready_y_readback = { 0x02, 0x00, 0x00, 0x00, 0x70, 0x00, -1, -1, 0x00, 0x00, 0x00, -1 },
+	  .ready_m_readback = { 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, -1, -1, 0x00, 0x00, 0x00, -1 },
+	  .ready_c_readback = { 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, -1, -1, 0x00, 0x00, 0x00, -1 },
+	  .done_c_readback = { 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, -1, -1, 0x00, 0x00, 0x00, -1 },
 	  .clear_error = { 0x40, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
 	  .clear_error_len = 12,
 	  .pgcode_offset = 3,
 	  .paper_code_offset = 6,
 	  .error_detect = cpxxx_error_detect,
-	  .pgcode_names = generic_pgcode_names,	  
+	  .pgcode_names = generic_pgcode_names,
 	},
 	{ .type = P_CP10,
 	  .model = "SELPHY CP-10",
@@ -395,7 +395,7 @@ static struct printer_data selphy_printers[] = {
 	  .pgcode_offset = 2,
 	  .paper_code_offset = -1,
 	  .error_detect = cp10_error_detect,
-	  .pgcode_names = cp10_pgcode_names,	  
+	  .pgcode_names = cp10_pgcode_names,
 	},
 	{ .type = -1 },
 };
@@ -411,7 +411,7 @@ static void setup_paper_codes(void)
 		if (selphy_printers[i].type == -1)
 			break;
 		/* Default all to IGNORE */
-		for (j = 0 ; j < 256 ; j++) 
+		for (j = 0 ; j < 256 ; j++)
 			selphy_printers[i].paper_codes[j] = -1;
 
 		/* Set up specifics */
@@ -467,10 +467,10 @@ enum {
 	S_FINISHED,
 };
 
-static int fancy_memcmp(const uint8_t *buf_a, const int16_t *buf_b, uint len) 
+static int fancy_memcmp(const uint8_t *buf_a, const int16_t *buf_b, uint len)
 {
 	uint i;
-  
+
 	for (i = 0 ; i < len ; i++) {
 		if (buf_b[i] == -1)
 			continue;
@@ -482,7 +482,7 @@ static int fancy_memcmp(const uint8_t *buf_a, const int16_t *buf_b, uint len)
 	return 0;
 }
 
-static int parse_printjob(uint8_t *buffer, uint8_t *bw_mode, uint32_t *plane_len) 
+static int parse_printjob(uint8_t *buffer, uint8_t *bw_mode, uint32_t *plane_len)
 {
 	int printer_type = -1;
 
@@ -490,7 +490,7 @@ static int parse_printjob(uint8_t *buffer, uint8_t *bw_mode, uint32_t *plane_len
 	    buffer[1] != 0x00) {
 		goto done;
 	}
-	
+
 	if (buffer[12] == 0x40 &&
 	    buffer[13] == 0x01) {
 		*plane_len = *(uint32_t*)(&buffer[16]);
@@ -535,7 +535,7 @@ done:
 	return printer_type;
 }
 
-/* Private data stucture */
+/* Private data structure */
 struct canonselphy_ctx {
 	struct libusb_device_handle *dev;
 	uint8_t endp_up;
@@ -599,7 +599,7 @@ static void *canonselphy_init(void)
 
 extern struct dyesub_backend canonselphy_backend;
 
-static void canonselphy_attach(void *vctx, struct libusb_device_handle *dev, 
+static void canonselphy_attach(void *vctx, struct libusb_device_handle *dev,
 			       uint8_t endp_up, uint8_t endp_down, uint8_t jobid)
 {
 	struct canonselphy_ctx *ctx = vctx;
@@ -678,7 +678,7 @@ static int canonselphy_read_parse(void *vctx, int data_fd)
 	if (i != MAX_HEADER - offset) {
 		if (i == 0)
 			return CUPS_BACKEND_CANCEL;
-		ERROR("Read failed (%d/%d)\n", 
+		ERROR("Read failed (%d/%d)\n",
 		      i, MAX_HEADER - offset);
 		perror("ERROR: Read failed");
 		return CUPS_BACKEND_FAILED;
@@ -691,9 +691,9 @@ static int canonselphy_read_parse(void *vctx, int data_fd)
 		if (ctx->type == P_CP790)
 			printer_type = P_CP790;
 		else
-			printer_type = P_ES40;			
+			printer_type = P_ES40;
 	}
-	
+
 	/* Look up the printer entry */
 	for (i = 0; selphy_printers[i].type != -1; i++) {
 		if (selphy_printers[i].type == printer_type) {
@@ -758,7 +758,7 @@ static int canonselphy_read_parse(void *vctx, int data_fd)
 
 	/* Move over chunks already read in */
 	memcpy(ctx->header, ctx->buffer, ctx->printer->init_length);
-	memcpy(ctx->plane_y, ctx->buffer+ctx->printer->init_length, 
+	memcpy(ctx->plane_y, ctx->buffer+ctx->printer->init_length,
 	       MAX_HEADER-ctx->printer->init_length);
 
 	/* Read in YELLOW plane */
@@ -864,7 +864,7 @@ top:
 		INFO("Waiting for printer idle\n");
 		if (fancy_memcmp(rdbuf, ctx->printer->init_readback, READBACK_LEN))
 			break;
-		
+
 		/* Make sure paper/ribbon is correct */
 		if (ctx->paper_code != -1) {
 			if (ctx->type == P_CP_XXX) {
@@ -892,7 +892,7 @@ top:
 			} else {
 				if (rdbuf[ctx->printer->paper_code_offset] !=
 				    ctx->paper_code) {
-					ERROR("Incorrect media/ribbon loaded (%02x vs %02x), aborting job!\n", 
+					ERROR("Incorrect media/ribbon loaded (%02x vs %02x), aborting job!\n",
 					      ctx->paper_code,
 					      rdbuf[ctx->printer->paper_code_offset]);
 					return CUPS_BACKEND_HOLD;  /* Hold this job, don't stop queue */
@@ -904,7 +904,7 @@ top:
 
 			if (ribbon == 0xf) {
 				ERROR("No ribbon loaded, aborting!\n");
-				return CUPS_BACKEND_STOP;	
+				return CUPS_BACKEND_STOP;
 			} else if (ribbon != ctx->paper_code) {
 				ERROR("Incorrect ribbon loaded, aborting job!\n");
 				return CUPS_BACKEND_HOLD;
@@ -977,7 +977,7 @@ top:
 		if (!fancy_memcmp(rdbuf, ctx->printer->done_c_readback, READBACK_LEN)) {
 			if (ctx->cp900)
 				state = S_PRINTER_CP900_FOOTER;
-			else 
+			else
 				state = S_FINISHED;
 		}
 		break;
@@ -985,7 +985,7 @@ top:
 		uint32_t empty = 0;
 
 		INFO("Sending CP900 Footer\n");
-		if ((ret = send_data(ctx->dev, ctx->endp_down, 
+		if ((ret = send_data(ctx->dev, ctx->endp_down,
 				     (uint8_t*)&empty, sizeof(empty))))
 			return CUPS_BACKEND_FAILED;
 
@@ -1002,7 +1002,7 @@ top:
 		state = S_FINISHED;
 		/* Intentional Fallthrough */
 	case S_FINISHED:
-		INFO("All data sent to printer!\n");	
+		INFO("All data sent to printer!\n");
 		break;
 	}
 	if (state != S_FINISHED)
@@ -1051,7 +1051,7 @@ static void canonselphy_cmdline(void)
 
 struct dyesub_backend canonselphy_backend = {
 	.name = "Canon SELPHY CP/ES",
-	.version = "0.92",
+	.version = "0.93",
 	.uri_prefix = "canonselphy",
 	.cmdline_usage = canonselphy_cmdline,
 	.cmdline_arg = canonselphy_cmdline_arg,
@@ -1166,7 +1166,7 @@ struct dyesub_backend canonselphy_backend = {
    08 00 03 00  [pg] 00 [pg2] [xx]  00 00 00 00   [? transitions to this]
    09 00 07 00  [pg] 00 [pg2] [xx]  00 00 00 00   [ready for C]
    09 00 00 00  [pg] 00 [pg2] 00  00 00 00 00   [? transitions to this]
-   0b 00 00 00  [pg] 00 [pg2] 00  00 00 00 00   [? transisions to this]
+   0b 00 00 00  [pg] 00 [pg2] 00  00 00 00 00   [? transitions to this]
    0c 00 00 00  [pg] 00 [pg2] 00  00 00 00 00   [? transitions to this]
    0f 00 00 00  [pg] 00 [pg2] 00  00 00 00 00   [? transitions to this]
    13 00 00 00  [pg] 00 [pg2] 00  00 00 00 00   [? transitions to this]
@@ -1177,7 +1177,7 @@ struct dyesub_backend canonselphy_backend = {
    16 01 00 00  [pg] 00 [pg2] 00  00 00 00 00   [error, cover open]
    02 00 00 00  05 05 02 00  00 00 00 00        [error, no media]
 
-   [xx] can be 0x00 or 0xff, depending on if a previous print job has 
+   [xx] can be 0x00 or 0xff, depending on if a previous print job has
 	completed or not.
 
    [pg] is:  0x01 for P-papers
@@ -1193,7 +1193,7 @@ struct dyesub_backend canonselphy_backend = {
  Selphy ES3/30:
 
    Init func:   40 00 [pgcode] [type]  00 00 00 00  00 00 00 00 [length, 32-bit LE]
-   Plane func:  40 01 [plane] 00  00 00 00 00  00 00 00 00 
+   Plane func:  40 01 [plane] 00  00 00 00 00  00 00 00 00
 
    End func:    40 20 00 00  00 00 00 00  00 00 00 00
 
@@ -1232,7 +1232,7 @@ struct dyesub_backend canonselphy_backend = {
  Selphy ES40:
 
    Init func:   40 00 [pgcode] [type]  00 00 00 00  00 00 00 00 [length, 32-bit LE]
-   Plane func:  40 01 [plane] 00  00 00 00 00  00 00 00 00 
+   Plane func:  40 01 [plane] 00  00 00 00 00  00 00 00 00
 
    End func:    40 20 00 00  00 00 00 00  00 00 00 00
 
@@ -1276,7 +1276,7 @@ struct dyesub_backend canonselphy_backend = {
  Selphy CP790:
 
    Init func:   40 00 [pgcode] 00  00 00 00 00  00 00 00 00 [length, 32-bit LE]
-   Plane func:  40 01 [plane] 00  00 00 00 00  00 00 00 00 
+   Plane func:  40 01 [plane] 00  00 00 00 00  00 00 00 00
 
    End func:    40 20 00 00  00 00 00 00  00 00 00 00
 
@@ -1293,7 +1293,7 @@ struct dyesub_backend canonselphy_backend = {
 
    00 00 ff 00  [pg1] [pg2] 00 00  00 00 00 02
    00 00 00 00  [pg1] [pg2] 00 00  00 00 00 02   [idle, ready for header]
-   00 00 01 00  [pg1] [pg2] 00 00  00 00 00 02   
+   00 00 01 00  [pg1] [pg2] 00 00  00 00 00 02
    00 01 01 00  [pg1] [pg2] 00 00  00 00 00 02   [ready for Y data]
    00 03 01 00  [pg1] [pg2] 00 00  00 00 00 02   [transitions to this]
    00 03 02 00  [pg1] [pg2] 00 00  00 00 00 02   [ready for M data]
@@ -1326,7 +1326,7 @@ struct dyesub_backend canonselphy_backend = {
  Selphy CP-10:
 
    Init func:   40 00 00 00  00 00 00 00  00 00 00 00
-   Plane func:  40 01 00 [plane]  [length, 32-bit LE]  00 00 00 00 
+   Plane func:  40 01 00 [plane]  [length, 32-bit LE]  00 00 00 00
 
    plane codes are 0x00, 0x01, 0x02 for Y, M, and C, respectively.
 
@@ -1338,7 +1338,7 @@ struct dyesub_backend canonselphy_backend = {
 
    01 00 00 00  00 00 00 00  00 00 00 00   [idle, waiting for init]
    02 00 00 00  00 00 00 00  00 00 00 00   [init sent, paper feeding]
-   02 00 00 00  00 00 00 00  00 00 00 00   [init sent, paper feeding] 
+   02 00 00 00  00 00 00 00  00 00 00 00   [init sent, paper feeding]
    02 00 00 00  00 00 00 00  00 00 00 00   [waiting for Y data]
    04 00 00 00  00 00 00 00  00 00 00 00   [waiting for M data]
    08 00 00 00  00 00 00 00  00 00 00 00   [waiting for C data]
@@ -1353,13 +1353,13 @@ struct dyesub_backend canonselphy_backend = {
 
  ***************************************************************************
  Selphy CP-series (except for CP790 & CP-10):
- 
+
     This is known to apply to:
 	CP-100, CP-200, CP-300, CP-330, CP400, CP500, CP510, CP710,
 	CP720, CP730, CP740, CP750, CP760, CP770, CP780, CP800, CP900
 
    Init func:   40 00 00 [pgcode]  00 00 00 00  00 00 00 00
-   Plane func:  40 01 00 [plane]  [length, 32-bit LE]  00 00 00 00 
+   Plane func:  40 01 00 [plane]  [length, 32-bit LE]  00 00 00 00
    End func:    00 00 00 00       # NOTE: Present (and necessary) on CP900 only.
 
    Error clear: 40 10 00 00  00 00 00 00  00 00 00 00
@@ -1373,14 +1373,14 @@ struct dyesub_backend canonselphy_backend = {
 
    Known readback values:
 
-   01 00 00 00  [ss] 00 [pg] 00  00 00 00 [xx]   [idle, waiting for init]
-   02 00 [rr] 00  00 00 [pg] 00  00 00 00 [xx]   [init sent, paper feeding]
-   02 00 [rr] 00  10 00 [pg] 00  00 00 00 [xx]   [init sent, paper feeding] 
-   02 00 [rr] 00  70 00 [pg] 00  00 00 00 [xx]   [waiting for Y data]
-   04 00 00 00  00 00 [pg] 00  00 00 00 [xx]   [waiting for M data]
-   08 00 00 00  00 00 [pg] 00  00 00 00 [xx]   [waiting for C data]
-   10 00 00 00  00 00 [pg] 00  00 00 00 [xx]   [C done, waiting]
-   20 00 00 00  00 00 [pg] 00  00 00 00 [xx]   [All done]
+   01 00 00 00  [ss] 00 [pg] [zz]  00 00 00 [xx]   [idle, waiting for init]
+   02 00 [rr] 00  00 00 [pg] [zz]  00 00 00 [xx]   [init sent, paper feeding]
+   02 00 [rr] 00  10 00 [pg] [zz]  00 00 00 [xx]   [init sent, paper feeding]
+   02 00 [rr] 00  70 00 [pg] [zz]  00 00 00 [xx]   [waiting for Y data]
+   04 00 00 00  00 00 [pg] [zz]  00 00 00 [xx]   [waiting for M data]
+   08 00 00 00  00 00 [pg] [zz]  00 00 00 [xx]   [waiting for C data]
+   10 00 00 00  00 00 [pg] [zz]  00 00 00 [xx]   [C done, waiting]
+   20 00 00 00  00 00 [pg] [zz]  00 00 00 [xx]   [All done]
 
    [xx] is 0x01 on the CP780/CP800/CP900, 0x00 on all others.
 
@@ -1405,51 +1405,6 @@ struct dyesub_backend canonselphy_backend = {
       0x41 if the 'Wide' paper tray is loaded with a 'P' ribbon. A '0' is used
       to signify nothing being loaded.
 
- ***************************************************************************
- Selphy CP820/CP910/CP1000/CP1200:
-
-  Radically different spool file format!  300dpi, same print sizes, but also
-  adding a 50x50mm sticker and 22x17.3mm ministickers, though I think the
-  driver treats all of those as 'C' sizes for printing purposes.
-
-  Printer does *not* require use of a spooler!  Huzzah!
-
-  32-byte header:
-
-  0f 00 00 40 00 00 00 00  00 00 00 00 00 00 01 00
-  01 00 ?? 00 00 00 00 00  XX 04 00 00 WW ZZ 00 00
-
-  ?? == 50  (P)
-     == 4c  (L)
-     == 43  (C)
-
-  XX == e0  (P)
-        80  (L)
-        40  (C)
-
-  WW == 50  (P)
-        c0  (L)
-        9c  (C)
-
-  ZZ == 07  (P)
-        05  (L)
-        02  (C)
-
-  P == 7008800  == 2336256 * 3 + 32 (1872*1248)
-  L == 5087264  == 1695744 * 3 + 32 (1536*1104)
-  C == 2180384  == 726784 * 3 + 32  (1088*668)
-
-  It is worth mentioning that the image payload is Y'CbCr rather than the
-  traditional YMC (or even BGR) of other dyseubs.  Our best guess is that
-  we need to use the JPEG coefficients, although we realistically have
-  no way of confirming this.
-
-  It is hoped that the printers do support YMC data, but as of yet we
-  have no way of determining if this is possible.
-
-  Also, we have reports of the printer not quite behaving properly
-  in the face of multiple jobs; it's possible this thing may need a
-  backend after all, but more sniffs will need to be performed to determine
-  what the status readbacks (if any) mean.
+   [zz] is 0x01 when on battery power, 0x00 otherwise.
 
 */

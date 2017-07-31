@@ -33,7 +33,7 @@ TESTS = run-testpattern-1 run-testpattern-2
 
 bin_PROGRAMS = testpattern
 noinst_PROGRAMS = printers printer_options
-noinst_SCRIPTS = run-testpattern-2 compare-checksums compress-checksums uncompress-checksums
+noinst_SCRIPTS = run-testpattern-2 compare-checksums compress-checksums
 endif
 
 AM_LFLAGS = -i
@@ -59,11 +59,22 @@ endif
 
 if BUILD_TESTPATTERN
 
-checksums: testpattern run-testpattern-2 ./compress-checksums
+# This suffix is *not* static during development!
+CSUM_SUFFIX=`@PKGROOT@/scripts/gversion`
+CSUM_RELEASE_SUFFIX=@GUTENPRINT_VERSION@
+CSUM_FILE=Checksums/sums.$(SPREFIX)$(CSUM_SUFFIX)
+CSUM_RELEASE_FILE=Checksums/sums.$(CSUM_RELEASE_SUFFIX)
+
+.PHONY: checksums checksums-release
+
+Checksums:
 	$(MKDIR_P) Checksums
-	./run-testpattern-2 -q -M Checksums/sums.$(SPREFIX)@GUTENPRINT_VERSION@.in
-	./compress-checksums < Checksums/sums.@GUTENPRINT_VERSION@.in |$(BZIP2) -c > Checksums/sums.@GUTENPRINT_VERSION@.bz2
-	rm -f Checksums/sums.@GUTENPRINT_VERSION@.in
+
+checksums: testpattern run-testpattern-2 ./compress-checksums Checksums
+	./run-testpattern-2 -q -M - | ./compress-checksums | $(COMPRESS) > "$(CSUM_FILE)@CSUF@"
+
+checksums-release: testpattern run-testpattern-2 ./compress-checksums Checksums
+	./run-testpattern-2 -q -M - | ./compress-checksums | $(COMPRESS) > "$(CSUM_RELEASE_FILE)@CSUF@"
 endif
 
 ## Clean
@@ -76,5 +87,4 @@ EXTRA_DIST = \
 	run-testpattern \
 	run-testpattern-1 \
 	compare-checksums.in \
-	compress-checksums.in \
-	uncompress-checksums.in
+	compress-checksums.in

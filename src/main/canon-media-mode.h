@@ -62,12 +62,12 @@ typedef struct {
   name##_modeuses                                           \
 }
 
-/* Ordering of data: 
+/* Ordering of data:
    BJC
    DS
    mini
    S
-   i --- *i is Japanese model, with Hagaki/inkjetHagaki support. 
+   i --- *i is Japanese model, with Hagaki/inkjetHagaki support.
          i* is US model without such support. Not sure about European models.
    iP
    iX
@@ -88,7 +88,7 @@ static const char* canon_BJC_30_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_30_modeuses[] = {
   { "Plain",		canon_BJC_30_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_30_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_30_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_30_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_30_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_30_modeuses_plain, 0 },
@@ -114,7 +114,7 @@ static const char* canon_BJC_85_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_85_modeuses[] = {
   { "Plain",		canon_BJC_85_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_85_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_85_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_85_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_85_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_85_modeuses_plain, 0 },
@@ -141,7 +141,7 @@ static const char* canon_BJC_210_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_210_modeuses[] = {
   { "Plain",		canon_BJC_210_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_210_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_210_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_210_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_210_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_210_modeuses_plain, 0 },
@@ -169,7 +169,7 @@ static const char* canon_BJC_240_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_240_modeuses[] = {
   { "Plain",		canon_BJC_240_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_240_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_240_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_240_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_240_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_240_modeuses_plain, 0 },
@@ -195,7 +195,7 @@ static const char* canon_BJC_2000_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_2000_modeuses[] = {
   { "Plain",		canon_BJC_2000_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_2000_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_2000_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_2000_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_2000_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_2000_modeuses_plain, 0 },
@@ -412,7 +412,7 @@ static const char* canon_BJC_4400_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_4400_modeuses[] = {
   { "Plain",		canon_BJC_4400_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_4400_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_4400_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_4400_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_4400_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_4400_modeuses_plain, 0 },
@@ -475,7 +475,7 @@ static const char* canon_BJC_5500_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_5500_modeuses[] = {
   { "Plain",		canon_BJC_5500_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_5500_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_5500_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_5500_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_5500_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_5500_modeuses_plain, 0 },
@@ -502,7 +502,7 @@ static const char* canon_BJC_6000_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_6000_modeuses[] = {
   { "Plain",		canon_BJC_6000_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_6000_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_6000_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_6000_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_6000_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_6000_modeuses_plain, 0 },
@@ -528,7 +528,7 @@ static const char* canon_BJC_7000_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_7000_modeuses[] = {
   { "Plain",		canon_BJC_7000_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_7000_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_7000_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_7000_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_7000_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_7000_modeuses_plain, 0 },
@@ -554,7 +554,7 @@ static const char* canon_BJC_7100_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_7100_modeuses[] = {
   { "Plain",		canon_BJC_7100_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_7100_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_7100_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_7100_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_7100_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_7100_modeuses_plain, 0 },
@@ -580,7 +580,7 @@ static const char* canon_BJC_8200_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_8200_modeuses[] = {
   { "Plain",		canon_BJC_8200_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_8200_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_8200_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_8200_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_8200_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_8200_modeuses_plain, 0 },
@@ -605,7 +605,7 @@ static const char* canon_BJC_8500_modeuses_plain[] = {
 
 static const canon_modeuse_t canon_BJC_8500_modeuses[] = {
   { "Plain",		canon_BJC_8500_modeuses_plain, 0 },
-  { "Transparency",	canon_BJC_8500_modeuses_plain, 0 }, 
+  { "Transparency",	canon_BJC_8500_modeuses_plain, 0 },
   { "BackPrint",	canon_BJC_8500_modeuses_plain, 0 },
   { "Fabric",		canon_BJC_8500_modeuses_plain, 0 },
   { "Envelope",		canon_BJC_8500_modeuses_plain, 0 },
@@ -811,7 +811,7 @@ static const char* canon_PIXMA_mini320_modeuses_Hagaki[] = {
 static const canon_modeuse_t canon_PIXMA_mini320_modeuses[] = {
   { "GlossyPro",	canon_PIXMA_mini320_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_mini320_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_mini320_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_mini320_modeuses_PPplus, 0 },
   { "PhotopaperMatte",	canon_PIXMA_mini320_modeuses_PPmatte, 0 },
   { "GlossyPaper",	canon_PIXMA_mini320_modeuses_PPgloss, 0 },
   { "PhotoPlusGloss2",	canon_PIXMA_mini320_modeuses_PPplus, 0 },
@@ -904,7 +904,7 @@ static const canon_modeuse_t canon_BJC_S300_modeuses[] = {
   { "Plain",            canon_BJC_S300_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S300_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S300_modeuses_PPgloss, 0 },/*untested*/
-  { "PhotopaperPlusDouble", canon_BJC_S300_modeuses_PPgloss, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S300_modeuses_PPgloss, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S300_modeuses_PPgloss, 0 },/*untested*/
   { "GlossyPaper",	canon_BJC_S300_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S300_modeuses_coated, 0 },
@@ -970,7 +970,7 @@ static const canon_modeuse_t canon_BJC_S330_modeuses[] = {
   { "Plain",            canon_BJC_S330_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S330_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S330_modeuses_PPpro, 0 },
-  { "PhotopaperPlusDouble", canon_BJC_S330_modeuses_PPpro, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S330_modeuses_PPpro, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S330_modeuses_PPmatte, 0 },
   { "GlossyPaper",	canon_BJC_S330_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S330_modeuses_PPmatte, 0 },
@@ -1037,7 +1037,7 @@ static const canon_modeuse_t canon_BJC_S500_modeuses[] = {
   { "Plain",            canon_BJC_S500_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S500_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S500_modeuses_PPpro, 0 },/*untested*/
-  { "PhotopaperPlusDouble", canon_BJC_S500_modeuses_PPpro, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S500_modeuses_PPpro, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S500_modeuses_coated, 0 },/*untested*/
   { "GlossyPaper",	canon_BJC_S500_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S500_modeuses_coated, 0 },
@@ -1112,7 +1112,7 @@ static const canon_modeuse_t canon_BJC_S520_modeuses[] = {
   { "Plain",            canon_BJC_S520_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S520_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S520_modeuses_PPpro, 0 },
-  { "PhotopaperPlusDouble", canon_BJC_S520_modeuses_PPpro, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S520_modeuses_PPpro, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S520_modeuses_PPmatte, 0 },
   { "GlossyPaper",	canon_BJC_S520_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S520_modeuses_coated, 0 },
@@ -1210,7 +1210,7 @@ static const canon_modeuse_t canon_BJC_S600_modeuses[] = {
   { "Plain",            canon_BJC_S600_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S600_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S600_modeuses_PPpro, 0 },/*untested*/
-  { "PhotopaperPlusDouble", canon_BJC_S600_modeuses_PPpro, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S600_modeuses_PPpro, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S600_modeuses_PPgloss, 0 },/*untested*/
   { "GlossyPaper",	canon_BJC_S600_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S600_modeuses_coated, 0 },
@@ -1283,7 +1283,7 @@ static const canon_modeuse_t canon_BJC_S750_modeuses[] = {
   { "Plain",            canon_BJC_S750_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S750_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S750_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_BJC_S750_modeuses_PPplus, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S750_modeuses_PPplus, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S750_modeuses_PPplus, 0 },
   { "GlossyPaper",	canon_BJC_S750_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S750_modeuses_coated, 0 },
@@ -1389,7 +1389,7 @@ static const canon_modeuse_t canon_BJC_S800_modeuses[] = {
   { "Plain",            canon_BJC_S800_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S800_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S800_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_BJC_S800_modeuses_PPplus, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S800_modeuses_PPplus, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S800_modeuses_PPgloss, 0 },
   { "GlossyPaper",	canon_BJC_S800_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S800_modeuses_PPgloss, 0 },
@@ -1459,7 +1459,7 @@ static const canon_modeuse_t canon_BJC_S820_modeuses[] = {
   { "Plain",            canon_BJC_S820_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S820_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S820_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_BJC_S820_modeuses_PPplus, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S820_modeuses_PPplus, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S820_modeuses_PPgloss, 0 },
   { "GlossyPaper",	canon_BJC_S820_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S820_modeuses_PPgloss, 0 },
@@ -1534,7 +1534,7 @@ static const canon_modeuse_t canon_BJC_S900_modeuses[] = {
   { "Plain",            canon_BJC_S900_modeuses_plain, 0 },
   { "GlossyPro",	canon_BJC_S900_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_BJC_S900_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_BJC_S900_modeuses_PPplus, 0 },/*untested*/
+  { "PhotopaperPlusDouble",canon_BJC_S900_modeuses_PPplus, 0 },/*untested*/
   { "PhotopaperMatte",	canon_BJC_S900_modeuses_PPgloss, 0 },
   { "GlossyPaper",	canon_BJC_S900_modeuses_PPgloss, 0 },
   { "Coated",		canon_BJC_S900_modeuses_coated, 0 },
@@ -2982,7 +2982,7 @@ static const canon_modeuse_t canon_PIXMA_iP90_modeuses[] = {
   { "Plain",            canon_PIXMA_iP90_modeuses_plain, 0 },/*INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL*/
   { "GlossyPro",	canon_PIXMA_iP90_modeuses_PPpro, INKSET_COLOR_SUPPORT },
   { "PhotopaperPlus",	canon_PIXMA_iP90_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP90_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP90_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_PIXMA_iP90_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "GlossyPaper",	canon_PIXMA_iP90_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_PIXMA_iP90_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
@@ -3047,7 +3047,7 @@ static const canon_modeuse_t canon_PIXMA_iP100_modeuses[] = {
   { "GlossyPro",	canon_PIXMA_iP100_modeuses_PPpro, INKSET_COLOR_SUPPORT },
   { "PhotopaperPlus",	canon_PIXMA_iP100_modeuses_PPplus, INKSET_COLOR_SUPPORT },
   { "PhotoPlusGloss2",	canon_PIXMA_iP100_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP100_modeuses_PPplus, INKSET_COLOR_SUPPORT },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP100_modeuses_PPplus, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_PIXMA_iP100_modeuses_PPplus, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_PIXMA_iP100_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
   { "GlossyPaper",	canon_PIXMA_iP100_modeuses_PPplus, INKSET_COLOR_SUPPORT },
@@ -3119,7 +3119,7 @@ static const canon_modeuse_t canon_PIXMA_iP110_modeuses[] = {
   { "Coated",		canon_PIXMA_iP110_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_PIXMA_iP110_modeuses_Hagaki, 0 },/*INKSET_COLOR_SUPPORT*/
   { "InkJetHagaki", 	canon_PIXMA_iP110_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "InkjetPhotoHagakiK", 	canon_PIXMA_iP110_modeuses_PPplus, INKSET_COLOR_SUPPORT },
+  { "InkjetPhotoHagakiK",canon_PIXMA_iP110_modeuses_PPplus, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_iP110_modeuses_Hagaki, 0 },/*INKSET_COLOR_SUPPORT*/
   { "TShirt",		canon_PIXMA_iP110_modeuses_TShirt, INKSET_COLOR_SUPPORT },
   { "Envelope",		canon_PIXMA_iP110_modeuses_Hagaki, 0 },/*INKSET_COLOR_SUPPORT*/
@@ -3351,7 +3351,7 @@ static const canon_modeuse_t canon_PIXMA_iP3000_modeuses[] = {
   { "Plain",            canon_PIXMA_iP3000_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_PIXMA_iP3000_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP3000_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP3000_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP3000_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP3000_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP3000_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP3000_modeuses_PPplusDS, 0 },
@@ -3440,7 +3440,7 @@ static const canon_modeuse_t canon_PIXMA_iP3100_modeuses[] = {
   { "Plain",            canon_PIXMA_iP3100_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_PIXMA_iP3100_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP3100_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP3100_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP3100_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP3100_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP3100_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP3100_modeuses_PPplusDS, 0 },
@@ -3511,7 +3511,7 @@ static const canon_modeuse_t canon_PIXMA_iP3300_modeuses[] = {
   { "Plain",            canon_PIXMA_iP3300_modeuses_plain, 0 },
   { "GlossyPro",	canon_PIXMA_iP3300_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP3300_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP3300_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP3300_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP3300_modeuses_PPplusDS, 0 },/*check*/
   { "PhotopaperMatte",	canon_PIXMA_iP3300_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP3300_modeuses_PPplusDS, 0 },
@@ -3580,7 +3580,7 @@ static const canon_modeuse_t canon_PIXMA_iP3600_modeuses[] = {
   { "PhotoPlusGloss2",	canon_PIXMA_iP3600_modeuses_PPplusG2, 0 },
   { "PhotoPro2",	canon_PIXMA_iP3600_modeuses_PPpro, 0 },
   { "PhotoProPlat",     canon_PIXMA_iP3600_modeuses_PPplusG2, 0 },
-  { "PhotoProSemiGloss", canon_PIXMA_iP3600_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_PIXMA_iP3600_modeuses_PPplusG2, 0 },
   { "GlossyPaper",	canon_PIXMA_iP3600_modeuses_PPplusG2, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP3600_modeuses_PPmatte, 0 },
   { "Coated",		canon_PIXMA_iP3600_modeuses_PPmatte, 0 },
@@ -3669,7 +3669,7 @@ static const canon_modeuse_t canon_PIXMA_iP4000_modeuses[] = {
   { "Plain",            canon_PIXMA_iP4000_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_PIXMA_iP4000_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP4000_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP4000_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP4000_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP4000_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP4000_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP4000_modeuses_PPplusDS, 0 },
@@ -3755,7 +3755,7 @@ static const canon_modeuse_t canon_PIXMA_iP4100_modeuses[] = {
   { "Plain",            canon_PIXMA_iP4100_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_PIXMA_iP4100_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP4100_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP4100_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP4100_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP4100_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP4100_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP4100_modeuses_PPplusDS, 0 },
@@ -3813,10 +3813,10 @@ static const char* canon_PIXMA_iP4200_modeuses_transparency[] = {
 };
 
 static const canon_modeuse_t canon_PIXMA_iP4200_modeuses[] = {
-  { "Plain",             canon_PIXMA_iP4200_modeuses_plain, DUPLEX_SUPPORT },
-  { "GlossyPro",	        canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
+  { "Plain",            canon_PIXMA_iP4200_modeuses_plain, DUPLEX_SUPPORT },
+  { "GlossyPro",	canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
   { "PhotopaperPlus",	canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* mostly not yet supported */
-  { "PhotopaperPlusDouble", canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
+  { "PhotopaperPlusDouble",canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
   { "PhotopaperMatte",	canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
   { "GlossyPaper",	canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
   { "Coated",		canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
@@ -3828,7 +3828,7 @@ static const canon_modeuse_t canon_PIXMA_iP4200_modeuses[] = {
   { "TShirt",		canon_PIXMA_iP4200_modeuses_TShirt, 0 },
   { "Envelope",		canon_PIXMA_iP4200_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_iP4200_modeuses_PPplus, 0 },/* not yet supported */
-  { "Transparency",      canon_PIXMA_iP4200_modeuses_transparency, 0 },/*untested*/
+  { "Transparency",     canon_PIXMA_iP4200_modeuses_transparency, 0 },/*untested*/
 };
 
 DECLARE_MODEUSES(canon_PIXMA_iP4200);
@@ -3875,10 +3875,10 @@ static const char* canon_PIXMA_iP4300_modeuses_transparency[] = {
 };
 
 static const canon_modeuse_t canon_PIXMA_iP4300_modeuses[] = {
-  { "Plain",             canon_PIXMA_iP4300_modeuses_plain, DUPLEX_SUPPORT },
-  { "GlossyPro",	        canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
+  { "Plain",            canon_PIXMA_iP4300_modeuses_plain, DUPLEX_SUPPORT },
+  { "GlossyPro",	canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
   { "PhotopaperPlus",	canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* mostly not yet supported */
-  { "PhotopaperPlusDouble", canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
+  { "PhotopaperPlusDouble",canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
   { "PhotopaperMatte",	canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
   { "GlossyPaper",	canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
   { "Coated",		canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
@@ -3890,7 +3890,7 @@ static const canon_modeuse_t canon_PIXMA_iP4300_modeuses[] = {
   { "TShirt",		canon_PIXMA_iP4300_modeuses_TShirt, 0 },
   { "Envelope",		canon_PIXMA_iP4300_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_iP4300_modeuses_PPplus, 0 },/* not yet supported */
-  { "Transparency",      canon_PIXMA_iP4300_modeuses_transparency, 0 },/*untested*/
+  { "Transparency",     canon_PIXMA_iP4300_modeuses_transparency, 0 },/*untested*/
 };
 
 DECLARE_MODEUSES(canon_PIXMA_iP4300);
@@ -3965,7 +3965,7 @@ static const canon_modeuse_t canon_PIXMA_iP4500_modeuses[] = {
   { "PhotoPlusGloss2",	canon_PIXMA_iP4500_modeuses_PPplus, 0 },
   { "GlossyPro",	canon_PIXMA_iP4500_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP4500_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP4500_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP4500_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP4500_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP4500_modeuses_PPmatte, 0 },
   { "Coated",	        canon_PIXMA_iP4500_modeuses_PPmatte, 0 },
@@ -4289,7 +4289,7 @@ static const canon_modeuse_t canon_PIXMA_iP5000_modeuses[] = {
   { "Plain",            canon_PIXMA_iP5000_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_PIXMA_iP5000_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP5000_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP5000_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP5000_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP5000_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP5000_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP5000_modeuses_PPplusDS, 0 },
@@ -4374,7 +4374,7 @@ static const canon_modeuse_t canon_PIXMA_iP5300_modeuses[] = {
   { "Plain",            canon_PIXMA_iP5300_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_PIXMA_iP5300_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP5300_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP5300_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP5300_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_PIXMA_iP5300_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP5300_modeuses_PPmatte, 0 },
   { "Coated",		canon_PIXMA_iP5300_modeuses_PPmatte, 0 },
@@ -4462,7 +4462,7 @@ static const canon_modeuse_t canon_PIXMA_iP6000_modeuses[] = {
  { "Plain",             canon_PIXMA_iP6000_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
  { "GlossyPro",	        canon_PIXMA_iP6000_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP6000_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP6000_modeuses_PPplus, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP6000_modeuses_PPplus, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP6000_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP6000_modeuses_PPplus, 0 },
  { "Coated",		canon_PIXMA_iP6000_modeuses_PPmatte, 0 },
@@ -4549,7 +4549,7 @@ static const canon_modeuse_t canon_PIXMA_iP6100_modeuses[] = {
   { "Plain",            canon_PIXMA_iP6100_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
   { "GlossyPro",	canon_PIXMA_iP6100_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_PIXMA_iP6100_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP6100_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP6100_modeuses_PPplus, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP6100_modeuses_PPmatte, 0 },
   { "GlossyPaper",	canon_PIXMA_iP6100_modeuses_PPplus, 0 },
   { "Coated",		canon_PIXMA_iP6100_modeuses_PPmatte, 0 },
@@ -4638,7 +4638,7 @@ static const canon_modeuse_t canon_PIXMA_iP6210_modeuses[] = {
   { "Plain",            canon_PIXMA_iP6210_modeuses_plain, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
   { "GlossyPro",	canon_PIXMA_iP6210_modeuses_PPpro, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
   { "PhotopaperPlus",	canon_PIXMA_iP6210_modeuses_PPplus, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP6210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP6210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
   { "PhotopaperMatte",	canon_PIXMA_iP6210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
   { "GlossyPaper",	canon_PIXMA_iP6210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
   { "Coated",		canon_PIXMA_iP6210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT | INKSET_COLOR_MODEREPL },
@@ -4713,7 +4713,7 @@ static const canon_modeuse_t canon_PIXMA_iP6600_modeuses[] = {
  { "Plain",             canon_PIXMA_iP6600_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_PIXMA_iP6600_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP6600_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP6600_modeuses_PPplus, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP6600_modeuses_PPplus, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP6600_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP6600_modeuses_PPplus, 0 },
  { "Coated",		canon_PIXMA_iP6600_modeuses_PPmatte, 0 },
@@ -4795,7 +4795,7 @@ static const canon_modeuse_t canon_PIXMA_iP6700_modeuses[] = {
  { "Plain",             canon_PIXMA_iP6700_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_PIXMA_iP6700_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP6700_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP6700_modeuses_PPplus, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP6700_modeuses_PPplus, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP6700_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP6700_modeuses_PPplus, 0 },
  { "Coated",		canon_PIXMA_iP6700_modeuses_PPmatte, 0 },
@@ -4891,7 +4891,7 @@ static const canon_modeuse_t canon_PIXMA_iP7100_modeuses[] = {
  { "Plain",             canon_PIXMA_iP7100_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
  { "GlossyPro",	        canon_PIXMA_iP7100_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP7100_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP7100_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP7100_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP7100_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP7100_modeuses_PPplusDS, 0 },
  { "Coated",		canon_PIXMA_iP7100_modeuses_PPmatte, 0 },
@@ -4982,7 +4982,7 @@ static const canon_modeuse_t canon_PIXMA_iP7200_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_iP7200_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_iP7200_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_iP7200_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_iP7200_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_iP7200_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_iP7200_modeuses_PPother, 0 },
 };
 
@@ -5057,7 +5057,7 @@ static const canon_modeuse_t canon_PIXMA_iP7500_modeuses[] = {
  { "Plain",             canon_PIXMA_iP7500_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_PIXMA_iP7500_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP7500_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP7500_modeuses_PPplus, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP7500_modeuses_PPplus, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP7500_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP7500_modeuses_PPplus, 0 },
  { "Coated",		canon_PIXMA_iP7500_modeuses_PPmatte, 0 },
@@ -5169,7 +5169,7 @@ static const canon_modeuse_t canon_PIXMA_iP8100_modeuses[] = {
  { "Plain",             canon_PIXMA_iP8100_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
  { "GlossyPro",	        canon_PIXMA_iP8100_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP8100_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP8100_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP8100_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP8100_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP8100_modeuses_PPgloss, 0 },
  { "Coated",		canon_PIXMA_iP8100_modeuses_PPmatte, 0 },
@@ -5266,7 +5266,7 @@ static const canon_modeuse_t canon_PIXMA_iP8500_modeuses[] = {
   { "Plain",            canon_PIXMA_iP8500_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
   { "GlossyPro",	canon_PIXMA_iP8500_modeuses_PPpro, 0 }, /*unsupported*/
   { "PhotopaperPlus",	canon_PIXMA_iP8500_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_PIXMA_iP8500_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_PIXMA_iP8500_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_PIXMA_iP8500_modeuses_PPpro, 0 }, /*unsupported*/
   { "GlossyPaper",	canon_PIXMA_iP8500_modeuses_PPplusDS, 0 },
   { "Coated",		canon_PIXMA_iP8500_modeuses_PPhires, 0 },
@@ -5370,7 +5370,7 @@ static const canon_modeuse_t canon_PIXMA_iP8600_modeuses[] = {
  { "Plain",             canon_PIXMA_iP8600_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
  { "GlossyPro",	        canon_PIXMA_iP8600_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP8600_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP8600_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP8600_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP8600_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP8600_modeuses_PPplusDS, 0 },
  { "Coated",		canon_PIXMA_iP8600_modeuses_PPmatte, 0 },
@@ -5473,12 +5473,12 @@ static const canon_modeuse_t canon_PIXMA_iP8700_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_iP8700_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_iP8700_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_iP8700_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_iP8700_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_iP8700_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_iP8700_modeuses_photorag, 0 },/*untested*/
   { "FineArtOther",     canon_PIXMA_iP8700_modeuses_photorag, 0 },
   { "PhotopaperOther",	canon_PIXMA_iP8700_modeuses_PPother, 0 },
 };
-    
+
 DECLARE_MODEUSES(canon_PIXMA_iP8700);
 
 /* ----------------------------------- Canon iP9910  ----------------------------------- */
@@ -5567,7 +5567,7 @@ static const canon_modeuse_t canon_PIXMA_iP9910_modeuses[] = {
  { "Plain",             canon_PIXMA_iP9910_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
  { "GlossyPro",	        canon_PIXMA_iP9910_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iP9910_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iP9910_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iP9910_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iP9910_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_PIXMA_iP9910_modeuses_PPplusDS, 0 },
  { "Coated",		canon_PIXMA_iP9910_modeuses_PPmatte, 0 },
@@ -5649,7 +5649,7 @@ static const canon_modeuse_t canon_PIXMA_iX4000_modeuses[] = {
  { "Plain",             canon_PIXMA_iX4000_modeuses_plain, 0 },
  { "GlossyPro",	        canon_PIXMA_iX4000_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iX4000_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iX4000_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iX4000_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iX4000_modeuses_PPplusDS, 0 },
  { "GlossyPaper",	canon_PIXMA_iX4000_modeuses_PPplusDS, 0 },
  { "Coated",		canon_PIXMA_iX4000_modeuses_PPplusDS, 0 },
@@ -5720,7 +5720,7 @@ static const canon_modeuse_t canon_PIXMA_iX5000_modeuses[] = {
  { "Plain",             canon_PIXMA_iX5000_modeuses_plain, 0 },
  { "GlossyPro",	        canon_PIXMA_iX5000_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_PIXMA_iX5000_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_PIXMA_iX5000_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_PIXMA_iX5000_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_PIXMA_iX5000_modeuses_PPplusDS, 0 },
  { "GlossyPaper",	canon_PIXMA_iX5000_modeuses_PPplusDS, 0 },
  { "Coated",		canon_PIXMA_iX5000_modeuses_PPplusDS, 0 },
@@ -5871,7 +5871,7 @@ static const canon_modeuse_t canon_PIXMA_iX6800_modeuses[] = {
   { "InkjetPhotoHagakiK",canon_PIXMA_iX6800_modeuses_PPplusG2, 0 },
   { "Hagaki", 	        canon_PIXMA_iX6800_modeuses_Hagaki, 0 },
   { "TShirt",		canon_PIXMA_iX6800_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_iX6800_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_iX6800_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_iX6800_modeuses_PPother, 0 },
 };
 
@@ -6267,7 +6267,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP150_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP150_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "GlossyPro",	canon_MULTIPASS_MP150_modeuses_PPpro, INKSET_COLOR_SUPPORT },
   { "PhotopaperPlus",	canon_MULTIPASS_MP150_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP150_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP150_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_MP150_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "GlossyPaper",	canon_MULTIPASS_MP150_modeuses_PPgloss, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_MP150_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
@@ -6450,7 +6450,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP210_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP210_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "GlossyPro",	canon_MULTIPASS_MP210_modeuses_PPpro, INKSET_COLOR_SUPPORT },
   { "PhotopaperPlus",	canon_MULTIPASS_MP210_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_MP210_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
   { "GlossyPaper",	canon_MULTIPASS_MP210_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_MP210_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
@@ -6467,21 +6467,13 @@ DECLARE_MODEUSES(canon_MULTIPASS_MP210);
 static const char* canon_MULTIPASS_MP230_modeuses_plain[] = {
   "600x600dpi_high",
   "600x600dpi",
-  "600x600dpi_draft",/*untested*/
+  "600x600dpi_draft",
   "300x300dpi",
-  "300x300dpi_draft",/*untested*/
-  /* Mono */
-  "600x600dpi_highmono",
-  "600x600dpi_mono",
-  "600x600dpi_draftmono",/*untested*/
-  "300x300dpi_mono",
-  "300x300dpi_draftmono",/*untested*/
   /* Color */
   "600x600dpi_high3",
   "600x600dpi_std3",
-  "600x600dpi_draft3",/*untested*/
+  "600x600dpi_draft3",
   "300x300dpi_std3",
-  "300x300dpi_draft3",/*untested*/
   NULL
   };
 
@@ -6504,10 +6496,6 @@ static const char* canon_MULTIPASS_MP230_modeuses_Hagaki[] = {
   "600x600dpi_high2",
   "600x600dpi_std2",
   "600x600dpi_draft2",/*untested*/
-  /* Mono */
-  "600x600dpi_highmono2",
-  "600x600dpi_mono2",
-  "600x600dpi_draftmono2",/*untested*/
   /* Color */
   "600x600dpi_high4",
   "600x600dpi_std4",
@@ -6526,7 +6514,7 @@ static const char* canon_MULTIPASS_MP230_modeuses_PPother[] = {
   };
 
 static const canon_modeuse_t canon_MULTIPASS_MP230_modeuses[] = {
- { "Plain",             canon_MULTIPASS_MP230_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL | DUPLEX_SUPPORT | DUPLEX_MODEREPL},
+ { "Plain",             canon_MULTIPASS_MP230_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
  { "PhotoPlusGloss2",	canon_MULTIPASS_MP230_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
  { "PhotoProPlat",	canon_MULTIPASS_MP230_modeuses_PPproPlat, INKSET_COLOR_SUPPORT },
  { "PhotoProLuster",    canon_MULTIPASS_MP230_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
@@ -6944,7 +6932,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP470_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP470_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL | DUPLEX_SUPPORT | DUPLEX_MODEREPL},
   { "GlossyPro",	canon_MULTIPASS_MP470_modeuses_PPpro, INKSET_COLOR_SUPPORT },
   { "PhotopaperPlus",	canon_MULTIPASS_MP470_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP470_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP470_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "PhotoPlusGloss2",	canon_MULTIPASS_MP470_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_MP470_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
   { "GlossyPaper",	canon_MULTIPASS_MP470_modeuses_PPplusDS, INKSET_COLOR_SUPPORT },
@@ -7252,7 +7240,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP520_modeuses[] = {
   { "GlossyPro",	canon_MULTIPASS_MP520_modeuses_PPpro, 0 },
   { "PhotoPlusGloss2",	canon_MULTIPASS_MP520_modeuses_PPplus, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MP520_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP520_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP520_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP520_modeuses_PPplus, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP520_modeuses_PPplusDS, 0 },
   { "Coated",		canon_MULTIPASS_MP520_modeuses_PPplusDS, 0 },
@@ -7324,7 +7312,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP530_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP530_modeuses_plain, 0 },
   { "GlossyPro",	canon_MULTIPASS_MP530_modeuses_PPpro, 0 },/*not supported yet*/
   { "PhotopaperPlus",	canon_MULTIPASS_MP530_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP530_modeuses_PPplusDS, 0 },/*not supported yet*/
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP530_modeuses_PPplusDS, 0 },/*not supported yet*/
   { "GlossyPaper",	canon_MULTIPASS_MP530_modeuses_PPplusDS, 0 },/*not supported yet*/
   { "PhotopaperMatte",	canon_MULTIPASS_MP530_modeuses_PPplusDS, 0 },/*not supported yet*/
   { "Coated",		canon_MULTIPASS_MP530_modeuses_PPplusDS, 0 },/*not supported yet*/
@@ -7398,7 +7386,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP540_modeuses[] = {
   { "PhotoProPlat",     canon_MULTIPASS_MP540_modeuses_PPplusG2, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP540_modeuses_PPmatte, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP540_modeuses_PPplusG2, 0 },
-  { "PhotoProSemiGloss", canon_MULTIPASS_MP540_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_MULTIPASS_MP540_modeuses_PPplusG2, 0 },
   { "Coated",		canon_MULTIPASS_MP540_modeuses_PPmatte, 0 },
   { "InkJetHagaki", 	canon_MULTIPASS_MP540_modeuses_inkjetHagaki, 0 },
   { "Hagaki", 	        canon_MULTIPASS_MP540_modeuses_Hagaki, 0 },
@@ -7625,7 +7613,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP600_modeuses[] = {
  { "Plain",             canon_MULTIPASS_MP600_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_MULTIPASS_MP600_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_MULTIPASS_MP600_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP600_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP600_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_MULTIPASS_MP600_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_MULTIPASS_MP600_modeuses_PPplusDS, 0 },
  { "Coated",		canon_MULTIPASS_MP600_modeuses_PPmatte, 0 },
@@ -7717,7 +7705,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP610_modeuses[] = {
  { "GlossyPro",	        canon_MULTIPASS_MP610_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_MULTIPASS_MP610_modeuses_PPplus, 0 },
  { "PhotoPlusGloss2",   canon_MULTIPASS_MP610_modeuses_PPplusG2, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP610_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP610_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_MULTIPASS_MP610_modeuses_PPmatte, 0 },
  { "GlossyPaper",	canon_MULTIPASS_MP610_modeuses_PPplusDS, 0 },
  { "Coated",		canon_MULTIPASS_MP610_modeuses_PPmatte, 0 },
@@ -7790,7 +7778,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP620_modeuses[] = {
   { "PhotoProPlat",     canon_MULTIPASS_MP620_modeuses_PPplusG2, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP620_modeuses_PPmatte, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP620_modeuses_PPplusG2, 0 },
-  { "PhotoProSemiGloss", canon_MULTIPASS_MP620_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_MULTIPASS_MP620_modeuses_PPplusG2, 0 },
   { "Coated",		canon_MULTIPASS_MP620_modeuses_PPmatte, 0 },
   { "InkJetHagaki", 	canon_MULTIPASS_MP620_modeuses_inkjetHagaki, 0 },
   { "Hagaki", 	        canon_MULTIPASS_MP620_modeuses_Hagaki, 0 },
@@ -7808,7 +7796,7 @@ static const char* canon_MULTIPASS_MP630_modeuses_plain[] = {
   "600x600dpi",
   "600x600dpi_draft",/*untested*/
   "300x300dpi",
-  "300x300dpi_draft",/*untested*/
+  "300x300dpi_draft",
   NULL
   };
 
@@ -7868,7 +7856,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP630_modeuses[] = {
   { "PhotoPlusGloss2",	canon_MULTIPASS_MP630_modeuses_PPplusG2, 0 },
   { "PhotoPro2",	canon_MULTIPASS_MP630_modeuses_PPpro, 0 },
   { "PhotoProPlat",     canon_MULTIPASS_MP630_modeuses_PPplusG2, 0 },
-  { "PhotoProSemiGloss", canon_MULTIPASS_MP630_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_MULTIPASS_MP630_modeuses_PPplusG2, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP630_modeuses_PPplusG2, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP630_modeuses_PPmatte, 0 },
   { "Coated",		canon_MULTIPASS_MP630_modeuses_PPmatte, 0 },
@@ -7888,9 +7876,7 @@ static const char* canon_MULTIPASS_MP640_modeuses_plain[] = {
   "600x600dpi_high2",
   "600x600dpi_high",/* duplex */
   "600x600dpi",
-  "600x600dpi_draft",/*untested*/
   "300x300dpi",
-  "300x300dpi_draft",/*untested*/
   NULL
   };
 
@@ -7898,21 +7884,18 @@ static const char* canon_MULTIPASS_MP640_modeuses_plain[] = {
 static const char* canon_MULTIPASS_MP640_modeuses_PPpro[] = {
   "600x600dpi_photohigh",
   "600x600dpi_photo",
-  "600x600dpi_photodraft",/*untested*/
   NULL
 };
 
 static const char* canon_MULTIPASS_MP640_modeuses_PPplusG2[] = {
   "600x600dpi_photohigh",
   "600x600dpi_photo",
-  "600x600dpi_photodraft",/*untested*/
   NULL
 };
 
 static const char* canon_MULTIPASS_MP640_modeuses_PPmatte[] = {
   "600x600dpi_photohigh",
   "600x600dpi_photo2",
-  "600x600dpi_photodraft",/*untested*/
   NULL
 };
 
@@ -7941,7 +7924,6 @@ static const char* canon_MULTIPASS_MP640_modeuses_TShirt[] = {
 
 static const char* canon_MULTIPASS_MP640_modeuses_PPother[] = {
   "600x600dpi_photo",
-  "600x600dpi_photodraft",/*untested*/
   NULL
 };
 
@@ -7950,7 +7932,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP640_modeuses[] = {
   { "PhotoPlusGloss2",	canon_MULTIPASS_MP640_modeuses_PPplusG2, 0 },
   { "PhotoPro2",	canon_MULTIPASS_MP640_modeuses_PPpro, 0 },
   { "PhotoProPlat",     canon_MULTIPASS_MP640_modeuses_PPplusG2, 0 },
-  { "PhotoProSemiGloss", canon_MULTIPASS_MP640_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_MULTIPASS_MP640_modeuses_PPplusG2, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP640_modeuses_PPplusG2, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP640_modeuses_PPmatte, 0 },
   { "Coated",		canon_MULTIPASS_MP640_modeuses_PPmatte, 0 },
@@ -8043,7 +8025,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP700_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP700_modeuses_plain, 0 },
   { "GlossyPro",	canon_MULTIPASS_MP700_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MP700_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP700_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP700_modeuses_PPplus, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP700_modeuses_PPpro, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP700_modeuses_PPplus, 0 },
   { "Coated",		canon_MULTIPASS_MP700_modeuses_coated, 0 },
@@ -8135,7 +8117,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP710_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP710_modeuses_plain, 0 },
   { "GlossyPro",	canon_MULTIPASS_MP710_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MP710_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP710_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP710_modeuses_PPplus, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP710_modeuses_PPpro, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP710_modeuses_PPplus, 0 },
   { "Coated",		canon_MULTIPASS_MP710_modeuses_coated, 0 },
@@ -8215,7 +8197,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP750_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP750_modeuses_plain, 0 },
   { "GlossyPro",	canon_MULTIPASS_MP750_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MP750_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP750_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP750_modeuses_PPplus, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP750_modeuses_PPpro, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP750_modeuses_PPplus, 0 },
   { "Coated",		canon_MULTIPASS_MP750_modeuses_PPplus, 0 },
@@ -8296,7 +8278,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP800_modeuses[] = {
  { "Plain",             canon_MULTIPASS_MP800_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_MULTIPASS_MP800_modeuses_PPpro, 0 },/*not supported yet*/
  { "PhotopaperPlus",	canon_MULTIPASS_MP800_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP800_modeuses_PPplusDS, 0 },/*not supported yet*/
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP800_modeuses_PPplusDS, 0 },/*not supported yet*/
  { "GlossyPaper",	canon_MULTIPASS_MP800_modeuses_PPplusDS, 0 },/*not supported yet*/
  { "PhotopaperMatte",	canon_MULTIPASS_MP800_modeuses_PPplusDS, 0 },/*not supported yet*/
  { "Coated",		canon_MULTIPASS_MP800_modeuses_PPplusDS, 0 },/*not supported yet*/
@@ -8386,7 +8368,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP810_modeuses[] = {
  { "Plain",             canon_MULTIPASS_MP810_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_MULTIPASS_MP810_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_MULTIPASS_MP810_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP810_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP810_modeuses_PPplusDS, 0 },
  { "GlossyPaper",	canon_MULTIPASS_MP810_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_MULTIPASS_MP810_modeuses_PPmatte, 0 },
  { "Coated",		canon_MULTIPASS_MP810_modeuses_PPmatte, 0 },
@@ -8461,7 +8443,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP830_modeuses[] = {
  { "Plain",             canon_MULTIPASS_MP830_modeuses_plain, DUPLEX_SUPPORT },
  { "GlossyPro",	        canon_MULTIPASS_MP830_modeuses_PPpro, 0 },/*not supported yet*/
  { "PhotopaperPlus",	canon_MULTIPASS_MP830_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP830_modeuses_PPplusDS, 0 },/*not supported yet*/
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP830_modeuses_PPplusDS, 0 },/*not supported yet*/
  { "GlossyPaper",	canon_MULTIPASS_MP830_modeuses_PPplusDS, 0 },/*not supported yet*/
  { "PhotopaperMatte",	canon_MULTIPASS_MP830_modeuses_PPplusDS, 0 },/*not supported yet*/
  { "Coated",		canon_MULTIPASS_MP830_modeuses_PPplusDS, 0 },/*not supported yet*/
@@ -8563,7 +8545,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP900_modeuses[] = {
  { "Plain",             canon_MULTIPASS_MP900_modeuses_plain, 0 },
  { "GlossyPro",	        canon_MULTIPASS_MP900_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_MULTIPASS_MP900_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP900_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP900_modeuses_PPplusDS, 0 },
  { "GlossyPaper",	canon_MULTIPASS_MP900_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_MULTIPASS_MP900_modeuses_PPmatte, 0 },
  { "Coated",		canon_MULTIPASS_MP900_modeuses_coated, 0 },
@@ -8666,7 +8648,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP950_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP950_modeuses_plain, DUPLEX_SUPPORT },
   { "GlossyPro",	canon_MULTIPASS_MP950_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MP950_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP950_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP950_modeuses_PPplus, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP950_modeuses_PPplus, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP950_modeuses_PPmatte, 0 },
   { "Coated",		canon_MULTIPASS_MP950_modeuses_PPmatte, 0 },
@@ -8775,7 +8757,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP960_modeuses[] = {
  { "Plain",             canon_MULTIPASS_MP960_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
  { "GlossyPro",	        canon_MULTIPASS_MP960_modeuses_PPpro, 0 },
  { "PhotopaperPlus",	canon_MULTIPASS_MP960_modeuses_PPplus, 0 },
- { "PhotopaperPlusDouble", canon_MULTIPASS_MP960_modeuses_PPplusDS, 0 },
+ { "PhotopaperPlusDouble",canon_MULTIPASS_MP960_modeuses_PPplusDS, 0 },
  { "GlossyPaper",	canon_MULTIPASS_MP960_modeuses_PPplusDS, 0 },
  { "PhotopaperMatte",	canon_MULTIPASS_MP960_modeuses_PPmatte, 0 },
  { "Coated",		canon_MULTIPASS_MP960_modeuses_PPmatte, 0 },
@@ -8863,7 +8845,7 @@ static const canon_modeuse_t canon_MULTIPASS_MP970_modeuses[] = {
   { "Plain",            canon_MULTIPASS_MP970_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
   { "GlossyPro",	canon_MULTIPASS_MP970_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MP970_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MP970_modeuses_PPplus, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MP970_modeuses_PPplus, 0 },
   { "PhotoPlusGloss2",  canon_MULTIPASS_MP970_modeuses_PPplus, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MP970_modeuses_PPplus, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MP970_modeuses_PPmatte, 0 },
@@ -9138,7 +9120,7 @@ static const canon_modeuse_t canon_MULTIPASS_MX300_modeuses[] = {
   { "PhotoPlusGloss2",  canon_MULTIPASS_MX300_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "GlossyPro",	canon_MULTIPASS_MX300_modeuses_PPpro, INKSET_COLOR_SUPPORT },
   { "PhotopaperPlus",   canon_MULTIPASS_MX300_modeuses_PPplus, INKSET_COLOR_SUPPORT },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MX300_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MX300_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_MX300_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
   { "GlossyPaper",	canon_MULTIPASS_MX300_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_MX300_modeuses_PPmatte, INKSET_COLOR_SUPPORT },
@@ -9503,7 +9485,7 @@ static const canon_modeuse_t canon_MULTIPASS_MX390_modeuses[] = {
   { "CanonPhotoHagakiK",canon_MULTIPASS_MX390_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_MULTIPASS_MX390_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_MULTIPASS_MX390_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_MULTIPASS_MX390_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_MULTIPASS_MX390_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_MULTIPASS_MX390_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -9634,14 +9616,14 @@ static const canon_modeuse_t canon_MULTIPASS_MX470_modeuses[] = {
   { "PhotoProLuster",   canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
-  { "GlossyPaperStandard",	canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
+  { "GlossyPaperStandard",canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_MULTIPASS_MX470_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "InkJetHagaki", 	canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "InkjetPhotoHagakiK",canon_MULTIPASS_MX470_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_MULTIPASS_MX470_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_MULTIPASS_MX470_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_MULTIPASS_MX470_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_MULTIPASS_MX470_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_MULTIPASS_MX470_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -9816,14 +9798,14 @@ static const canon_modeuse_t canon_MULTIPASS_MX530_modeuses[] = {
   { "PhotoProLuster",   canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
-  { "GlossyPaperStandard",	canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
+  { "GlossyPaperStandard",canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_MULTIPASS_MX530_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "InkJetHagaki", 	canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "InkjetPhotoHagakiK",canon_MULTIPASS_MX530_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_MULTIPASS_MX530_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_MULTIPASS_MX530_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_MULTIPASS_MX530_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_MULTIPASS_MX530_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_MULTIPASS_MX530_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -9885,7 +9867,7 @@ static const canon_modeuse_t canon_MULTIPASS_MX700_modeuses[] = {
   { "GlossyPro",	canon_MULTIPASS_MX700_modeuses_PPpro, 0 },
   { "PhotoPlusGloss2",	canon_MULTIPASS_MX700_modeuses_PPplus, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MX700_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MX700_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MX700_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MX700_modeuses_PPplus, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MX700_modeuses_PPplusDS, 0 },
   { "Coated",		canon_MULTIPASS_MX700_modeuses_PPplusDS, 0 },
@@ -10033,7 +10015,7 @@ static const canon_modeuse_t canon_PIXMA_MX720_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MX720_modeuses_PPplusG2, 0 },
   { "Hagaki", 	        canon_PIXMA_MX720_modeuses_Hagaki, DUPLEX_SUPPORT },
   { "TShirt",		canon_PIXMA_MX720_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MX720_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MX720_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MX720_modeuses_PPother, 0 },
 };
 
@@ -10109,7 +10091,7 @@ static const canon_modeuse_t canon_MULTIPASS_MX850_modeuses[] = {
   { "PhotoPlusGloss2",	canon_MULTIPASS_MX850_modeuses_PPplus, 0 },
   { "GlossyPro",	canon_MULTIPASS_MX850_modeuses_PPpro, 0 },
   { "PhotopaperPlus",	canon_MULTIPASS_MX850_modeuses_PPplus, 0 },
-  { "PhotopaperPlusDouble", canon_MULTIPASS_MX850_modeuses_PPplusDS, 0 },
+  { "PhotopaperPlusDouble",canon_MULTIPASS_MX850_modeuses_PPplusDS, 0 },
   { "GlossyPaper",	canon_MULTIPASS_MX850_modeuses_PPplusDS, 0 },
   { "PhotoProSemiGloss",canon_MULTIPASS_MX850_modeuses_PPplusDS, 0 },
   { "PhotopaperMatte",	canon_MULTIPASS_MX850_modeuses_PPmatte, 0 },
@@ -10411,7 +10393,7 @@ static const canon_modeuse_t canon_PIXMA_MX920_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MX920_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MX920_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MX920_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MX920_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MX920_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MX920_modeuses_PPother, 0 },
 };
 
@@ -10494,7 +10476,7 @@ static const canon_modeuse_t canon_MULTIPASS_E400_modeuses[] = {
   { "PhotoProPlat",     canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
   { "PhotoProLuster",   canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
-  { "GlossyPaperStandard",	canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
+  { "GlossyPaperStandard",canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_E400_modeuses_PPglossy, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_MULTIPASS_E400_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT },
@@ -10552,7 +10534,7 @@ static const canon_modeuse_t canon_MULTIPASS_E480_modeuses[] = {
   { "PhotoProPlat",     canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
   { "PhotoProLuster",   canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
-  { "GlossyPaperStandard",	canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
+  { "GlossyPaperStandard",canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_E480_modeuses_PP, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_MULTIPASS_E480_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT },
@@ -10727,7 +10709,7 @@ static const canon_modeuse_t canon_MULTIPASS_E560_modeuses[] = {
   { "PhotoProPlat",     canon_MULTIPASS_E560_modeuses_PPproPlat, INKSET_COLOR_SUPPORT },
   { "PhotoProLuster",   canon_MULTIPASS_E560_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_MULTIPASS_E560_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
-  { "GlossyPaperStandard",	canon_MULTIPASS_E560_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
+  { "GlossyPaperStandard",canon_MULTIPASS_E560_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_MULTIPASS_E560_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_MULTIPASS_E560_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_MULTIPASS_E560_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
@@ -10740,6 +10722,343 @@ static const canon_modeuse_t canon_MULTIPASS_E560_modeuses[] = {
 };
 
 DECLARE_MODEUSES(canon_MULTIPASS_E560);
+
+/* ----------------------------------- Canon E3100  ----------------------------------- */
+static const char* canon_PIXMA_E3100_modeuses_plain[] = {
+  "600x600dpi_high",
+  "600x600dpi",
+  "600x600dpi_draft",/*untested*/
+  "300x300dpi",
+  /* Color */
+  "600x600dpi_high3",
+  "600x600dpi_std3",
+  "600x600dpi_draft3",/*untested*/
+  "300x300dpi_std3",
+  NULL
+  };
+
+static const char* canon_PIXMA_E3100_modeuses_PPplusG2[] = {
+  "1200x1200dpi_photohigh2",
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  "600x600dpi_photodraft",/*untested*/
+  NULL
+};
+
+static const char* canon_PIXMA_E3100_modeuses_PPGstd[] = {
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  "600x600dpi_photodraft",/*untested*/
+  NULL
+};
+
+static const char* canon_PIXMA_E3100_modeuses_Hagaki[] = {
+  "600x600dpi_high2",
+  "600x600dpi_std2",
+  "600x600dpi_draft2",/*untested*/
+  /* Color */
+  "600x600dpi_high4",
+  "600x600dpi_std4",
+  "600x600dpi_draft4",/*untested*/
+  NULL
+};
+
+/*unsupported*/
+static const char* canon_PIXMA_E3100_modeuses_TShirt[] = {
+  "600x600dpi_photohigh",
+  NULL
+};
+
+/*unsupported*/
+static const char* canon_PIXMA_E3100_modeuses_PPother[] = {
+  "600x600dpi_photohigh",
+  NULL
+};
+
+static const canon_modeuse_t canon_PIXMA_E3100_modeuses[] = {
+ { "Plain",             canon_PIXMA_E3100_modeuses_plain, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
+ { "PhotoPlusGloss2",	canon_PIXMA_E3100_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
+ { "PhotoProPlat",	canon_PIXMA_E3100_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },/*unsupported*/
+ { "PhotoProLuster",    canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },/*unsupported*/
+ { "PhotoProSemiGloss", canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },/*unsupported*/
+ { "GlossyPaperStandard",canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },
+ { "PhotopaperMatte",	canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },/*unsupported*/
+ { "Coated",		canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },/*unsupported*/
+ { "InkJetHagakiaddr", 	canon_PIXMA_E3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
+ { "InkJetHagaki", 	canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },
+ { "InkjetPhotoHagakiKaddr",canon_PIXMA_E3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
+ { "InkjetPhotoHagakiK",canon_PIXMA_E3100_modeuses_PPGstd, INKSET_COLOR_SUPPORT },
+ { "HagakiA", 	        canon_PIXMA_E3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
+ { "Hagaki", 	        canon_PIXMA_E3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
+ { "TShirt",		canon_PIXMA_E3100_modeuses_TShirt, INKSET_COLOR_SUPPORT },/*unsupported*/
+ { "Envelope",		canon_PIXMA_E3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },/*unsupported*/
+ { "PhotopaperOther",	canon_PIXMA_E3100_modeuses_PPother, INKSET_COLOR_SUPPORT },/*unsupported*/
+};
+
+DECLARE_MODEUSES(canon_PIXMA_E3100);
+
+/* ----------------------------------- Canon TS5000  ----------------------------------- */
+static const char* canon_PIXMA_TS5000_modeuses_plain[] = {
+  "600x600dpi_high",
+  "600x600dpi",
+  "600x600dpi_draft",
+  NULL
+  };
+
+static const char* canon_PIXMA_TS5000_modeuses_PPplusG2[] = {
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_TS5000_modeuses_PPpro[] = {
+  /*ud1 not supported */
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_TS5000_modeuses_Hagaki[] = {
+  "600x600dpi_high3",
+  "600x600dpi_std3",
+  NULL
+};
+
+static const char* canon_PIXMA_TS5000_modeuses_inkjetHagaki[] = {
+  "600x600dpi_photohigh2",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_TS5000_modeuses_TShirt[] = {
+  "600x600dpi_tshirt",
+  NULL
+};
+
+static const char* canon_PIXMA_TS5000_modeuses_PPother[] = {
+  "600x600dpi_photohigh",
+  NULL
+};
+
+static const canon_modeuse_t canon_PIXMA_TS5000_modeuses[] = {
+  { "Plain",            canon_PIXMA_TS5000_modeuses_plain, 0 },
+  { "PhotoPlusGloss2",  canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "PhotoProPlat",     canon_PIXMA_TS5000_modeuses_PPpro, 0 },
+  { "PhotoProLuster",   canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "PhotopaperMatte",	canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "GlossyPaperStandard",canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "Coated",		canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "InkJetHagakiaddr", canon_PIXMA_TS5000_modeuses_Hagaki, 0 },
+  { "InkJetHagaki", 	canon_PIXMA_TS5000_modeuses_inkjetHagaki, 0 },
+  { "InkjetPhotoHagakiKaddr",canon_PIXMA_TS5000_modeuses_Hagaki, 0 },
+  { "InkjetPhotoHagakiK",canon_PIXMA_TS5000_modeuses_PPplusG2, 0 },
+  { "HagakiA", 	        canon_PIXMA_TS5000_modeuses_Hagaki, 0 },
+  { "Hagaki", 	        canon_PIXMA_TS5000_modeuses_Hagaki, 0 },
+  { "TShirt",		canon_PIXMA_TS5000_modeuses_TShirt, 0 },
+  { "Envelope",		canon_PIXMA_TS5000_modeuses_Hagaki, 0 },
+  { "PhotopaperOther",	canon_PIXMA_TS5000_modeuses_PPother, 0 },
+};
+
+DECLARE_MODEUSES(canon_PIXMA_TS5000);
+
+/* ----------------------------------- Canon TS6000  ----------------------------------- */
+static const char* canon_PIXMA_TS6000_modeuses_plain[] = {
+  "600x600dpi_high",
+  "600x600dpi_high2",/*duplex*/
+  "600x600dpi",
+  "600x600dpi_std2",/*duplex*/
+  "600x600dpi_draft",
+  NULL
+  };
+
+static const char* canon_PIXMA_TS6000_modeuses_PPplusG2[] = {
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_TS6000_modeuses_PPpro[] = {
+  /*ud1 not supported */
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_TS6000_modeuses_Hagaki[] = {
+  "600x600dpi_high3",
+  "600x600dpi_std3",
+  NULL
+};
+
+static const char* canon_PIXMA_TS6000_modeuses_inkjetHagaki[] = {
+  "600x600dpi_photohigh2",
+  "600x600dpi_photo2",
+  NULL
+};
+
+static const char* canon_PIXMA_TS6000_modeuses_TShirt[] = {
+  "600x600dpi_tshirt",
+  NULL
+};
+
+static const char* canon_PIXMA_TS6000_modeuses_PPother[] = {
+  "600x600dpi_photohigh",
+  NULL
+};
+
+static const canon_modeuse_t canon_PIXMA_TS6000_modeuses[] = {
+  { "Plain",            canon_PIXMA_TS6000_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
+  { "PhotoPlusGloss2",  canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "PhotoProPlat",     canon_PIXMA_TS6000_modeuses_PPpro, 0 },
+  { "PhotoProLuster",   canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "PhotopaperMatte",	canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "GlossyPaperStandard",canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "Coated",		canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "InkJetHagakiaddr", canon_PIXMA_TS6000_modeuses_Hagaki, 0 },
+  { "InkJetHagaki", 	canon_PIXMA_TS6000_modeuses_inkjetHagaki, 0 },
+  { "InkjetPhotoHagakiKaddr",canon_PIXMA_TS6000_modeuses_Hagaki, 0 },
+  { "InkjetPhotoHagakiK",canon_PIXMA_TS6000_modeuses_PPplusG2, 0 },
+  { "HagakiA", 	        canon_PIXMA_TS6000_modeuses_Hagaki, 0 },
+  { "Hagaki", 	        canon_PIXMA_TS6000_modeuses_Hagaki, 0 },
+  { "TShirt",		canon_PIXMA_TS6000_modeuses_TShirt, 0 },
+  { "Envelope",		canon_PIXMA_TS6000_modeuses_Hagaki, 0 },
+  { "PhotopaperOther",	canon_PIXMA_TS6000_modeuses_PPother, 0 },
+};
+
+DECLARE_MODEUSES(canon_PIXMA_TS6000);
+
+/* ----------------------------------- Canon TS8000  ----------------------------------- */
+/* leave out media with entirely unsupported modes, no standins */
+static const char* canon_PIXMA_TS8000_modeuses_plain[] = {
+  "600x600dpi_high",
+  "600x600dpi_high2",/*duplex*/
+  "600x600dpi",
+  "600x600dpi_std2",/*duplex*/
+  "600x600dpi_draft",
+  NULL
+  };
+
+static const char* canon_PIXMA_TS8000_modeuses_Coated[] = {
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_TS8000_modeuses_Hagaki[] = {
+  "600x600dpi_high3",
+  "600x600dpi_high4",/*duplex*/
+  "600x600dpi_std3",
+  "600x600dpi_std4",/*duplex*/
+  NULL
+};
+
+static const char* canon_PIXMA_TS8000_modeuses_Env[] = {
+  "600x600dpi_high3",
+  "600x600dpi_std3",
+  NULL
+};
+
+static const char* canon_PIXMA_TS8000_modeuses_inkjetHagaki[] = {
+  "600x600dpi_photohigh2",
+  "600x600dpi_photo2",
+  NULL
+};
+
+static const char* canon_PIXMA_TS8000_modeuses_CD[] = {
+  "600x600dpi_photohigh3",
+  "600x600dpi_photo3",
+  NULL
+};
+
+static const char* canon_PIXMA_TS8000_modeuses_TShirt[] = {
+  "600x600dpi_tshirt",
+  NULL
+};
+
+static const canon_modeuse_t canon_PIXMA_TS8000_modeuses[] = {
+  { "Plain",            canon_PIXMA_TS8000_modeuses_plain, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
+  /*  { "PhotoPlusGloss2",  canon_PIXMA_TS8000_modeuses_PPplusG2, 0 },*/
+  /*  { "PhotoProPlat",     canon_PIXMA_TS8000_modeuses_PPpro, 0 },*/
+  /*  { "PhotoProLuster",   canon_PIXMA_TS8000_modeuses_PPplusG2, 0 },*/
+  /*  { "PhotoProSemiGloss",canon_PIXMA_TS8000_modeuses_PPplusG2, 0 },*/
+  /*  { "PhotopaperMatte",	canon_PIXMA_TS8000_modeuses_PPplusG2, 0 },*/
+  /*  { "GlossyPaperStandard",canon_PIXMA_TS8000_modeuses_PPplusG2, 0 },*/
+  { "Coated",		canon_PIXMA_TS8000_modeuses_Coated, 0 },
+  { "InkJetHagakiaddr", canon_PIXMA_TS8000_modeuses_Hagaki, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
+  { "InkJetHagaki", 	canon_PIXMA_TS8000_modeuses_inkjetHagaki, 0 },
+  { "InkjetPhotoHagakiKaddr",canon_PIXMA_TS8000_modeuses_Hagaki, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
+  /*  { "InkjetPhotoHagakiK",canon_PIXMA_TS8000_modeuses_PPplusG2, 0 },*/
+  { "HagakiA", 	        canon_PIXMA_TS8000_modeuses_Hagaki, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
+  { "Hagaki", 	        canon_PIXMA_TS8000_modeuses_Hagaki, DUPLEX_SUPPORT | DUPLEX_MODEREPL },
+  { "TShirt",		canon_PIXMA_TS8000_modeuses_TShirt, 0 },
+  { "Envelope",		canon_PIXMA_TS8000_modeuses_Env, 0 },
+  /*  { "PhotopaperOther",	canon_PIXMA_TS8000_modeuses_PPother, 0 },*/
+  { "DiscCompat",	canon_PIXMA_TS8000_modeuses_CD, 0 },
+  { "DiscOthers",	canon_PIXMA_TS8000_modeuses_CD, 0 },
+  /*  { "FineArtOther",	canon_PIXMA_TS8000_modeuses_PPother, 0 }, */
+};
+
+DECLARE_MODEUSES(canon_PIXMA_TS8000);
+
+/* ----------------------------------- Canon G1000  ----------------------------------- */
+static const char* canon_PIXMA_G1000_modeuses_plain[] = {
+  "600x600dpi_high",
+  "600x600dpi",
+  "300x300dpi",
+  NULL
+};
+
+static const char* canon_PIXMA_G1000_modeuses_PPplusG2[] = {
+  "600x600dpi_photohigh2",
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_G1000_modeuses_PP[] = {
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_PIXMA_G1000_modeuses_Hagaki[] = {
+  "600x600dpi_high2",
+  "600x600dpi_std2",
+  NULL
+};
+
+static const char* canon_PIXMA_G1000_modeuses_TShirt[] = {
+  "600x600dpi_photohigh",
+  NULL
+};
+
+static const char* canon_PIXMA_G1000_modeuses_PPother[] = {
+  "600x600dpi_photohigh",
+  NULL
+};
+
+static const canon_modeuse_t canon_PIXMA_G1000_modeuses[] = {
+  { "Plain",            canon_PIXMA_G1000_modeuses_plain, 0 },
+  { "PhotoPlusGloss2",  canon_PIXMA_G1000_modeuses_PPplusG2, 0 },
+  { "PhotoProLuster",   canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "PhotoProSemiGloss",canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "GlossyPaperStandard",canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "PhotopaperMatte",	canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "Coated",		canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "InkJetHagakiaddr", canon_PIXMA_G1000_modeuses_Hagaki, 0 },
+  { "InkJetHagaki", 	canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "InkjetPhotoHagakiKaddr",canon_PIXMA_G1000_modeuses_Hagaki, 0 },
+  { "InkjetPhotoHagakiK",canon_PIXMA_G1000_modeuses_PP, 0 },
+  { "HagakiA", 	        canon_PIXMA_G1000_modeuses_Hagaki, 0 },
+  { "Hagaki", 	        canon_PIXMA_G1000_modeuses_Hagaki, 0 },
+  { "TShirt",		canon_PIXMA_G1000_modeuses_TShirt, 0 },
+  { "Envelope",		canon_PIXMA_G1000_modeuses_Hagaki, 0 },
+  { "PhotopaperOther",	canon_PIXMA_G1000_modeuses_PPother, 0 },
+};
+
+DECLARE_MODEUSES(canon_PIXMA_G1000);
 
 /* ----------------------------------- Canon P200  ----------------------------------- */
 
@@ -10847,7 +11166,7 @@ static const canon_modeuse_t canon_PIXMA_MG2100_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG2100_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG2100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_PIXMA_MG2100_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG2100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG2100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG2100_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -10918,7 +11237,7 @@ static const canon_modeuse_t canon_PIXMA_MG2200_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG2200_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG2200_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_PIXMA_MG2200_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG2200_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG2200_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG2200_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -10975,7 +11294,7 @@ static const canon_modeuse_t canon_PIXMA_MG2400_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG2400_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG2400_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_PIXMA_MG2400_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG2400_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG2400_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG2400_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -11025,14 +11344,14 @@ static const canon_modeuse_t canon_PIXMA_MG2900_modeuses[] = {
   { "PhotoProLuster",   canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotoProSemiGloss",canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "PhotopaperMatte",	canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
-  { "GlossyPaperStandard",	canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
+  { "GlossyPaperStandard",canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Coated",		canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "HagakiA", 	        canon_PIXMA_MG2900_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "InkJetHagaki", 	canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "InkjetPhotoHagakiK",canon_PIXMA_MG2900_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG2900_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_PIXMA_MG2900_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG2900_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG2900_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG2900_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -11103,7 +11422,7 @@ static const canon_modeuse_t canon_PIXMA_MG3100_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG3100_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL | DUPLEX_SUPPORT },
   { "TShirt",		canon_PIXMA_MG3100_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG3100_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG3100_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -11175,7 +11494,7 @@ static const canon_modeuse_t canon_PIXMA_MG3200_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG3200_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG3200_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL | DUPLEX_SUPPORT },
   { "TShirt",		canon_PIXMA_MG3200_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG3200_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG3200_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG3200_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -11234,7 +11553,7 @@ static const canon_modeuse_t canon_PIXMA_MG3500_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG3500_modeuses_PPplusG2, INKSET_COLOR_SUPPORT },
   { "Hagaki", 	        canon_PIXMA_MG3500_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_PIXMA_MG3500_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG3500_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG3500_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG3500_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -11294,7 +11613,7 @@ static const canon_modeuse_t canon_PIXMA_MG3600_modeuses[] = {
   { "InkjetPhotoHagakiKaddr",canon_PIXMA_MG3600_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "Hagaki", 	        canon_PIXMA_MG3600_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "TShirt",		canon_PIXMA_MG3600_modeuses_TShirt, INKSET_COLOR_SUPPORT },
-  { "Envelope",		canon_PIXMA_MG3600_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL }, 
+  { "Envelope",		canon_PIXMA_MG3600_modeuses_Hagaki, INKSET_BLACK_SUPPORT | INKSET_COLOR_SUPPORT | INKSET_BLACK_MODEREPL | INKSET_COLOR_MODEREPL },
   { "PhotopaperOther",	canon_PIXMA_MG3600_modeuses_PPother, INKSET_COLOR_SUPPORT },
 };
 
@@ -11363,7 +11682,7 @@ static const canon_modeuse_t canon_PIXMA_MG5100_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG5100_modeuses_PPplusG2, 0 },
   { "Hagaki", 	        canon_PIXMA_MG5100_modeuses_Hagaki, DUPLEX_SUPPORT },
   { "TShirt",		canon_PIXMA_MG5100_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5100_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5100_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5100_modeuses_PPother, 0 },
 };
 
@@ -11442,7 +11761,7 @@ static const canon_modeuse_t canon_PIXMA_MG5200_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG5200_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG5200_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG5200_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5200_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5200_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5200_modeuses_PPother, 0 },
 };
 
@@ -11520,7 +11839,7 @@ static const canon_modeuse_t canon_PIXMA_MG5300_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG5300_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG5300_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG5300_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5300_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5300_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5300_modeuses_PPother, 0 },
 };
 
@@ -11599,7 +11918,7 @@ static const canon_modeuse_t canon_PIXMA_MG5400_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG5400_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG5400_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG5400_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5400_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5400_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5400_modeuses_PPother, 0 },
 };
 
@@ -11665,7 +11984,7 @@ static const canon_modeuse_t canon_PIXMA_MG5500_modeuses[] = {
   { "CanonPhotoHagakiK",canon_PIXMA_MG5500_modeuses_PPplusG2, 0 },
   { "Hagaki", 	        canon_PIXMA_MG5500_modeuses_Hagaki, 0 },
   { "TShirt",		canon_PIXMA_MG5500_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5500_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5500_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5500_modeuses_PPother, 0 },
 };
 
@@ -11724,14 +12043,14 @@ static const canon_modeuse_t canon_PIXMA_MG5600_modeuses[] = {
   { "PhotoProLuster",   canon_PIXMA_MG5600_modeuses_PPplusG2, 0 },
   { "PhotoProSemiGloss",canon_PIXMA_MG5600_modeuses_PPplusG2, 0 },
   { "PhotopaperMatte",	canon_PIXMA_MG5600_modeuses_PPmatte, 0 },
-  { "GlossyPaperStandard",	canon_PIXMA_MG5600_modeuses_PPplusG2, 0 },
+  { "GlossyPaperStandard",canon_PIXMA_MG5600_modeuses_PPplusG2, 0 },
   { "Coated",		canon_PIXMA_MG5600_modeuses_PPmatte, 0 },
   { "HagakiA", 	        canon_PIXMA_MG5600_modeuses_Hagaki, 0 },
   { "InkJetHagaki", 	canon_PIXMA_MG5600_modeuses_PPplusG2, 0 },
   { "InkjetPhotoHagakiK",canon_PIXMA_MG5600_modeuses_PPplusG2, 0 },
   { "Hagaki", 	        canon_PIXMA_MG5600_modeuses_Hagaki, 0 },
   { "TShirt",		canon_PIXMA_MG5600_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5600_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5600_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5600_modeuses_PPother, 0 },
 };
 
@@ -11798,7 +12117,7 @@ static const canon_modeuse_t canon_PIXMA_MG5700_modeuses[] = {
   { "HagakiA", 	        canon_PIXMA_MG5700_modeuses_Hagaki, 0 },
   { "Hagaki", 	        canon_PIXMA_MG5700_modeuses_Hagaki, 0 },
   { "TShirt",		canon_PIXMA_MG5700_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG5700_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG5700_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG5700_modeuses_PPother, 0 },
 };
 
@@ -11888,7 +12207,7 @@ static const canon_modeuse_t canon_PIXMA_MG6100_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG6100_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG6100_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG6100_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG6100_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG6100_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG6100_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG6100_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG6100_modeuses_PPother, 0 },
@@ -11981,7 +12300,7 @@ static const canon_modeuse_t canon_PIXMA_MG6200_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG6200_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG6200_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG6200_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG6200_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG6200_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG6200_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG6200_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG6200_modeuses_PPother, 0 },
@@ -12075,7 +12394,7 @@ static const canon_modeuse_t canon_PIXMA_MG6300_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG6300_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG6300_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG6300_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG6300_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG6300_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG6300_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG6300_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG6300_modeuses_PPother, 0 },
@@ -12169,7 +12488,7 @@ static const canon_modeuse_t canon_PIXMA_MG6500_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG6500_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG6500_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG6500_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG6500_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG6500_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG6500_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG6500_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG6500_modeuses_PPother, 0 },
@@ -12254,7 +12573,7 @@ static const canon_modeuse_t canon_PIXMA_MG6700_modeuses[] = {
   { "PhotoProLuster",   canon_PIXMA_MG6700_modeuses_PPplusG2, 0 },/*unsupported*/
   { "PhotoProSemiGloss",canon_PIXMA_MG6700_modeuses_PPplusG2, 0 },/*unsupported*/
   { "PhotopaperMatte",	canon_PIXMA_MG6700_modeuses_PPmatte, 0 },
-  { "GlossyPaperStandard",	canon_PIXMA_MG6700_modeuses_PPplusG2, 0 },/*unsupported*/
+  { "GlossyPaperStandard",canon_PIXMA_MG6700_modeuses_PPplusG2, 0 },/*unsupported*/
   { "Coated",		canon_PIXMA_MG6700_modeuses_PPmatte, 0 },
   { "HagakiA", 	        canon_PIXMA_MG6700_modeuses_Hagaki, DUPLEX_SUPPORT },
   { "InkJetHagaki", 	canon_PIXMA_MG6700_modeuses_inkjetHagaki, 0 },
@@ -12263,7 +12582,7 @@ static const canon_modeuse_t canon_PIXMA_MG6700_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG6700_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG6700_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG6700_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG6700_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG6700_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG6700_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG6700_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG6700_modeuses_PPother, 0 },
@@ -12331,7 +12650,7 @@ static const canon_modeuse_t canon_PIXMA_MG7700_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG7700_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG7700_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG7700_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG7700_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG7700_modeuses_Hagaki, 0 },
   /*{ "FineArtPhotoRag",  canon_PIXMA_MG7700_modeuses_photorag, 0 },
   { "FineArtOther",     canon_PIXMA_MG7700_modeuses_photorag, 0 },
   { "PhotopaperOther",	canon_PIXMA_MG7700_modeuses_PPother, 0 },*/
@@ -12424,7 +12743,7 @@ static const canon_modeuse_t canon_PIXMA_MG8100_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG8100_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG8100_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG8100_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG8100_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG8100_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG8100_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG8100_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG8100_modeuses_PPother, 0 },
@@ -12517,7 +12836,7 @@ static const canon_modeuse_t canon_PIXMA_MG8200_modeuses[] = {
   { "DiscCompat",	canon_PIXMA_MG8200_modeuses_disc, 0 },
   { "DiscOthers",	canon_PIXMA_MG8200_modeuses_disc, 0 },
   { "TShirt",		canon_PIXMA_MG8200_modeuses_TShirt, 0 },
-  { "Envelope",		canon_PIXMA_MG8200_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_PIXMA_MG8200_modeuses_Hagaki, 0 },
   { "FineArtPhotoRag",  canon_PIXMA_MG8200_modeuses_photorag, 0 },/*unsupported*/
   { "FineArtOther",     canon_PIXMA_MG8200_modeuses_photorag, 0 },/*unsupported*/
   { "PhotopaperOther",	canon_PIXMA_MG8200_modeuses_PPother, 0 },
@@ -12827,15 +13146,18 @@ DECLARE_MODEUSES(canon_PIXMA_Pro9000mk2);
 /* ----------------------------------- Canon Pro9500 ----------------------------------- */
 
 static const char* canon_PIXMA_Pro9500_modeuses_plain[] = {
-  "600x600dpi_high",
-  "600x600dpi",
-  "600x600dpi_draft",
+  "600x600dpi_high",/* untested */
+  "600x600dpi",/* untested */
+  "300x600dpi_high",
+  "300x600dpi",
+  "75x600dpi",
   /* Mono */
   "600x600dpi_highmono2",
-  "600x600dpi_highmono", /*untested*/
-  "600x600dpi_mono",
-  "600x600dpi_draftmono",
-  "600x600dpi_draftmono2",/*untested*/
+  "600x600dpi_highmono",
+  "600x600dpi_mono",/* untested */
+  "300x600dpi_mono",
+  "300x600dpi_draftmono",
+  "75x600dpi_mono",
   NULL
   };
 
@@ -12885,12 +13207,18 @@ static const char* canon_PIXMA_Pro9500_modeuses_inkjetHagaki[] = {
 
 /* modes not yet supported (R,G inks) */
 static const char* canon_PIXMA_Pro9500_modeuses_Hagaki[] = {
+  "600x600dpi_high",/* untested */
+  "600x600dpi",/* untested */
+  "300x600dpi_high",/* untested */
+  "300x600dpi",/* untested */
+  "75x600dpi",/* untested */
    /* Mono */
   "600x600dpi_highmono2",
   "600x600dpi_highmono",
-  "600x600dpi_mono", /*untested*/
-  "600x600dpi_draftmono",/*untested*/
-  "600x600dpi_draftmono2",/*untested*/
+  "600x600dpi_mono",
+  "300x600dpi_mono",/* untested */
+  "300x600dpi_draftmono",
+  "75x600dpi_mono",
   NULL
 };
 
@@ -13110,10 +13438,54 @@ static const canon_modeuse_t canon_MAXIFY_iB4000_modeuses[] = {
   { "InkjetPhotoHagakiK",canon_MAXIFY_iB4000_modeuses_PPplusG2, 0 },
   { "Hagaki", 	        canon_MAXIFY_iB4000_modeuses_Hagaki, 0 },
   { "TShirt",		canon_MAXIFY_iB4000_modeuses_PPplusG2, 0 },/*unsupported*/
-  { "Envelope",		canon_MAXIFY_iB4000_modeuses_Hagaki, 0 }, 
+  { "Envelope",		canon_MAXIFY_iB4000_modeuses_Hagaki, 0 },
   { "PhotopaperOther",	canon_MAXIFY_iB4000_modeuses_PPplusG2, 0 },/*unsupported*/
 };
 
 DECLARE_MODEUSES(canon_MAXIFY_iB4000);
+
+/* ----------------------------------- Canon MAXIFY iB4100 ----------------------------------- */
+
+static const char* canon_MAXIFY_iB4100_modeuses_plain[] = {
+  "600x600dpi_high",
+  "600x600dpi",
+  "600x600dpi_mono",
+  NULL
+};
+
+static const char* canon_MAXIFY_iB4100_modeuses_PPplusG2[] = {
+  "600x600dpi_photohigh",
+  "600x600dpi_photo",
+  NULL
+};
+
+static const char* canon_MAXIFY_iB4100_modeuses_Hagaki[] = {
+  "600x600dpi_high2",
+  "600x600dpi_std2",
+  NULL
+};
+
+static const canon_modeuse_t canon_MAXIFY_iB4100_modeuses[] = {
+  { "Plain",            canon_MAXIFY_iB4100_modeuses_plain, DUPLEX_SUPPORT },
+  { "PhotoPlusGloss2",  canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "PhotoProPlat",     canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },/*unsupported*/
+  { "PhotoProLuster",   canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "PhotoProSemiGloss",canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "GlossyPaperStandard",canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "PhotopaperMatte",	canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "Coated",		canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "HagakiA", 	        canon_MAXIFY_iB4100_modeuses_Hagaki, 0 },
+  { "Hagaki", 	        canon_MAXIFY_iB4100_modeuses_Hagaki, 0 },
+  { "InkJetHagakiaddr", canon_MAXIFY_iB4100_modeuses_Hagaki, 0 },
+  { "InkJetHagaki", 	canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "InkjetPhotoHagakiKaddr",canon_MAXIFY_iB4100_modeuses_Hagaki, 0 },
+  { "InkjetPhotoHagakiK",canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },
+  { "LabelMedia",	canon_MAXIFY_iB4100_modeuses_plain, 0 },/* new 2017 */
+  { "TShirt",		canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },/*unsupported*/
+  { "Envelope",		canon_MAXIFY_iB4100_modeuses_Hagaki, 0 },
+  { "PhotopaperOther",	canon_MAXIFY_iB4100_modeuses_PPplusG2, 0 },/*unsupported*/
+};
+
+DECLARE_MODEUSES(canon_MAXIFY_iB4100);
 
 #endif

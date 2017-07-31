@@ -18,6 +18,7 @@
 
 #export STP_MODULE_PATH = $(top_builddir)/src/main/.libs:$(top_builddir)/src/main
 #export STP_DATA_PATH = $(top_srcdir)/src/xml
+
 VPATH = @srcdir@
 am__is_gnu_make = test -n '$(MAKEFILE_LIST)' && test -n '$(MAKELEVEL)'
 am__make_running_with_option = \
@@ -83,9 +84,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/scripts/global.mk $(srcdir)/Makefile.in \
-	$(srcdir)/Makefile.am $(srcdir)/mkgitlog.in compile \
-	config.guess config.rpath config.sub depcomp install-sh \
-	missing ylwrap ltmain.sh
+	$(srcdir)/Makefile.am $(srcdir)/mkgitlog.in \
+	$(srcdir)/gversion.in compile config.guess config.rpath \
+	config.sub depcomp install-sh missing ylwrap ltmain.sh
 subdir = scripts
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
@@ -102,8 +103,9 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = mkgitlog
+CONFIG_CLEAN_FILES = mkgitlog gversion
 CONFIG_CLEAN_VPATH_FILES =
+SCRIPTS = $(noinst_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -139,9 +141,11 @@ BZIP2 = @BZIP2@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+COMPRESS = @COMPRESS@
 CONVERT = @CONVERT@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
+CSUF = @CSUF@
 CUPS_CFLAGS = @CUPS_CFLAGS@
 CUPS_CONFIG = @CUPS_CONFIG@
 CUPS_LIBS = @CUPS_LIBS@
@@ -200,6 +204,7 @@ GUTENPRINT_MICRO_VERSION = @GUTENPRINT_MICRO_VERSION@
 GUTENPRINT_MINOR_VERSION = @GUTENPRINT_MINOR_VERSION@
 GUTENPRINT_RELEASE_VERSION = @GUTENPRINT_RELEASE_VERSION@
 GUTENPRINT_VERSION = @GUTENPRINT_VERSION@
+GZIP = @GZIP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -225,6 +230,7 @@ LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
 LIPO = @LIPO@
 LN_S = @LN_S@
+LRZIP = @LRZIP@
 LTALLOCA = @LTALLOCA@
 LTLIBICONV = @LTLIBICONV@
 LTLIBINTL = @LTLIBINTL@
@@ -252,6 +258,7 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+PKGROOT = @PKGROOT@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
@@ -260,6 +267,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 RELEASE_DATE = @RELEASE_DATE@
 RM = @RM@
+RZIP = @RZIP@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -272,6 +280,7 @@ VERSION = @VERSION@
 WHICH_PPDS = @WHICH_PPDS@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
+XZ = @XZ@
 YACC = @YACC@
 YFLAGS = @YFLAGS@
 abs_builddir = @abs_builddir@
@@ -347,8 +356,10 @@ GUTENPRINTUI_LIBS = $(top_builddir)/src/gutenprintui/libgutenprintui.la
 EXTRA_DIST = \
 	autogen.sh \
 	global.mk \
-	mkgitlog
+	mkgitlog \
+	gversion
 
+noinst_SCRIPTS = gversion
 MAINTAINERCLEANFILES = \
 	Makefile.in \
 	mkgitlog
@@ -388,6 +399,8 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 mkgitlog: $(top_builddir)/config.status $(srcdir)/mkgitlog.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+gversion: $(top_builddir)/config.status $(srcdir)/gversion.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 mostlyclean-libtool:
@@ -434,7 +447,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(SCRIPTS)
 installdirs:
 install: install-am
 install-exec: install-exec-am

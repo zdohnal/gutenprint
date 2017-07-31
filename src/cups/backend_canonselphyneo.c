@@ -41,7 +41,7 @@
 
 /* Exported */
 #define USB_VID_CANON        0x04a9
-#define USB_PID_CANON_CP820  XXX
+#define USB_PID_CANON_CP820  0x327b
 #define USB_PID_CANON_CP910  0x327a
 #define USB_PID_CANON_CP1000 0x32ae
 #define USB_PID_CANON_CP1200 0x32b1
@@ -58,7 +58,7 @@ struct selphyneo_readback {
 	uint8_t data[12];
 } __attribute((packed));
 
-/* Private data stucture */
+/* Private data structure */
 struct selphyneo_ctx {
 	struct libusb_device_handle *dev;
 	uint8_t endp_up;
@@ -97,6 +97,8 @@ static char *selphyneo_errors(uint8_t err)
 		return "Paper Feed";
 	case 0x03:
 		return "No Paper";
+	case 0x06:
+		return "Ink Cassette Empty";
 	case 0x07:
 		return "No Ink";
 	case 0x09:
@@ -152,7 +154,7 @@ static void *selphyneo_init(void)
 
 extern struct dyesub_backend selphyneo_backend;
 
-static void selphyneo_attach(void *vctx, struct libusb_device_handle *dev, 
+static void selphyneo_attach(void *vctx, struct libusb_device_handle *dev,
 				  uint8_t endp_up, uint8_t endp_down, uint8_t jobid)
 {
 	struct selphyneo_ctx *ctx = vctx;
@@ -195,7 +197,7 @@ static int selphyneo_read_parse(void *vctx, int data_fd)
 	if (i != sizeof(hdr)) {
 		if (i == 0)
 			return CUPS_BACKEND_CANCEL;
-		ERROR("Read failed (%d/%d)\n", 
+		ERROR("Read failed (%d/%d)\n",
 		      i, (int)sizeof(hdr));
 		perror("ERROR: Read failed");
 		return CUPS_BACKEND_FAILED;
@@ -213,19 +215,19 @@ static int selphyneo_read_parse(void *vctx, int data_fd)
 		      hdr.data[10], le32_to_cpu(hdr.cols), le32_to_cpu(hdr.rows));
 		return CUPS_BACKEND_CANCEL;
 	}
-	
+
 	/* Allocate a buffer */
 	ctx->datalen = 0;
 	ctx->databuf = malloc(remain + sizeof(hdr));
 	if (!ctx->databuf) {
 		ERROR("Memory allocation failure!\n");
 		return CUPS_BACKEND_FAILED;
-	}				
+	}
 
 	/* Store the read-in header */
 	memcpy(ctx->databuf, &hdr, sizeof(hdr));
 	ctx->datalen += sizeof(hdr);
-	
+
 	/* Read in data */
 	while (remain > 0) {
 		i = read(data_fd, ctx->databuf + ctx->datalen, remain);
@@ -241,7 +243,7 @@ static int selphyneo_read_parse(void *vctx, int data_fd)
 static int selphyneo_main_loop(void *vctx, int copies) {
 	struct selphyneo_ctx *ctx = vctx;
 	struct selphyneo_readback rdback;
-	
+
 	int ret, num;
 
 	/* Read in the printer status to clear last state */
@@ -259,13 +261,13 @@ static int selphyneo_main_loop(void *vctx, int copies) {
 
 	ATTR("marker-types=ribbonWax\n");
 
-top:	
+top:
 	INFO("Waiting for printer idle\n");
 
 	do {
 		ret = read_data(ctx->dev, ctx->endp_up,
 				(uint8_t*) &rdback, sizeof(rdback), &num);
-		
+
 		if (ret < 0)
 			return CUPS_BACKEND_FAILED;
 
@@ -292,7 +294,7 @@ top:
 
 	ATTR("marker-levels=%d\n", -3); /* ie Unknown but OK */
 
-	INFO("Sending spool data\n");	
+	INFO("Sending spool data\n");
 	/* Send the data over in 256K chunks */
 	{
 		int chunk = 256*1024;
@@ -316,7 +318,7 @@ top:
 	do {
 		ret = read_data(ctx->dev, ctx->endp_up,
 				(uint8_t*) &rdback, sizeof(rdback), &num);
-		
+
 		if (ret < 0)
 			return CUPS_BACKEND_FAILED;
 
@@ -372,7 +374,7 @@ static int selphyneo_cmdline_arg(void *vctx, int argc, char **argv)
 		GETOPT_PROCESS_GLOBAL
 		case 'R':
 			selphyneo_send_reset(ctx);
-			break;			
+			break;
 		}
 
 		if (j) return j;
@@ -388,7 +390,7 @@ static void selphyneo_cmdline(void)
 
 struct dyesub_backend canonselphyneo_backend = {
 	.name = "Canon SELPHY CPneo",
-	.version = "0.06",
+	.version = "0.08",
 	.uri_prefix = "canonselphyneo",
 	.cmdline_usage = selphyneo_cmdline,
 	.cmdline_arg = selphyneo_cmdline_arg,
@@ -398,7 +400,7 @@ struct dyesub_backend canonselphyneo_backend = {
 	.read_parse = selphyneo_read_parse,
 	.main_loop = selphyneo_main_loop,
 	.devices = {
-//	{ USB_VID_CANON, USB_PID_CANON_CP820, P_CP910, ""},
+	{ USB_VID_CANON, USB_PID_CANON_CP820, P_CP910, ""},
 	{ USB_VID_CANON, USB_PID_CANON_CP910, P_CP910, ""},
 	{ USB_VID_CANON, USB_PID_CANON_CP1000, P_CP910, ""},
 	{ USB_VID_CANON, USB_PID_CANON_CP1200, P_CP910, ""},
@@ -421,7 +423,7 @@ struct dyesub_backend canonselphyneo_backend = {
   32-byte header:
 
   0f 00 00 40 00 00 00 00  00 00 00 00 00 00 01 00
-  01 00 TT 00 00 00 00 00  XX XX XX XX YY YY YY YY
+  01 00 TT 00 00 00 00 ZZ  XX XX XX XX YY YY YY YY
 
                            cols (le32) rows (le32)
         50                 e0 04       50 07          1248 * 1872  (P)
@@ -432,19 +434,17 @@ struct dyesub_backend canonselphyneo_backend = {
      == 4c  (L)
      == 43  (C)
 
+  ZZ == 00  Y'CbCr data follows
+     == 01  CMY    data follows
+
   Followed by three planes of image data.
 
   P == 7008800  == 2336256 * 3 + 32 (1872*1248)
   L == 5087264  == 1695744 * 3 + 32 (1472*1152)
   C == 2180384  == 726784 * 3 + 32  (1088*668)
 
-  It is worth mentioning that the image payload is Y'CbCr rather than the
-  traditional YMC (or even BGR) of other dyseubs.  Our best guess is that
-  we need to use the JPEG coefficients, although we realistically have
-  no way of confirming this.
-
-  It is hoped that the printers do support YMC data, but as of yet we
-  have no way of determining if this is possible.
+  It is worth mentioning that the Y'CbCr image data is surmised to use the
+  JPEG coefficients, although we realistically have no way of confirming this.
 
   Other questions:
 
@@ -474,7 +474,7 @@ struct dyesub_backend canonselphyneo_backend = {
 
  ZZ == Media?
 
-   01  
+   01
    10
    11
     ^-- Ribbon
@@ -487,5 +487,19 @@ struct dyesub_backend canonselphyneo_backend = {
 Also, the first time a readback happens after plugging in the printer:
 
 34 44 35 31  01 00 01 00  01 00 45 00      "4D51" ...??
+
+
+** ** ** ** This is what windows sends if you print over the network:
+
+00 00 00 00 40 00 00 00  02 00 00 00 00 00 04 00  Header [unknown]
+00 00 02 00 00 00 00 00  00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+
+00 00 01 00 HH HH HH HH  02 00 00 00 PP PP PP PP  Header2 [unknown] PP == payload len, HH == payload + header2 len [ie + 3 ]
+CC CC CC CC RR RR RR RR  00 00 00 00 LL LL LL LL  CC == cols, RR == rows, LL == plane len (ie RR * CC)
+L2 L2 L2 L2                                       L2 == LL * 2, apparently.
+
+[ ..followed by three planes of LL bytes, totalling PP bytes.. ]
 
 */

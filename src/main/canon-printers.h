@@ -586,7 +586,7 @@ static const canon_cap_t canon_model_capabilities[] =
     &canon_MULTIPASS_MP150_slotlist,
     CANON_CAP_STD0|CANON_CAP_I|CANON_CAP_px|CANON_CAP_rr,0,
     2,0,
-    0, /* Upper/Lower Cassette option */    
+    0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_iP2700,
     &canon_BJC_S900_modelist,
     &canon_BJC_S800_paperlist,
@@ -2123,7 +2123,7 @@ static const canon_cap_t canon_model_capabilities[] =
     INCH(17/2), INCH(23),       /* max paper width and height */ /* from MacOSX driver */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_MULTIPASS_MP530_slotlist,
-    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_I|CANON_CAP_P|CANON_CAP_r|CANON_CAP_BORDERLESS,0x64,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_DUPLEX|CANON_CAP_I|CANON_CAP_P|CANON_CAP_r|CANON_CAP_BORDERLESS,0x64,
     3,4, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_iP4200,  /*features */
@@ -2246,7 +2246,7 @@ static const canon_cap_t canon_model_capabilities[] =
     3,4, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_iP4200,  /*features */
-    &canon_MULTIPASS_MP640_modelist,
+    &canon_MULTIPASS_MP630_modelist,
     &canon_MULTIPASS_MP630_paperlist,
     &canon_MULTIPASS_MP630_modeuselist,
     NULL,
@@ -2959,12 +2959,11 @@ static const canon_cap_t canon_model_capabilities[] =
     iP4500_channel_order
   },
   { /* Canon PIXMA MG3600 */
-    /* no support for Esc (s and ESC (u commands yet for duplex */
     "PIXMA MG3600", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height */ /* unconfirmed */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_PIXMA_MG2100_slotlist,
-    CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_px|CANON_CAP_I|CANON_CAP_P|CANON_CAP_T|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u|CANON_CAP_px|CANON_CAP_I|CANON_CAP_P|CANON_CAP_T|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
     3,9, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_MG3500,  /* features: also uses CAP_T */
@@ -3062,12 +3061,11 @@ static const canon_cap_t canon_model_capabilities[] =
     iP4500_channel_order
   },
   { /* Canon PIXMA MG5600 */
-    /* no support for Esc (s and ESC (u commands yet for duplex */
     "PIXMA MG5600", 3,          /*model, model_id*/
     INCH(17/2), INCH(14),       /* max paper width and height */ /* not confirmed yet */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_MULTIPASS_MX7600_slotlist,
-    CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_px|CANON_CAP_v|CANON_CAP_I|CANON_CAP_P|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u|CANON_CAP_px|CANON_CAP_v|CANON_CAP_I|CANON_CAP_P|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
     3,9, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_MG5600,
@@ -3080,12 +3078,12 @@ static const canon_cap_t canon_model_capabilities[] =
     iP4500_channel_order
   },
   { /* Canon PIXMA MG5700 */
-    /* no support for Esc (s and ESC (u commands yet for duplex */
+    /* TESTING ESC (s */
     "PIXMA MG5700", 3,          /*model, model_id*/
     INCH(17/2), INCH(14),       /* max paper width and height */ /* not confirmed yet */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_MULTIPASS_MX7600_slotlist,
-    CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_px|CANON_CAP_v|CANON_CAP_w|CANON_CAP_I|CANON_CAP_P|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u|CANON_CAP_px|CANON_CAP_v|CANON_CAP_w|CANON_CAP_I|CANON_CAP_P|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
     3,9, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_MG5600,
@@ -3223,7 +3221,7 @@ static const canon_cap_t canon_model_capabilities[] =
     &canon_PIXMA_MG5200_slotlist,
     CANON_CAP_STD0|CANON_CAP_DUPLEX|CANON_CAP_px|CANON_CAP_r|CANON_CAP_rr|CANON_CAP_I|CANON_CAP_P|CANON_CAP_XML|CANON_CAP_BORDERLESS,0x64,
     3,6, /* ESC (l and (P command lengths */
-    0, /* Upper/Lower Cassette option */    
+    0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_iP2700,  /* features */
     &canon_PIXMA_MG8100_modelist,
     &canon_PIXMA_MG6100_paperlist,
@@ -3403,7 +3401,7 @@ static const canon_cap_t canon_model_capabilities[] =
     NULL,
     NULL,
     iP4500_channel_order
-  },    
+  },
   { /* Canon MULTIPASS MX510 --- with XML */
     "PIXMA MX510", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height */ /* from linux driver v3.70 */
@@ -3642,6 +3640,30 @@ static const canon_cap_t canon_model_capabilities[] =
     NULL,
     iP4500_channel_order
   },
+  { /* Canon MULTIPASS E470 --- with XML */
+    /* ESC (y command unknown so far, left out for now.
+       Appears for some parameter combinations, not for others
+       Seems to depend on size of media, as well as margin/flap orientation.
+       e.g. Legal, B5, Envelopes not, but Letter, A4, KG, 5x7, square5x5 have it.
+       For envelopes, long side left or short side top no, but long side right or short bottom have it.
+    */
+    /* ESC (P difference for Envelope media compared to E460 */
+    "PIXMA E470", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height assumed */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MULTIPASS_MP250_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_T|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML,0,
+    2,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5300,
+    &canon_PIXMA_P200_modelist,
+    &canon_MULTIPASS_E400_paperlist,
+    &canon_MULTIPASS_E400_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
   { /* Canon MULTIPASS E480 --- with XML */
     "PIXMA E480", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height assumed */
@@ -3658,7 +3680,7 @@ static const canon_cap_t canon_model_capabilities[] =
     NULL,
     NULL,
     iP4500_channel_order
-  },  
+  },
   { /* Canon MULTIPASS E500 --- with XML */
     "PIXMA E500", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height */ /* from linux driver v3.60 */
@@ -3744,6 +3766,109 @@ static const canon_cap_t canon_model_capabilities[] =
     NULL,
     iP4500_channel_order
   },
+  { /* Canon PIXMA E3100 --- with XML, borderless */
+    "PIXMA E3100", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MULTIPASS_MP250_slotlist, /* these models only have a rear tray. Also uses CAP_T */
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_T|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    2,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5300,  /*features */
+    &canon_PIXMA_E3100_modelist,
+    &canon_PIXMA_E3100_paperlist,
+    &canon_PIXMA_E3100_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
+  { /* Canon PIXMA TS5000 --- with XML, borderless */
+    "PIXMA TS5000", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MULTIPASS_MP250_slotlist, /* these models only have a rear tray. */
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5600,  /*features */
+    &canon_PIXMA_TS5000_modelist,
+    &canon_PIXMA_TS5000_paperlist,
+    &canon_PIXMA_TS5000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
+  { /* Canon PIXMA TS6000 --- with XML, borderless */
+    "PIXMA TS6000", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_PIXMA_TS6000_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u|CANON_CAP_BORDERLESS,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5600,  /*features */
+    &canon_PIXMA_TS6000_modelist,
+    &canon_PIXMA_TS5000_paperlist,
+    &canon_PIXMA_TS6000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
+  { /* Canon PIXMA TS8000 --- with XML, borderless */
+    "PIXMA TS8000", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_PIXMA_TS8000_slotlist, /* uses ESC (r 0x68 command for CD tray only */
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u|CANON_CAP_r|CANON_CAP_rr|CANON_CAP_BORDERLESS,0,/* only Esc (r with CD media, so leave 0 here */
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5600,  /*features */
+    &canon_PIXMA_TS8000_modelist,
+    &canon_PIXMA_TS8000_paperlist,
+    &canon_PIXMA_TS8000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
+  { /* Canon PIXMA G1000 --- with XML */
+    "PIXMA G1000", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height assumed */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MULTIPASS_MP250_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5300,
+    &canon_PIXMA_G1000_modelist,
+    &canon_PIXMA_G1000_paperlist,
+    &canon_PIXMA_G1000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order /* CMYK */
+  },
+  { /* Canon PIXMA G4000 --- with XML */
+    /* Uses Esc (y command, unknown use, left out for now */
+    "PIXMA G4000", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height assumed */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MULTIPASS_MP250_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_BORDERLESS,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5600,
+    &canon_PIXMA_G1000_modelist,
+    &canon_PIXMA_G1000_paperlist,
+    &canon_PIXMA_G1000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order /* CMYK */
+  },
   { /* Canon PIXMA P200 --- with XML */
     "PIXMA P200", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height assumed */
@@ -3762,18 +3887,34 @@ static const canon_cap_t canon_model_capabilities[] =
     iP4500_channel_order
   },
   { /* Canon MAXIFY iB4000 --- with XML */
-    /* no support for Esc (s and ESC (u commands yet for duplex */
     "MAXIFY iB4000", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height assumed */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_MAXIFY_iB4000_slotlist,
-    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_DUPLEX,0,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u,0,
     3,9, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_MG5300, /*features*/
     &canon_MAXIFY_iB4000_modelist,
     &canon_MAXIFY_iB4000_paperlist,
     &canon_MAXIFY_iB4000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
+  { /* Canon MAXIFY iB4100 --- with XML */
+    "MAXIFY iB4100", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height assumed */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MAXIFY_iB4000_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5300, /*features*/
+    &canon_MAXIFY_iB4100_modelist,
+    &canon_MAXIFY_iB4100_paperlist,
+    &canon_MAXIFY_iB4100_modeuselist,
     NULL,
     NULL,
     NULL,
@@ -3781,12 +3922,11 @@ static const canon_cap_t canon_model_capabilities[] =
   },
   { /* Canon MAXIFY MB2000 --- with XML */
     /* Same: MB5000 */
-    /* no support for Esc (s and ESC (u commands yet for duplex */
     "MAXIFY MB2000", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height assumed */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_MULTIPASS_MX7600_slotlist,
-    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_DUPLEX,0,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u,0,
     3,9, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_MG5300, /*features*/
@@ -3798,20 +3938,55 @@ static const canon_cap_t canon_model_capabilities[] =
     NULL,
     iP4500_channel_order
   },
+    { /* Canon MAXIFY MB2100 --- with XML */
+      /* Same MB5100 */
+    "MAXIFY MB2100", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height assumed */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MULTIPASS_MX7600_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5300, /*features*/
+    &canon_MAXIFY_iB4100_modelist,
+    &canon_MAXIFY_iB4100_paperlist,
+    &canon_MAXIFY_iB4100_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
   { /* Canon MAXIFY MB2300 --- with XML */
     /* Same: MB5300 */
-    /* no support for Esc (s and ESC (u commands yet for duplex */
     "MAXIFY MB2300", 3,          /*model, model_id*/
     INCH(17/2), 1917,       /* max paper width and height assumed */
     10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
     &canon_MAXIFY_iB4000_slotlist,
-    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_DUPLEX,0,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s|CANON_CAP_u,0,
     3,9, /* ESC (l and (P command lengths */
     0, /* Upper/Lower Cassette option */
     control_cmd_PIXMA_MG5300, /*features*/
     &canon_MAXIFY_iB4000_modelist,
     &canon_MAXIFY_iB4000_paperlist,
     &canon_MAXIFY_iB4000_modeuselist,
+    NULL,
+    NULL,
+    NULL,
+    iP4500_channel_order
+  },
+  { /* Canon MAXIFY MB2700 --- with XML */
+    /* Same MB5400 */
+    "MAXIFY MB2700", 3,          /*model, model_id*/
+    INCH(17/2), 1917,       /* max paper width and height assumed */
+    10, 10, 9, 15,    /*border_left, border_right, border_top, border_bottom */
+    &canon_MAXIFY_iB4000_slotlist,
+    CANON_CAP_STD0|CANON_CAP_px|CANON_CAP_P|CANON_CAP_I|CANON_CAP_v|CANON_CAP_w|CANON_CAP_XML|CANON_CAP_DUPLEX|CANON_CAP_s,0,
+    3,9, /* ESC (l and (P command lengths */
+    0, /* Upper/Lower Cassette option */
+    control_cmd_PIXMA_MG5300, /*features*/
+    &canon_MAXIFY_iB4100_modelist,
+    &canon_MAXIFY_iB4100_paperlist,
+    &canon_MAXIFY_iB4100_modeuselist,
     NULL,
     NULL,
     NULL,
@@ -3820,4 +3995,3 @@ static const canon_cap_t canon_model_capabilities[] =
 };
 
 #endif
-

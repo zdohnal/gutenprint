@@ -1,7 +1,7 @@
 /*
  *   CUPS Backend common code
  *
- *   Copyright (c) 2007-2016 Solomon Peachy <pizza@shaftnet.org>
+ *   Copyright (c) 2007-2017 Solomon Peachy <pizza@shaftnet.org>
  *
  *   The latest version of this program can be found at:
  *
@@ -27,7 +27,7 @@
 
 #include "backend_common.h"
 
-#define BACKEND_VERSION "0.70G"
+#define BACKEND_VERSION "0.71G"
 #ifndef URI_PREFIX
 #error "Must Define URI_PREFIX"
 #endif
@@ -168,7 +168,7 @@ static int parse1284_data(const char *device_id, struct deviceid_dict* dict)
 			break;
 	}
 	return num;
-};
+}
 
 static char *dict_find(const char *key, int dlen, struct deviceid_dict* dict)
 {
@@ -226,7 +226,7 @@ done:
 	return ret;
 }
 
-int send_data(struct libusb_device_handle *dev, uint8_t endp, 
+int send_data(struct libusb_device_handle *dev, uint8_t endp,
 	      uint8_t *buf, int len)
 {
 	int num = 0;
@@ -312,7 +312,7 @@ static char *url_encode(char *str) {
 	}
 
 	while (*pstr) {
-		if (isalnum(*pstr) || *pstr == '-' || *pstr == '_' || *pstr == '.' || *pstr == '~') 
+		if (isalnum(*pstr) || *pstr == '-' || *pstr == '_' || *pstr == '.' || *pstr == '~')
 			*pbuf++ = *pstr;
 		else if (*pstr == ' ')
 			*pbuf++ = '+';
@@ -368,7 +368,7 @@ static int print_scan_output(struct libusb_device *device,
 	char *ieee_id = NULL;
 	int i;
 
-	uint8_t endp_up = 0, endp_down = 0;
+	uint8_t endp_up, endp_down;
 
 	DEBUG("Probing VID: %04X PID: %04x\n", desc->idVendor, desc->idProduct);
 
@@ -392,6 +392,7 @@ static int print_scan_output(struct libusb_device *device,
 	}
 
 	/* Find the endpoints */
+	endp_up = endp_down = 0;
 	for (i = 0 ; i < config->interface[iface].altsetting[altset].bNumEndpoints ; i++) {
 		if ((config->interface[iface].altsetting[altset].endpoint[i].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) == LIBUSB_TRANSFER_TYPE_BULK) {
 			if (config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress & LIBUSB_ENDPOINT_IN)
@@ -403,7 +404,7 @@ static int print_scan_output(struct libusb_device *device,
 			break;
 	}
 
-	/* Query IEEE1284 info only if it's a PRINTER class */	
+	/* Query IEEE1284 info only if it's a PRINTER class */
 	if (desc->bDeviceClass == LIBUSB_CLASS_PRINTER ||
 	    (desc->bDeviceClass == LIBUSB_CLASS_PER_INTERFACE &&
 	     config->interface[iface].altsetting[altset].bInterfaceClass == LIBUSB_CLASS_PRINTER)) {
@@ -428,7 +429,7 @@ static int print_scan_output(struct libusb_device *device,
 	}
 	if (!manuf || !strlen(manuf)) {  /* Last-ditch */
 		if (manuf) free(manuf);
-		manuf = url_encode("Unknown");
+		manuf = url_encode("Unknown"); // XXX use USB VID?
 	}
 
 	/* Look up model number */
@@ -445,7 +446,7 @@ static int print_scan_output(struct libusb_device *device,
 
 	if (!product || !strlen(product)) { /* Last-ditch */
 		if (!product) free(product);
-		product = url_encode("Unknown");
+		product = url_encode("Unknown"); // XXX Use USB PID?
 	}
 
 	/* Look up description */
@@ -496,7 +497,7 @@ static int print_scan_output(struct libusb_device *device,
 		if (serial) free(serial);
 		WARNING("**** THIS PRINTER DOES NOT REPORT A SERIAL NUMBER!\n");
 		WARNING("**** If you intend to use multiple printers of this type, you\n");
-		WARNING("**** must only plug one in at a time or unexpected behaivor will occur!\n");
+		WARNING("**** must only plug one in at a time or unexpected behavior will occur!\n");
 		serial = strdup("NONE_UNKNOWN");
 	}
 
@@ -512,7 +513,7 @@ static int print_scan_output(struct libusb_device *device,
 		strncpy(buf + k, product, sizeof(buf)-k);
 
 		fprintf(stdout, "direct %s://%s?serial=%s&backend=%s \"%s\" \"%s\" \"%s\" \"\"\n",
-			prefix, buf, serial, backend->uri_prefix, 
+			prefix, buf, serial, backend->uri_prefix,
 			descr, descr,
 			ieee_id? ieee_id : "");
 	}
@@ -570,7 +571,7 @@ extern struct dyesub_backend cw01_backend;
 
 static struct dyesub_backend *backends[] = {
 	&canonselphy_backend,
-	&canonselphyneo_backend,	
+	&canonselphyneo_backend,
 	&kodak6800_backend,
 	&kodak605_backend,
 	&kodak1400_backend,
@@ -581,7 +582,7 @@ static struct dyesub_backend *backends[] = {
 	&updr150_backend,
 	&mitsu70x_backend,
 	&mitsu9550_backend,
-	&mitsup95d_backend,	
+	&mitsup95d_backend,
 	&dnpds40_backend,
 	&cw01_backend,
 	NULL,
@@ -662,7 +663,7 @@ static struct dyesub_backend *find_backend(char *uri_prefix)
 void print_license_blurb(void)
 {
 	const char *license = "\n\
-Copyright 2007-2016 Solomon Peachy <pizza AT shaftnet DOT org>\n\
+Copyright 2007-2017 Solomon Peachy <pizza AT shaftnet DOT org>\n\
 \n\
 This program is free software; you can redistribute it and/or modify it\n\
 under the terms of the GNU General Public License as published by the Free\n\
@@ -750,8 +751,7 @@ int main (int argc, char **argv)
 	struct dyesub_backend *backend = NULL;
 	void * backend_ctx = NULL;
 
-	uint8_t endp_up = 0;
-	uint8_t endp_down = 0;
+	uint8_t endp_up, endp_down;
 
 	int iface = 0; // XXX loop through interfaces
 	int altset = 0; // XXX loop through altsetting
@@ -933,6 +933,7 @@ int main (int argc, char **argv)
 		goto done_close;
 	}
 
+	endp_up = endp_down = 0;
 	for (i = 0 ; i < config->interface[iface].altsetting[altset].bNumEndpoints ; i++) {
 		if ((config->interface[iface].altsetting[altset].endpoint[i].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) == LIBUSB_TRANSFER_TYPE_BULK) {
 			if (config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress & LIBUSB_ENDPOINT_IN)
@@ -941,7 +942,7 @@ int main (int argc, char **argv)
 				endp_down = config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress;
 		}
 		if (endp_up && endp_down)
-			break;		
+			break;
 	}
 
 	if (config)
@@ -1015,7 +1016,8 @@ newpage:
 		goto done_claimed;
 
 	/* Log the completed page */
-	PAGE("%d %d\n", current_page, copies);
+	if (!uri)
+		PAGE("%d %d\n", current_page, copies);
 
 	/* Since we have no way of telling if there's more data remaining
 	   to be read (without actually trying to read it), always assume
@@ -1026,7 +1028,8 @@ done_multiple:
 	close(data_fd);
 
 	/* Done printing, log the total number of pages */
-	PAGE("total %d\n", current_page * copies);
+	if (!uri)
+		PAGE("total %d\n", current_page * copies);
 	ret = CUPS_BACKEND_OK;
 
 done_claimed:

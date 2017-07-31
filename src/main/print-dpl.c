@@ -6,7 +6,7 @@
  *	Robert Krawitz (rlk@alum.mit.edu) and
  *      Dave Hill (dave@minnie.demon.co.uk)
  *
- *   Copyright 2016 FIXME
+ *   Copyright 2016 Steve Letter (sletter1@yahoo.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -167,7 +167,7 @@ static const dpl_cap_t dpl_model_capabilities[] = {
   {10020,			/* I Class Mark II 600 DPI */
    4 * 72, 99 * 72,		/* Max paper size */
    1, 1,			/* Min paper size */
-   /* for future use 
+   /* for future use
       DPL_RES_150_150 | DPL_RES_203_203 | DPL_RES_300_300 | DPL_RES_600_600, */
    DPL_RES_300_300 | DPL_RES_600_600,	/* Resolutions */
    DPL_RES_600_600,
@@ -286,6 +286,193 @@ static const dpl_cap_t dpl_model_capabilities[] = {
    'A',
    'E',
    },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10031,                       /* H4212 */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,             /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'W',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10032,                       /* H4212X */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,             /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'W',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10033,                       /* H4310 */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_150_150 | DPL_RES_300_300,   /* Resolutions */
+   DPL_RES_300_300,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'S',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10034,                       /* H4310X */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_150_150 | DPL_RES_300_300,   /* Resolutions */
+   DPL_RES_300_300,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'S',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10035,                       /* H4408 */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_400_400 | DPL_RES_203_203,   /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'O',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'G',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10036,                       /* H4606 */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_300_300 | DPL_RES_600_600,   /* Resolutions */
+   DPL_RES_600_600,             /* Max Resolution */
+   DPL_RES_300_300,             /* Resolution Adjust */
+   'K',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'G',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10037,                       /* H4606X */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_300_300 | DPL_RES_600_600,   /* Resolutions */
+   DPL_RES_600_600,             /* Max Resolution */
+   DPL_RES_300_300,             /* Resolution Adjust */
+   'K',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'G',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10038,                       /* H6210 */
+   6 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,             /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'S',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10039,                       /* H6210X */
+   6 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,             /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'S',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10040,                       /* H6212 */
+   6 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,             /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'W',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10041,                       /* H6212X */
+   6 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,             /* Resolutions */
+   DPL_RES_203_203,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'W',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10042,                       /* H6308 */
+   6 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_150_150 | DPL_RES_300_300,   /* Resolutions */
+   DPL_RES_300_300,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'O',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'G',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10043,                       /* H6310X */
+   6 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_150_150 | DPL_RES_300_300,   /* Resolutions */
+   DPL_RES_300_300,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'S',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'O',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10044,                       /* H8308 */
+   8.5 * 72, 99 * 72,           /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_150_150 | DPL_RES_300_300,   /* Resolutions */
+   DPL_RES_300_300,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'O',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'G',                         /* Default IPS */
+   },
+/* Datamax-O'Neil Thermal DPL printers */
+  {10045,                       /* H8308X */
+   8.5 * 72, 99 * 72,           /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_150_150 | DPL_RES_300_300,   /* Resolutions */
+   DPL_RES_300_300,             /* Max Resolution */
+   DPL_RES_203_203,             /* Resolution Adjust */
+   'O',                         /* Maximum IPS */
+   'C',                         /* Minimum IPS */
+   'G',                         /* Default IPS */
+   },
+/* Honeywell Thermal DPL printers */
+  {10046,                       /* RP2 */
+   2 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,     /* Resolutions */
+   DPL_RES_203_203,
+   DPL_RES_203_203,
+   'I',
+   'A',
+   'E',
+   },
+/* Honeywell Thermal DPL printers */
+  {10047,                       /* RP4 */
+   4 * 72, 99 * 72,             /* Max paper size */
+   1, 1,                        /* Min paper size */
+   DPL_RES_203_203,     /* Resolutions */
+   DPL_RES_203_203,
+   DPL_RES_203_203,
+   'I',
+   'A',
+   'E',
+   },
 };
 
 static const stp_parameter_t the_parameters[] = {
@@ -305,12 +492,13 @@ static const stp_parameter_t the_parameters[] = {
     STP_PARAMETER_TYPE_STRING_LIST, STP_PARAMETER_CLASS_CORE,
     STP_PARAMETER_LEVEL_BASIC, 1, 1, STP_CHANNEL_NONE, 1, 0
   },
-#ifdef FIXME
+#ifdef FIXME  /* Orientation not available for graphics, need
+               * rotation routine in this driver */
   {
    "Orientation", N_("Orientation"), "Color=No,Category=Basic Printer Setup",
    N_("Orientation, Portrait, Landscape, Upside Down, Seascape"),
    STP_PARAMETER_TYPE_STRING_LIST, STP_PARAMETER_CLASS_FEATURE,
-   STP_PARAMETER_LEVEL_BASIC, 1, 1, STP_CHANNEL_NONE, 1, 0,
+   STP_PARAMETER_LEVEL_BASIC, 1, 1, STP_CHANNEL_NONE, 1, 0
    },
 #endif
   {
@@ -563,7 +751,7 @@ dpl_papersize_valid (const stp_papersize_t * pt, int model)
 
 /*
  * We are allowed custom paper sizes. Check that the size is within
- * limits.  Check that the name contains d-o if this is the 
+ * limits.  Check that the name contains d-o if this is the
  * Datamax O'Neil label printer and not custom paper
  */
 
@@ -665,8 +853,6 @@ dpl_parameters (const stp_vars_t * v, const char *name,
   else if (strcmp (name, "Resolution") == 0)
     {
       description->bounds.str = stp_string_list_create ();
-      stp_string_list_add_string (description->bounds.str, "None",
-				  _("Default"));
       description->deflt.str =
 	dpl_val_to_string (caps->max_resolution, dpl_resolutions,
 			   NUM_RESOLUTIONS);
@@ -1111,7 +1297,7 @@ dpl_do_print (stp_vars_t * v, stp_image_t * image)
     }
 
   stp_puts ("\r\002L\r", v);	/* enter Label Formatting mode */
-  multiplier = dpl_get_multiplier (v);	/* dot multiplyer */
+  multiplier = dpl_get_multiplier (v);	/* dot multiplier */
   stp_zprintf (v, "D%1i%1i\r", multiplier, multiplier);
   stp_puts ("R0000\r", v);	/* 0 offset, offset handled below */
   stp_puts ("A2\r", v);		/* transparent mode */

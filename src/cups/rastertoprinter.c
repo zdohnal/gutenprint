@@ -636,8 +636,8 @@ purge_excess_data(cups_image_t *cups)
   char *buffer = stp_malloc(cups->header.cupsBytesPerLine);
   if (buffer)
     {
-      if (! suppress_messages)
-	fprintf(stderr, "DEBUG: Gutenprint: Purging %d row%s\n",
+      if (! suppress_messages && ! suppress_verbose_messages )
+	fprintf(stderr, "DEBUG2: Gutenprint: Purging %d row%s\n",
 		cups->header.cupsHeight - cups->row,
 		((cups->header.cupsHeight - cups->row) == 1 ? "" : "s"));
       while (cups->row < cups->header.cupsHeight)
@@ -1298,6 +1298,7 @@ main(int  argc,				/* I - Number of command-line arguments */
   stp_set_float_parameter(default_settings, "AppGamma", 1.0);
   set_all_options(default_settings, options, num_options, ppd);
 
+  cupsFreeOptions(num_options, options);
   ppdClose(ppd);
 
   cups.ras = cupsRasterOpen(fd, CUPS_RASTER_READ);
@@ -1335,7 +1336,7 @@ main(int  argc,				/* I - Number of command-line arguments */
       if (! suppress_messages)
 	{
 	  fprintf(stderr, "DEBUG: Gutenprint: ================ Printing page %d      ================\n", cups.page + 1);
-	  fprintf(stderr, "PAGE: %d 1\n", cups.page + 1);
+	  fprintf(stderr, "PAGE: %d %d\n", cups.page + 1, cups.header.NumCopies);
 	}
       v = initialize_page(&cups, default_settings, page_size_name);
 #ifdef ENABLE_CUPS_LOAD_SAVE_OPTIONS

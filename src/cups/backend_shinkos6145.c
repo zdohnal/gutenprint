@@ -32,7 +32,7 @@
  *
  *   You must still adhere to all other terms of the license to this program
  *   (ie GPLv2) and the license of the libS6145ImageProcess library.
- * 
+ *
  */
 
 #include <stdio.h>
@@ -55,7 +55,7 @@
 #if defined(USE_DLOPEN)
 #define WITH_DYNAMIC
 #include <dlfcn.h>
-#define DL_INIT() do {} while(0)    
+#define DL_INIT() do {} while(0)
 #define DL_OPEN(__x) dlopen(__x, RTLD_NOW)
 #define DL_SYM(__x, __y) dlsym(__x, __y)
 #define DL_CLOSE(__x) dlclose(__x)
@@ -130,7 +130,7 @@ struct s6145_printjob_hdr {
 	uint32_t unk19;
 	uint32_t unk20;
 
-	uint32_t unk21;
+	uint32_t ext_flags;  /* 0x00 in the official headers. 0x01 to mark inout data as YMC planar */
 } __attribute__((packed));
 
 /* "Image Correction Parameter" File */
@@ -151,8 +151,8 @@ struct tankParamTable {
 	uint32_t fstOutConductivity;
 	uint32_t plusMaxEnergy;
 	uint32_t minusMaxEnergy;
-	uint32_t plusMaxEnergyPreRead;	
-	uint32_t minusMaxEnergyPreRead;	
+	uint32_t plusMaxEnergyPreRead;
+	uint32_t minusMaxEnergyPreRead;
 	uint32_t preReadLevelDiff;
 	uint32_t rsvd[14]; // null?
 } __attribute__((packed));
@@ -259,7 +259,7 @@ struct shinkos6145_correctionparam {
 	uint8_t  pad[3948];       // @12436, null.
 } __attribute__((packed)); /* 16384 bytes */
 
-/* Private data stucture */
+/* Private data structure */
 struct shinkos6145_ctx {
 	struct libusb_device_handle *dev;
 	uint8_t endp_up;
@@ -276,6 +276,7 @@ struct shinkos6145_ctx {
 	size_t datalen;
 
 	uint8_t ribbon_type;
+	uint8_t input_ymc;
 
 	uint16_t last_donor;
 	uint16_t last_remain;
@@ -335,7 +336,7 @@ static char *cmd_names(uint16_t v) {
 	case S6145_CMD_GETPARAM:
 		return "Get Parameter";
 	case S6145_CMD_GETSERIAL:
-		return "Get Serial Number";		
+		return "Get Serial Number";
 	case S6145_CMD_PRINTSTAT:
 		return "Get Print ID Status";
 	case S6145_CMD_EXTCOUNTER:
@@ -365,7 +366,7 @@ static char *cmd_names(uint16_t v) {
 	default:
 		return "Unknown Command";
 	}
-};
+}
 
 struct s6145_print_cmd {
 	struct s6145_cmd_hdr hdr;
@@ -378,7 +379,7 @@ struct s6145_print_cmd {
 	uint8_t  reserved[6];
 	uint8_t  unk_1;      /* Brava 21 sets this to 1 */
 	uint8_t  method;
-	uint8_t  image_avg;	
+	uint8_t  image_avg;
 } __attribute__((packed));
 
 #define PRINT_MODE_NO_OC        0x01
@@ -406,7 +407,7 @@ static char *print_modes(uint8_t v) {
 #define PRINT_METHOD_DOUBLE  0x08
 #define PRINT_METHOD_NOTRIM  0x80
 
-static char *print_methods (uint8_t v) { 
+static char *print_methods (uint8_t v) {
 	switch (v & 0xf) {
 	case PRINT_METHOD_STD:
 		return "Standard";
@@ -699,7 +700,7 @@ static char *error_codes(uint8_t major, uint8_t minor)
 			return "Paper Jam: Precut Print Position Off";
 		case 0x20:
 			return "Paper Jam: Precut Print Position On";
-			
+
 		case 0x29:
 			return "Paper Jam: Printing Paper Top On";
 		case 0x2A:
@@ -780,7 +781,7 @@ static char *error_str(uint8_t v) {
 	case ERROR_COMMS_TIMEOUT:
 		return "Main Communication Timeout";
 	case ERROR_MAINT_NEEDED:
-		return "Maintainence Needed";
+		return "Maintenance Needed";
 	case ERROR_BAD_COMMAND:
 		return "Inappropriate Command";
 	case ERROR_PRINTER:
@@ -1035,7 +1036,7 @@ static const char *print_ribbons (uint8_t v) {
 		return "6x8";
 	case RIBBON_6x9:
 		return "6x9";
-	// XXX 89x??? rubbons.		
+	// XXX 89x??? rubbons.
 	default:
 		return "Unknown";
 	}
@@ -1147,7 +1148,7 @@ static int s6145_do_cmd(struct shinkos6145_ctx *ctx,
 	}
 
 	if (resp->result != RESULT_SUCCESS) {
-		INFO("Printer Status:  %02x (%s)\n", resp->status, 
+		INFO("Printer Status:  %02x (%s)\n", resp->status,
 		     status_str(resp->status));
 		INFO(" Result: 0x%02x  Error: 0x%02x (0x%02x/0x%02x = %s)\n",
 		     resp->result, resp->error, resp->printer_major,
@@ -1194,7 +1195,7 @@ static int get_status(struct shinkos6145_ctx *ctx)
 	INFO(" Print Counts:\n");
 	INFO("\tSince Paper Changed:\t%08u\n", le32_to_cpu(resp->count_paper));
 	INFO("\tLifetime:\t\t%08u\n", le32_to_cpu(resp->count_lifetime));
-	INFO("\tMaintainence:\t\t%08u\n", le32_to_cpu(resp->count_maint));
+	INFO("\tMaintenance:\t\t%08u\n", le32_to_cpu(resp->count_maint));
 	INFO("\tPrint Head:\t\t%08u\n", le32_to_cpu(resp->count_head));
 	INFO(" Cutter Actuations:\t%08u\n", le32_to_cpu(resp->count_cutter));
 	INFO(" Ribbon Remaining:\t%08u\n", le32_to_cpu(resp->count_ribbon_left));
@@ -1229,9 +1230,9 @@ static int get_status(struct shinkos6145_ctx *ctx)
 		return -1;
 
 	INFO("Lifetime Distance:     %08u inches\n", le32_to_cpu(resp2->lifetime_distance));
-	INFO("Maintainence Distance: %08u inches\n", le32_to_cpu(resp2->maint_distance));
+	INFO("Maintenance Distance:  %08u inches\n", le32_to_cpu(resp2->maint_distance));
 	INFO("Head Distance:         %08u inches\n", le32_to_cpu(resp2->head_distance));
-	
+
 	/* Query various params */
 	if(ctx->type == P_SHINKO_S6145D) {
 		if ((ret = get_param(ctx, PARAM_REGION_CODE, &val))) {
@@ -1279,7 +1280,7 @@ static int get_status(struct shinkos6145_ctx *ctx)
 		val = 240; // default?
 
 	INFO("Sleep delay:         %u minutes\n", val);
-		
+
 	return 0;
 }
 
@@ -1309,7 +1310,7 @@ static int get_fwinfo(struct shinkos6145_ctx *ctx)
 
 		if (le16_to_cpu(resp->hdr.payload_len) != (sizeof(struct s6145_fwinfo_resp) - sizeof(struct s6145_status_hdr)))
 			continue;
-		
+
 		INFO(" %s\t ver %02x.%02x\n", fwinfo_targets(i),
 		     resp->major, resp->minor);
 #if 0
@@ -1340,7 +1341,7 @@ static int get_errorlog(struct shinkos6145_ctx *ctx)
 		ERROR("Failed to execute %s command\n", cmd_names(cmd.cmd));
 		return ret;
 	}
-	
+
 	if (le16_to_cpu(resp->hdr.payload_len) != (sizeof(struct s6145_errorlog_resp) - sizeof(struct s6145_status_hdr)))
 		return -2;
 
@@ -1348,13 +1349,13 @@ static int get_errorlog(struct shinkos6145_ctx *ctx)
 	for (i = 0 ; i < resp->count ; i++) {
 		INFO(" %02d: @ %08u prints : 0x%02x/0x%02x (%s)\n", i,
 		     le32_to_cpu(resp->items[i].print_counter),
-		     resp->items[i].major, resp->items[i].minor, 
+		     resp->items[i].major, resp->items[i].minor,
 		     error_codes(resp->items[i].major, resp->items[i].minor));
 	}
 	return 0;
 }
 
-static int get_mediainfo(struct shinkos6145_ctx *ctx) 
+static int get_mediainfo(struct shinkos6145_ctx *ctx)
 {
 	struct s6145_cmd_hdr cmd;
 	struct s6145_mediainfo_resp *resp = (struct s6145_mediainfo_resp *) rdbuf;
@@ -1412,7 +1413,7 @@ static int cancel_job(struct shinkos6145_ctx *ctx, char *str)
 	return 0;
 }
 
-static int flash_led(struct shinkos6145_ctx *ctx) 
+static int flash_led(struct shinkos6145_ctx *ctx)
 {
 	struct s6145_cmd_hdr cmd;
 	struct s6145_status_hdr *resp = (struct s6145_status_hdr *) rdbuf;
@@ -1464,7 +1465,7 @@ static int get_param(struct shinkos6145_ctx *ctx, int target, uint32_t *param)
 
 	/* Set up command */
 	cmd.target = target;
-	
+
 	cmd.hdr.cmd = cpu_to_le16(S6145_CMD_GETPARAM);
 	cmd.hdr.len = cpu_to_le16(sizeof(struct s6145_getparam_cmd)-sizeof(cmd.hdr));
 
@@ -1528,7 +1529,7 @@ static int shinkos6145_dump_corrdata(struct shinkos6145_ctx *ctx, char *fname)
 	free(ctx->corrdata);
 	ctx->corrdata = NULL;
 	ctx->corrdatalen = 0;
-	
+
 	return ret;
 }
 
@@ -1562,7 +1563,7 @@ static int shinkos6145_dump_eeprom(struct shinkos6145_ctx *ctx, char *fname)
 	return ret;
 }
 
-static int get_tonecurve(struct shinkos6145_ctx *ctx, int type, char *fname) 
+static int get_tonecurve(struct shinkos6145_ctx *ctx, int type, char *fname)
 {
 	struct s6145_readtone_cmd  cmd;
 	struct s6145_readtone_resp *resp = (struct s6145_readtone_resp *) rdbuf;
@@ -1636,7 +1637,7 @@ done:
 	return ret;
 }
 
-static int set_tonecurve(struct shinkos6145_ctx *ctx, int target, char *fname) 
+static int set_tonecurve(struct shinkos6145_ctx *ctx, int target, char *fname)
 {
 	struct s6145_update_cmd cmd;
 	struct s6145_status_hdr *resp = (struct s6145_status_hdr *) rdbuf;
@@ -1737,7 +1738,7 @@ static int shinkos6145_get_imagecorr(struct shinkos6145_ctx *ctx)
 
 	while (total < ctx->corrdatalen) {
 		struct s6145_imagecorr_data data;
-		
+
 		ret = read_data(ctx->dev, ctx->endp_up, (uint8_t *) &data,
 				sizeof(data),
 				&num);
@@ -1805,7 +1806,7 @@ static void shinkos6145_cmdline(void)
 	DEBUG("\t\t[ -m ]           # Query media\n");
 	DEBUG("\t\t[ -q filename ]  # Extract eeprom data\n");
 	DEBUG("\t\t[ -Q filename ]  # Extract image correction params\n");
-	DEBUG("\t\t[ -r ]           # Reset user/NV tone curve\n");	
+	DEBUG("\t\t[ -r ]           # Reset user/NV tone curve\n");
 	DEBUG("\t\t[ -R ]           # Reset printer to factory defaults\n");
 	DEBUG("\t\t[ -s ]           # Query status\n");
 	DEBUG("\t\t[ -X jobid ]     # Abort a printjob\n");
@@ -1904,11 +1905,11 @@ static void *shinkos6145_init(void)
 	memset(ctx, 0, sizeof(struct shinkos6145_ctx));
 
 	DL_INIT();
-	
+
 	return ctx;
 }
 
-static void shinkos6145_attach(void *vctx, struct libusb_device_handle *dev, 
+static void shinkos6145_attach(void *vctx, struct libusb_device_handle *dev,
 			       uint8_t endp_up, uint8_t endp_down, uint8_t jobid)
 {
 	struct shinkos6145_ctx *ctx = vctx;
@@ -1921,12 +1922,12 @@ static void shinkos6145_attach(void *vctx, struct libusb_device_handle *dev,
 
 	device = libusb_get_device(dev);
 	libusb_get_device_descriptor(device, &desc);
-	
+
 	ctx->type = lookup_printer_type(&shinkos6145_backend,
-					desc.idVendor, desc.idProduct);	
+					desc.idVendor, desc.idProduct);
 
 	/* Attempt to open the library */
-#if defined(WITH_DYNAMIC)	
+#if defined(WITH_DYNAMIC)
 	INFO("Attempting to load image processing library\n");
 	ctx->dl_handle = DL_OPEN(LIB_NAME); /* Try the Sinfonia one first */
 	if (!ctx->dl_handle)
@@ -1971,7 +1972,7 @@ static void shinkos6145_teardown(void *vctx) {
 		DL_CLOSE(ctx->dl_handle);
 
 	DL_EXIT();
-	
+
 	free(ctx);
 }
 
@@ -2004,7 +2005,7 @@ static void lib6145_process_image(uint8_t *src, uint16_t *dest,
 	pad_r = pad_l + le16_to_cpu(corrdata->width);
 	out = 0;
 	in = 0;
-	
+
 	/* Convert YMC 8-bit to 16-bit, and pad appropriately to full stripe */
 	for (row = 0 ; row < le16_to_cpu(corrdata->height) ; row++) {
 		for (col = 0 ; col < row_lim; col++) {
@@ -2044,7 +2045,7 @@ static void lib6145_process_image(uint8_t *src, uint16_t *dest,
 			}
 			dest[out++] = val;
 		}
-	}	
+	}
 
 	/* Generate lamination plane, if desired */
 	if (oc_mode > PRINT_MODE_NO_OC) {
@@ -2096,6 +2097,12 @@ static int shinkos6145_read_parse(void *vctx, int data_fd) {
 
 		return CUPS_BACKEND_CANCEL;
 	}
+
+	/* Extended spool format to re-purpose an unused header field.
+	   When bit 0 is set, this tells the backend that the data is
+	   already in planar YMC format (vs packed RGB) so we don't need
+	   to do the conversion ourselves.  Saves some processing overhead */
+	ctx->input_ymc = le32_to_cpu(ctx->hdr.ext_flags) & 0x01;
 
 	if (ctx->databuf) {
 		free(ctx->databuf);
@@ -2155,7 +2162,7 @@ static int shinkos6145_main_loop(void *vctx, int copies) {
 
 	struct s6145_cmd_hdr *cmd = (struct s6145_cmd_hdr *) cmdbuf;
 	struct s6145_print_cmd *print = (struct s6145_print_cmd *) cmdbuf;
-	struct s6145_status_resp *sts = (struct s6145_status_resp *) rdbuf; 
+	struct s6145_status_resp *sts = (struct s6145_status_resp *) rdbuf;
 	struct s6145_mediainfo_resp *media = (struct s6145_mediainfo_resp *) rdbuf;
 
 	uint32_t cur_mode;
@@ -2233,7 +2240,7 @@ top:
 
 		memcpy(rdbuf2, rdbuf, READBACK_LEN);
 
-		INFO("Printer Status: 0x%02x (%s)\n", 
+		INFO("Printer Status: 0x%02x (%s)\n",
 		     sts->hdr.status, status_str(sts->hdr.status));
 
 		/* Guessimate a percentage for the remaining media */
@@ -2264,8 +2271,8 @@ top:
 	case S_IDLE:
 		INFO("Waiting for printer idle\n");
 		/* If either bank is free, continue */
-		if (sts->bank1_status == BANK_STATUS_FREE || 
-		    sts->bank2_status == BANK_STATUS_FREE) 
+		if (sts->bank1_status == BANK_STATUS_FREE ||
+		    sts->bank2_status == BANK_STATUS_FREE)
 			state = S_PRINTER_READY_CMD;
 
 		break;
@@ -2280,7 +2287,7 @@ top:
 
 		if (cur_mode != oc_mode) {
 			/* If cur_mode is not the same as desired oc_mode,
-			   change it -- but we have to wait until the printer 
+			   change it -- but we have to wait until the printer
 			   is COMPLETELY idle */
 			if (sts->bank1_status != BANK_STATUS_FREE ||
 			    sts->bank2_status != BANK_STATUS_FREE) {
@@ -2320,13 +2327,11 @@ top:
 		ctx->corrdata->width = cpu_to_le16(le32_to_cpu(ctx->hdr.columns));
 		ctx->corrdata->height = cpu_to_le16(le32_to_cpu(ctx->hdr.rows));
 
-		/* Convert packed RGB to planar YMC */
-		// XXX would it make more sense to have Gutenprint generate
-		// planar YMC data as an extension of the spooler format?
-		{
+		/* Convert packed RGB to planar YMC if necessary */
+		if (!ctx->input_ymc) {
 			int planelen = le16_to_cpu(ctx->corrdata->width) * le16_to_cpu(ctx->corrdata->height);
 			uint8_t *databuf3 = malloc(ctx->datalen);
-				 
+
 			for (i = 0 ; i < planelen ; i++) {
 				uint8_t r, g, b;
 				r = ctx->databuf[3*i];
@@ -2352,7 +2357,7 @@ top:
 		} else {
 			WARNING("Utilizing fallback internal image processing code\n");
 			WARNING(" *** Output quality will be poor! *** \n");
-		
+
 			lib6145_calc_avg(ctx, le32_to_cpu(ctx->hdr.columns), le32_to_cpu(ctx->hdr.rows));
 			lib6145_process_image(ctx->databuf, databuf2, ctx->corrdata, oc_mode);
 		}
@@ -2426,16 +2431,16 @@ top:
 
 	if (state != S_FINISHED)
 		goto top;
-	
+
 	INFO("Print complete\n");
 
 	return CUPS_BACKEND_OK;
 
 printer_error:
 	ERROR("Printer reported error: %#x (%s) status: %#x (%s) -> %#x.%#x (%s)\n",
-	      sts->hdr.error, 
+	      sts->hdr.error,
 	      error_str(sts->hdr.error),
-	      sts->hdr.status, 
+	      sts->hdr.status,
 	      status_str(sts->hdr.status),
 	      sts->hdr.printer_major, sts->hdr.printer_minor,
 	      error_codes(sts->hdr.printer_major, sts->hdr.printer_minor));
@@ -2483,7 +2488,7 @@ static int shinkos6145_query_serno(struct libusb_device_handle *dev, uint8_t end
 
 struct dyesub_backend shinkos6145_backend = {
 	.name = "Shinko/Sinfonia CHC-S6145",
-	.version = "0.21",
+	.version = "0.22",
 	.uri_prefix = "shinkos6145",
 	.cmdline_usage = shinkos6145_cmdline,
 	.cmdline_arg = shinkos6145_cmdline_arg,
@@ -2495,7 +2500,7 @@ struct dyesub_backend shinkos6145_backend = {
 	.query_serno = shinkos6145_query_serno,
 	.devices = {
 	{ USB_VID_SHINKO, USB_PID_SHINKO_S6145, P_SHINKO_S6145, ""},
-	{ USB_VID_SHINKO, USB_PID_SHINKO_S6145D, P_SHINKO_S6145D, ""},	
+	{ USB_VID_SHINKO, USB_PID_SHINKO_S6145D, P_SHINKO_S6145D, ""},
 	{ 0, 0, 0, ""}
 	}
 };

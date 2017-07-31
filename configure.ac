@@ -1,15 +1,15 @@
 dnl Copyright (C) 2001-2004 Roger Leigh
-dnl 
+dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
 dnl the Free Software Foundation; either version 2, or (at your option)
 dnl any later version.
-dnl 
+dnl
 dnl This program is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 dnl GNU General Public License for more details.
-dnl 
+dnl
 dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
@@ -41,7 +41,7 @@ dnl
 dnl The .soname version is (GCI - GBA).GBA
 dnl Example: if GCI is 3 and GBA is 1, the version is 2.1.  To get 2.2,
 dnl GCI would be incremented to 4 and GBA to 2.
-dnl 
+dnl
 dnl *NOTE*: due to an error preparing 5.2.8, we must skip over major version of
 dnl 3 (that is, GCI - GBA) and go directly from 2 to 4.
 dnl
@@ -76,10 +76,10 @@ dnl
 pushdef([GUTENPRINT_NAME],              [gutenprint])
 pushdef([GUTENPRINT_MAJOR_VERSION],     [5])
 pushdef([GUTENPRINT_MINOR_VERSION],     [2])
-pushdef([GUTENPRINT_MICRO_VERSION],     [12])
+pushdef([GUTENPRINT_MICRO_VERSION],     [13])
 pushdef([GUTENPRINT_EXTRA_VERSION],     [])
-pushdef([GUTENPRINT_CURRENT_INTERFACE], [7])
-pushdef([GUTENPRINT_BINARY_AGE],        [5])
+pushdef([GUTENPRINT_CURRENT_INTERFACE], [8])
+pushdef([GUTENPRINT_BINARY_AGE],        [6])
 pushdef([GUTENPRINTUI2_CURRENT_INTERFACE], [1])
 pushdef([GUTENPRINTUI2_BINARY_AGE],        [0])
 pushdef([GUTENPRINT_VERSION], GUTENPRINT_MAJOR_VERSION.GUTENPRINT_MINOR_VERSION.GUTENPRINT_MICRO_VERSION[]GUTENPRINT_EXTRA_VERSION)
@@ -372,7 +372,7 @@ if test x$enable_static = xyes; then
   else
     AC_MSG_ERROR([--disable-static must be used with --with-modules])
   fi
-fi 
+fi
 
 STP_ARG_ENABLE([debug],
                [turn on debugging in build],
@@ -403,13 +403,13 @@ dnl   [EXTRA_LIBREADLINE_DEPS]=""
 dnl fi
 
 # libusb-1.0 (For CUPS backends, but only bother if CUPS is enabled)
-if test "x$BUILD_CUPS" = "xyes" ; then
+AS_IF([test "x$BUILD_CUPS" = "xyes"], [
  PKG_CHECK_MODULES([LIBUSB], [libusb-1.0],
                    [HAVE_LIBUSB=yes
                     BUILD_LIBUSB_BACKENDS=yes],
                    [HAVE_LIBUSB=no
 	            BUILD_LIBUSB_BACKENDS=no])
-fi
+])
 
 AC_PATH_TOOL([GIMPTOOL2_CHECK], [gimptool-2.0 gimptool])
 if test -z "${GIMPTOOL2_CHECK}" ; then
@@ -440,9 +440,9 @@ PKG_CHECK_MODULES([GTK2], [gtk+-2.0],
                   [HAVE_GTK2=no
 	           BUILD_LIBGUTENPRINTUI2=no])
 # Require both gimptool and pkg-config to succeed
-if test x$BUILD_GIMP2 = xyes; then
+AS_IF([test "x$BUILD_GIMP2" = "xyes"], [
   PKG_CHECK_MODULES([GIMP2], [gimpui-2.0], [BUILD_GIMP2=yes], [BUILD_GIMP2=no])
-fi
+])
 
 STP_ARG_WITH([gimp2],
              [build GIMP 2.x Print plugin],
@@ -515,7 +515,6 @@ AC_PROG_LN_S
 AM_PROG_LEX
 AC_PROG_YACC
 AC_PROG_MKDIR_P
-AC_PATH_PROG([BZIP2], [bzip2])
 AC_PATH_PROG([TEST], [test])
 AC_PATH_PROG([TRUE], [true])
 AC_PATH_PROG([FIND], [find])
@@ -569,6 +568,30 @@ if test x${USE_MAINTAINER_MODE} = xyes ; then
     AC_MSG_WARN([HTML developer's guide cannot be regenerated!])
   fi
 fi
+
+AC_PATH_PROG([XZ], [xz])
+AC_PATH_PROG([GZIP], [gzip])
+AC_PATH_PROG([BZIP2], [bzip2])
+AC_PATH_PROG([LRZIP], [lrzip])
+AC_PATH_PROG([RZIP], [rzip])
+if test x${LRZIP} != x ; then
+  COMPRESS="${LRZIP} -z -q"
+  CSUF=.lrz
+elif test x${XZ} != x ; then
+  COMPRESS="${XZ} -e -9"
+  CSUF=.xz
+elif test x${RZIP} != x ; then
+  COMPRESS="${RZIP} -9"
+  CSUF=.rz
+elif test x${BZIP2} != x ; then
+  COMPRESS="${BZIP2} -9"
+  CSUF=.bz2
+else
+  COMPRESS="${GZIP} -9"
+  CSUF=.gz
+fi
+AC_SUBST(COMPRESS)
+AC_SUBST(CSUF)
 
 dnl CUPS checks
 STP_CUPS_PROGS
@@ -888,7 +911,7 @@ if test x$USE_LTDL = xtrue; then
     GUTENPRINT_LIBDEPS="${GUTENPRINT_LIBDEPS} ${LTDL_LIBS}"
     gutenprint_libdeps="${gutenprint_libdeps} ${LTDL_LIBS}"
   fi
-  LIBUSB_BACKEND_LIBDEPS="${LIBUSB_BACKEND_LIBDEPS} ${LTDL_LIBS}"  
+  LIBUSB_BACKEND_LIBDEPS="${LIBUSB_BACKEND_LIBDEPS} ${LTDL_LIBS}"
   AC_DEFINE(USE_LTDL, "1", [Use GNU libltdl as module loader])
   AC_MSG_RESULT([ltdl])
 elif test x$USE_DLOPEN = xtrue; then
@@ -898,7 +921,7 @@ elif test x$USE_DLOPEN = xtrue; then
     MODULE="true"
     AC_DEFINE(MODULE, "1", [Build a modular libgutenprint])
     GUTENPRINT_LIBDEPS="${GUTENPRINT_LIBDEPS} ${DLOPEN_LIBS}"
-    gutenprint_libdeps="${gutenprint_libdeps} ${DLOPEN_LIBS}"    
+    gutenprint_libdeps="${gutenprint_libdeps} ${DLOPEN_LIBS}"
   fi
   LIBUSB_BACKEND_LIBDEPS="${LIBUSB_BACKEND_LIBDEPS} ${DLOPEN_LIBS}"
   AC_DEFINE(USE_DLOPEN, "1", [Use libdl/dlopen as module loader])
@@ -943,6 +966,8 @@ STP_RELEASE_DATE
 dnl Some versions of make get very grouchy about $(RM)
 RM='rm'
 
+PKGROOT=`pwd`
+
 dnl Substitutions
 AC_SUBST(prefix)
 AC_SUBST(exec_prefix)
@@ -986,6 +1011,7 @@ AC_SUBST(BUILD_CUPS_PPDS)
 AC_SUBST(GUTENPRINT_BASE_VERSION)
 AC_SUBST(GUTENPRINT_RELEASE_VERSION)
 AC_SUBST(LIBUSB_BACKEND_LIBDEPS)
+AC_SUBST(PKGROOT)
 
 dnl Optional architecture options to be applied after all autoconf tests
 dnl are done...
@@ -1023,8 +1049,6 @@ AC_CONFIG_FILES([src/testpattern/compare-checksums],
                 [chmod +x src/testpattern/compare-checksums])
 AC_CONFIG_FILES([src/testpattern/compress-checksums],
                 [chmod +x src/testpattern/compress-checksums])
-AC_CONFIG_FILES([src/testpattern/uncompress-checksums],
-                [chmod +x src/testpattern/uncompress-checksums])
 AC_CONFIG_FILES([src/cups/test-rastertogutenprint],
                 [chmod +x src/cups/test-rastertogutenprint])
 AC_CONFIG_FILES([src/testpattern/Makefile])
@@ -1046,6 +1070,8 @@ AC_CONFIG_FILES([test/Makefile])
 AC_CONFIG_FILES([scripts/Makefile])
 AC_CONFIG_FILES([scripts/mkgitlog],
 		[chmod +x scripts/mkgitlog])
+AC_CONFIG_FILES([scripts/gversion],
+		[chmod +x scripts/gversion])
 AC_CONFIG_COMMANDS([default], [
 echo
 ],

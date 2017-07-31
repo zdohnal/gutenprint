@@ -1,7 +1,11 @@
 /*
- *   Mitsubishi P95D Monochrome Thermal Photo Printer CUPS backend
+ *   Mitsubishi P93D/P95D Monochrome Thermal Photo Printer CUPS backend
  *
- *   (c) 2016 Solomon Peachy <pizza@shaftnet.org>
+ *   (c) 2016-2017 Solomon Peachy <pizza@shaftnet.org>
+ *
+ *   Development of this backend was sponsored by:
+ *
+ *     A benefactor who wishes to remain anonymous
  *
  *   The latest version of this program can be found at:
  *
@@ -40,24 +44,28 @@
 #include "backend_common.h"
 
 #define USB_VID_MITSU       0x06D3
+#define USB_PID_MITSU_P93D  0x0398
 #define USB_PID_MITSU_P95D  0x3b10
 
-/* Private data stucture */
+/* Private data structure */
 struct mitsup95d_ctx {
 	struct libusb_device_handle *dev;
 	uint8_t endp_up;
 	uint8_t endp_down;
 
+	int type;
+
 	uint8_t mem_clr[4]; // 1b 5a 43 00
 	int mem_clr_present;
 
 	uint8_t hdr[2];  // 1b 51
-	
+
 	uint8_t hdr1[50]; // 1b 57 20 2e ...
 	uint8_t hdr2[50]; // 1b 57 21 2e ...
 	uint8_t hdr3[50]; // 1b 57 22 2e ...
 
-	uint8_t hdr4[36];  // 1b 58 ...
+	uint8_t hdr4[42];  // 1b 58 ...
+	int hdr4_len;      // 36 (P95) or 42 (P93)
 	uint8_t plane[12]; // 1b 5a 74 00 ...
 
 	uint8_t *databuf;
@@ -95,6 +103,8 @@ static void mitsup95d_attach(void *vctx, struct libusb_device_handle *dev,
 	device = libusb_get_device(dev);
 	libusb_get_device_descriptor(device, &desc);
 
+	ctx->type = lookup_printer_type(&mitsup95d_backend,
+					desc.idVendor, desc.idProduct);
 }
 
 static void mitsup95d_teardown(void *vctx) {
@@ -116,7 +126,7 @@ static int mitsup95d_read_parse(void *vctx, int data_fd) {
 	int i;
 	int remain;
 	int ptr_offset;
-	
+
 	if (!ctx)
 		return CUPS_BACKEND_FAILED;
 
@@ -125,25 +135,20 @@ static int mitsup95d_read_parse(void *vctx, int data_fd) {
 		ctx->databuf = NULL;
 	}
 	ctx->mem_clr_present = 0;
-		
+
 top:
 	i = read(data_fd, buf, sizeof(buf));
+
 	if (i == 0)
 		return CUPS_BACKEND_CANCEL;
 	if (i < 0)
 		return CUPS_BACKEND_CANCEL;
-
 	if (buf[0] != 0x1b) {
 		ERROR("malformed data stream\n");
 		return CUPS_BACKEND_CANCEL;
 	}
 
 	switch (buf[1]) {
-	case 0x43: /* Memory Clear */
-		remain = 4;
-		ptr = ctx->mem_clr;
-		ctx->mem_clr_present = 1;
-		break;
 	case 0x50: /* Footer */
 		remain = 2;
 		ptr = ctx->ftr;
@@ -157,12 +162,19 @@ top:
 		ptr = tmphdr;
 		break;
 	case 0x58: /* User Comment */
-		remain = 36;
+		if (ctx->type == P_MITSU_P93D)
+			ctx->hdr4_len = 42;
+		else
+			ctx->hdr4_len = 36;
+		remain = ctx->hdr4_len;
 		ptr = ctx->hdr4;
 		break;
-	case 0x5a: /* Plane header */
-		remain = 12;
-		ptr = ctx->plane;
+	case 0x5a: /* Plane header OR printer reset */
+		// reset memory: 1b 5a 43 ...  [len 04]
+		// plane header: 1b 5a 74 ...  [len 12]
+		// Read in the minimum length, and clean it up later */
+		ptr = tmphdr;
+		remain = 4;
 		break;
 	default:
 		ERROR("Unrecognized command! (%02x %02x)\n", buf[0], buf[1]);
@@ -172,7 +184,7 @@ top:
 	memcpy(ptr, buf, sizeof(buf));
 	remain -= sizeof(buf);
 	ptr_offset = sizeof(buf);
-	
+
 	while (remain) {
 		i = read(data_fd, ptr + ptr_offset, remain);
 		if (i == 0)
@@ -181,8 +193,22 @@ top:
 			return CUPS_BACKEND_CANCEL;
 		remain -= i;
 		ptr_offset += i;
+
+		/* Handle the ambiguous 0x5a block */
+		if (buf[1] == 0x5a && remain == 0) {
+			if (tmphdr[2] == 0x74) { /* plane header */
+				ptr = ctx->plane;
+				remain = 12 - ptr_offset; /* Finish reading */
+			} else if (tmphdr[2] == 0x43) { /* reset memory */
+				ptr = ctx->mem_clr;
+				ctx->mem_clr_present = 1;
+				remain = 4 - ptr_offset;
+			}
+			memcpy(ptr, tmphdr, ptr_offset);
+			buf[1] = 0xff;
+		}
 	}
-	
+
 	if (ptr == tmphdr) {
 		if (tmphdr[3] != 46) {
 			ERROR("Unexpected header chunk: %02x %02x %02x %02x\n",
@@ -239,21 +265,29 @@ static int mitsup95d_main_loop(void *vctx, int copies) {
 	struct mitsup95d_ctx *ctx = vctx;
 	uint8_t querycmd[4] = { 0x1b, 0x72, 0x00, 0x00 };
 	uint8_t queryresp[9];
-	
+
 	int ret;
 	int num;
 
 	if (!ctx)
 		return CUPS_BACKEND_FAILED;
 
+	/* P93D is ... special.  Windows switches to this halfway through
+	   but it seems be okay to use it everywhere */
+	if (ctx->type == P_MITSU_P93D) {
+		querycmd[2] = 0x03;
+	}
+
 	/* Update printjob header to reflect number of requested copies */
 	if (ctx->hdr2[13] != 0xff)
 		ctx->hdr2[13] = copies;
 
-	/* XXX Update unknown header field to match sniffs */
-	if (ctx->hdr1[18] == 0x00)
-		ctx->hdr1[18] = 0x01;
-	
+	if (ctx->type == P_MITSU_P95D) {
+		/* XXX Update unknown header field to match sniffs */
+		if (ctx->hdr1[18] == 0x00)
+			ctx->hdr1[18] = 0x01;
+	}
+
 	INFO("Waiting for printer idle\n");
 
         /* Query Status to make sure printer is idle */
@@ -263,22 +297,35 @@ static int mitsup95d_main_loop(void *vctx, int copies) {
 			return CUPS_BACKEND_FAILED;
 		ret = read_data(ctx->dev, ctx->endp_up,
 				queryresp, sizeof(queryresp), &num);
-		if (num != sizeof(queryresp) || ret < 0) {
+		if (ret < 0)
+			return CUPS_BACKEND_FAILED;
+		if (ctx->type == P_MITSU_P95D && num != 9) {
+			return CUPS_BACKEND_FAILED;
+		} else if (ctx->type == P_MITSU_P93D && num != 8) {
 			return CUPS_BACKEND_FAILED;
 		}
 
-		if (queryresp[5] & 0x40) {
-			ERROR("Printer error %02x\n", queryresp[5]); // XXX decode
-			return CUPS_BACKEND_STOP;
+		if (ctx->type == P_MITSU_P95D) {
+			if (queryresp[5] & 0x40) {
+				ERROR("Printer error %02x\n", queryresp[5]); // XXX decode
+				return CUPS_BACKEND_STOP;
+			}
+			if (queryresp[5] == 0x00)
+				break;
+		} else {
+			if (queryresp[6] == 0x45) {
+				ERROR("Printer error %02x\n", queryresp[7]);
+				return CUPS_BACKEND_STOP;
+			}
+			if (queryresp[6] == 0x30)
+				break;
 		}
-		if (queryresp[5] == 0x00)
-			break;
-		
+
 		sleep(1);
 	} while (1);
 
 	INFO("Sending print job\n");
-	
+
 	/* Send over Memory Clear, if present */
 	if (ctx->mem_clr_present) {
 		if ((ret = send_data(ctx->dev, ctx->endp_down,
@@ -302,7 +349,7 @@ static int mitsup95d_main_loop(void *vctx, int copies) {
 			     ctx->hdr3, sizeof(ctx->hdr3))))
 		return CUPS_BACKEND_FAILED;
 	if ((ret = send_data(ctx->dev, ctx->endp_down,
-			     ctx->hdr4, sizeof(ctx->hdr4))))
+			     ctx->hdr4, ctx->hdr4_len)))
 		return CUPS_BACKEND_FAILED;
 
 	/* Send plane header and image data */
@@ -319,16 +366,38 @@ static int mitsup95d_main_loop(void *vctx, int copies) {
 		return CUPS_BACKEND_FAILED;
 	ret = read_data(ctx->dev, ctx->endp_up,
 			queryresp, sizeof(queryresp), &num);
-	if (num != sizeof(queryresp) || ret < 0) {
+
+	if (ret < 0)
+		return CUPS_BACKEND_FAILED;
+	if (ctx->type == P_MITSU_P95D && num != 9) {
+		return CUPS_BACKEND_FAILED;
+	} else if (ctx->type == P_MITSU_P93D && num != 8) {
 		return CUPS_BACKEND_FAILED;
 	}
+
 	if (queryresp[5] & 0x40) {
 		ERROR("Printer error %02x\n", queryresp[5]); // XXX decode
 		return CUPS_BACKEND_STOP;
 	}
-	if (queryresp[5] != 0x00) {
-		ERROR("Printer not ready (%02x)!\n", queryresp[5]);
-		return CUPS_BACKEND_CANCEL;
+
+	if (ctx->type == P_MITSU_P95D) {
+		if (queryresp[5] & 0x40) {
+			ERROR("Printer error %02x\n", queryresp[5]); // XXX decode
+			return CUPS_BACKEND_STOP;
+		}
+		if (queryresp[5] != 0x00) {
+			ERROR("Printer not ready (%02x)!\n", queryresp[5]);
+			return CUPS_BACKEND_CANCEL;
+		}
+	} else {
+		if (queryresp[6] == 0x45) {
+			ERROR("Printer error %02x\n", queryresp[7]);
+			return CUPS_BACKEND_STOP;
+		}
+		if (queryresp[6] != 0x30) {
+			ERROR("Printer not ready (%02x)!\n", queryresp[6]);
+			return CUPS_BACKEND_CANCEL;
+		}
 	}
 
 	/* Send over Footer */
@@ -341,33 +410,53 @@ static int mitsup95d_main_loop(void *vctx, int copies) {
 	/* Query status until we're done.. */
 	do {
 		sleep(1);
-		
+
 		/* Query Status */
 		if ((ret = send_data(ctx->dev, ctx->endp_down,
 				     querycmd, sizeof(querycmd))))
 			return CUPS_BACKEND_FAILED;
 		ret = read_data(ctx->dev, ctx->endp_up,
 				queryresp, sizeof(queryresp), &num);
-		if (num != sizeof(queryresp) || ret < 0) {
+
+		if (ret < 0)
+			return CUPS_BACKEND_FAILED;
+		if (ctx->type == P_MITSU_P95D && num != 9) {
+			return CUPS_BACKEND_FAILED;
+		} else if (ctx->type == P_MITSU_P93D && num != 8) {
 			return CUPS_BACKEND_FAILED;
 		}
 
-		if (queryresp[5] & 0x40) {
-			ERROR("Printer error %02x\n", queryresp[5]); // XXX decode
-			return CUPS_BACKEND_STOP;
-		}
-		if (queryresp[5] == 0 && queryresp[7] == 0)
-			break;
-
-		if (queryresp[7] > 0) {
-			if (fast_return) {
-				INFO("Fast return mode enabled.\n");
+		if (ctx->type == P_MITSU_P95D) {
+			if (queryresp[5] & 0x40) {
+				ERROR("Printer error %02x\n", queryresp[5]); // XXX decode
+				return CUPS_BACKEND_STOP;
+			}
+			if (queryresp[5] == 0x00)
 				break;
+
+			if (queryresp[7] > 0) {
+				if (fast_return) {
+					INFO("Fast return mode enabled.\n");
+					break;
+				}
+			}
+		} else {
+			if (queryresp[6] == 0x45) {
+				ERROR("Printer error %02x\n", queryresp[7]);
+				return CUPS_BACKEND_STOP;
+			}
+			if (queryresp[6] == 0x30)
+				break;
+			if (queryresp[6] == 0x43 && queryresp[7] > 0) {
+				if (fast_return) {
+					INFO("Fast return mode enabled.\n");
+					break;
+				}
 			}
 		}
 	} while(1);
-	
-	INFO("Print complete\n");	
+
+	INFO("Print complete\n");
 	return CUPS_BACKEND_OK;
 }
 
@@ -392,8 +481,8 @@ static int mitsup95d_cmdline_arg(void *vctx, int argc, char **argv)
 
 /* Exported */
 struct dyesub_backend mitsup95d_backend = {
-	.name = "Mitsubishi P95D",
-	.version = "0.02",
+	.name = "Mitsubishi P93D/P95D",
+	.version = "0.05",
 	.uri_prefix = "mitsup95d",
 	.cmdline_arg = mitsup95d_cmdline_arg,
 	.init = mitsup95d_init,
@@ -402,6 +491,7 @@ struct dyesub_backend mitsup95d_backend = {
 	.read_parse = mitsup95d_read_parse,
 	.main_loop = mitsup95d_main_loop,
 	.devices = {
+	{ USB_VID_MITSU, USB_PID_MITSU_P93D, P_MITSU_P93D, ""},
 	{ USB_VID_MITSU, USB_PID_MITSU_P95D, P_MITSU_P95D, ""},
 	{ 0, 0, 0, ""}
 	}
@@ -409,7 +499,7 @@ struct dyesub_backend mitsup95d_backend = {
 
 /*****************************************************
 
- Mitsubishi P95D Spool Format
+ Mitsubishi P93D/P95D Spool Format
 
    ...All fields are BIG ENDIAN.
 
@@ -423,19 +513,28 @@ struct dyesub_backend mitsup95d_backend = {
 
  PRINT_SETUP
 
-  1b 57 20 2e  00 0a 00 02   00 00 00 00  00 00 CC CC
+  1b 57 20 2e  00 0a 00 ZZ   00 00 00 00  00 00 CC CC
   RR RR XX 00  00 00 00 00   00 00 00 00  00 00 00 00
   00 00 00 00  00 00 00 00   00 00 00 00  00 00 00 00
   00 00
 
-   XX == 01 seen in sniffs, 00 seen in dumps.  Unknown!
+   XX == 01 seen in sniffs, 00 seen in dumps.  Unknown purpose.
+   ZZ == 00 on P93D, 02 on P95D
 
    CC CC = columns, RR RR = rows (print dimensions)
 
  PRINT_OPTIONS
 
+   P95:
 
   1b 57 21 2e  00 4a aa 00   20 TT 00 00  64 NN 00 MM
+  [[ 00 00 00  00 00 00 00   00 00 00 00  00 00 00 00
+  00 ]] 00 00  00 02 00 00   00 00 00 00  00 00 00 00
+  00 XY
+
+   P93:
+
+  1b 57 21 2e  00 4a aa 00   00 TT 00 00  00 NN 00 MM
   [[ 00 00 00  00 00 00 00   00 00 00 00  00 00 00 00
   00 ]] 00 00  00 02 00 00   00 00 00 00  00 00 00 00
   00 XY
@@ -449,19 +548,29 @@ struct dyesub_backend mitsup95d_backend = {
         02 = Date
         03 = DateTime
    [[ .. ]] = actual comment (18 bytes), see below.
+
    TT = media type
+
+         P95D:
+
         00 = Standard
         01 = High Density
         02 = High Glossy
         03 = High Glossy (K95HG)
-   X = media cut length
+
+         P93D:
+
+        00 = High Density
+        01 = High Glossy
+        02 = Standard
+
+   X = media cut length   (P95D ONLY.  P93 is 0)
         4..8  (mm)
    Y = flags
         0x04 = Paper save
         0x03 = Buzzer (3 = high, 2 = low, 0 = off)
 
-
- GAMMA ????
+ GAMMA  (P95)
 
   1b 57 22 2e  00 15 TT 00   00 00 00 00  LL BB CC 00
   [[ 00 00 00  00 00 00 00   00 00 00 00  00 00 00 00
@@ -479,13 +588,35 @@ struct dyesub_backend mitsup95d_backend = {
         01 = Yes
    [[ .. ]] = Gamma table, loaded from LUT on disk.  (skip first 16 bytes)
 
- USER_COMMENT
+ GAMMA  (P93)
+
+  1b 57 22 2e  00 d5 00 00   00 00 00 00  SS 00 LL 00
+  BB 00 CC 00  00 00 00 00   00 00 00 00  00 00 00 00
+  00 00 00 00  00 00 00 00   00 00 00 00  00 00 00 00
+  00 00
+
+   SS = Sharpening (0 = low, 1 = normal, 2 = high)
+   LL = Gamma table
+        00..04  Gamma table 1..5
+   BB = Brightness (signed 8-bit)
+   CC = Contrast (signed 8-bit)
+
+ USER_COMMENT  (P95)
 
   1b 58 [[ 20  20 20 20 20  20 20 20 20  20 20 20 20
   20 20 20 20  20 20 20 20  20 20 20 20  20 20 20 20
   20 20 20 ]]
 
    [[ .. ]] = Actual comment.  34 bytes payload, 0x20 -> 0x7e
+               (Null terminated?)
+
+ USER_COMMENT  (P93)
+
+  1b 58 [[ 20  20 20 20 20  20 20 20 20  20 20 20 20
+  20 20 20 20  20 20 20 20  20 20 20 20  20 20 20 20
+  20 20 20 20  20 20 20 20  20 20 ]]
+
+   [[ .. ]] = Actual comment.  40 bytes payload, 0x20 -> 0x7e
                (Null terminated?)
 
  IMAGE_DATA
@@ -505,7 +636,7 @@ struct dyesub_backend mitsup95d_backend = {
 
  *********************************
 
- Printer Comms:
+ P95D Printer Comms:
 
  STATUS query
 
@@ -524,16 +655,33 @@ struct dyesub_backend mitsup95d_backend = {
     ^
     \--- 0x40 appears to be a flag that indicates error.
 
+ P93D Printer Comms:
+
+ STATUS query
+
+ -> 1b 72 0? 00
+ <- e4 72 0? 00  03 XX YY ZZ
+
+  ? could be 0x00 or 0x03.  Seen both.
+
+Seen:   30 30 30
+        30 43 01   <- 1 copies remaining
+        30 43 00   <- 0 copies remaining
+           ^^
+            \-- 30 == idle, 43 == printing
+
+        30 45 6f  <- door open
+        30 45 50  <- no paper
+
+           45 == error?
  ****************************
 
 UNKNOWNS:
 
  * How multiple images are stacked for printing on a single page
-   (col offset too?  write four, then tell PRINT?)  Is this the mystery 0x01?
- * How to adjust printer sharpness?
+   (col offset too?  write four, then tell PRINT?)
+ * How to adjust P95D printer sharpness?
  * Serial number query (iSerial appears bogus)
  * What "custom gamma" table does to spool file?
 
 */
-
-

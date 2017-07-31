@@ -1,4 +1,4 @@
-Welcome to Gutenprint 5.2.12-pre4, a pre-release of Gutenprint 5.2.12.
+Welcome to Gutenprint 5.2.13, a stable release of Gutenprint 5.2.
 Please read these release notes carefully.
 
 Gutenprint is a suite of printer drivers for UNIX, Linux, and
@@ -20,6 +20,7 @@ These release notes contain the following sections:
 I)    General Requirements
 II)   Critical Upgrade Note
 III)  Changes from Previous Releases
+        * Changes from 5.2.12
         * Changes from 5.2.11
         * Changes from 5.2.10
         * Changes from 5.2.9
@@ -246,6 +247,279 @@ device.  We have determined that the data is in fact written by the
 
 III) MAJOR CHANGES FROM PREVIOUS RELEASES
 
+* Changes from 5.2.12
+
+  1) Critical bugfix
+
+     * Correct mis-defined paper type that collided with standard
+       A4 paper.  This resulted in some Canon and PCL printers
+       mishandling A4 paper.
+
+  2) Added support for the following Epson inkjet printers:
+
+     EPSON Artisan 1430
+     EPSON L210
+
+  3) Improvements to the dye-sublimation driver:
+
+     * Code optimizations in the dye-sublimation driver, resulting
+       in a significant (2x-2.7x) boost in performance.
+
+     * Added support for the following thermal printer:
+
+      Mitsubishi P93DW
+
+     * Enhanced support (and bugfixes) for the following
+       dye-sublimation and thermal printers:
+
+      Canon SELPHY CP820
+      Canon SELPHY CP910
+      Canon SELPHY CP1000
+      Canon SELPHY CP1200
+      Fujifilm ASK-300          [EXPERIMENTAL]
+      Kodak 305
+      Mitsubishi CP-D70DW
+      Mitsubishi CP-D707DW      [EXPERIMENTAL]
+      Mitsubishi CP-D80DW
+      Mitsubishi CP-K60DW-S
+      Mitsubishi P95DW
+
+  4) Improvements to the Gimp plugin
+
+     * Compilation fixes when CUPS is not enabled
+
+     * Fix non-interactive plugin mode
+
+  5) Changes to the Canon driver:
+
+     * Added support for following printer models:
+
+       Canon G1000 series  (EXPERIMENTAL)
+       Canon PIXMA G1000   (EXPERIMENTAL)(*1)
+       Canon PIXMA G1100   (EXPERIMENTAL)(*1)
+       Canon PIXMA G1200   (EXPERIMENTAL)(*1)
+       Canon PIXMA G1400   (EXPERIMENTAL)(*1)
+       Canon PIXMA G1500   (EXPERIMENTAL)(*1)
+       Canon PIXMA G1800   (EXPERIMENTAL)(*1)
+       Canon PIXMA G1900   (EXPERIMENTAL)(*1)
+
+       Canon G2000 series  (EXPERIMENTAL)
+       Canon PIXMA G2000   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2002   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2100   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2200   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2400   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2500   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2600   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2800   (EXPERIMENTAL)(*1)
+       Canon PIXMA G2900   (EXPERIMENTAL)(*1)
+
+       Canon G3000 series  (EXPERIMENTAL)
+       Canon PIXMA G3000   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3100   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3200   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3400   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3500   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3600   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3800   (EXPERIMENTAL)(*1)
+       Canon PIXMA G3900   (EXPERIMENTAL)(*1)
+
+       Canon G4000 series  (EXPERIMENTAL)
+       Canon PIXMA G4000   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4100   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4200   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4400   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4500   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4600   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4800   (EXPERIMENTAL)(*1)
+       Canon PIXMA G4900   (EXPERIMENTAL)(*1)
+
+       Canon MG3000 series (EXPERIMENTAL)
+       Canon PIXMA MG3010  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3020  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3022  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3030  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3040  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3050  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3051  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3052  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3053  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3060  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3070  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3077  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3080  (EXPERIMENTAL)(*1)
+       Canon PIXMA MG3090  (EXPERIMENTAL)(*1)
+
+       Canon E410 series   (EXPERIMENTAL)
+       Canon PIXMA E410    (EXPERIMENTAL)(*1)
+       Canon PIXMA E414    (EXPERIMENTAL)(*1)
+       Canon PIXMA E417    (EXPERIMENTAL)(*1)
+       Canon PIXMA E418    (EXPERIMENTAL)(*1)
+
+       Canon E470 series   (EXPERIMENTAL)
+       Canon PIXMA E470    (EXPERIMENTAL)(*1)
+       Canon PIXMA E471    (EXPERIMENTAL)(*1)
+       Canon PIXMA E474    (EXPERIMENTAL)(*1)
+       Canon PIXMA E477    (EXPERIMENTAL)(*1)
+       Canon PIXMA E478    (EXPERIMENTAL)(*1)
+
+       Canon E3100 series  (EXPERIMENTAL)
+       Canon PIXMA E3170   (EXPERIMENTAL)(*1)
+
+       Canon TS3100 series (EXPERIMENTAL)
+       Canon PIXMA TS3170  (EXPERIMENTAL)(*1)
+
+       Canon TS5000 series (EXPERIMENTAL)
+       Canon PIXMA TS5010  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5020  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5030  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5040  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5050  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5051  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5053  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5055  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5060  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5070  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5080  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS5090  (EXPERIMENTAL)(*1)
+
+       Canon TS6000 series (EXPERIMENTAL)
+       Canon PIXMA TS6010  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6020  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6030  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6040  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6050  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6051  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6052  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6060  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6070  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6080  (EXPERIMENTAL)(*1)
+
+       Canon TS8000 series (EXPERIMENTAL)
+       Canon PIXMA TS8010  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6020  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6030  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6040  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6050  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6051  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6052  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6053  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6060  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6070  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6080  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6090  (EXPERIMENTAL)(*1)
+
+       Canon TS9000 series (EXPERIMENTAL)
+       Canon PIXMA TS9010  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6020  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6030  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6040  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6050  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6055  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6060  (EXPERIMENTAL)(*1)
+       Canon PIXMA TS6080  (EXPERIMENTAL)(*1)
+
+       Canon iB4100 series (EXPERIMENTAL)
+       Canon MAXIFY iB4110 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4120 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4130 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4140 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4150 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4160 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4170 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4180 (EXPERIMENTAL)(*1)
+       Canon MAXIFY iB4190 (EXPERIMENTAL)(*1)
+
+       Canon MB2100 series (EXPERIMENTAL)
+       Canon MAXIFY MB2110 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2120 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2130 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2140 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2150 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2160 (EXPERIMENTAL)(*1)
+
+       Canon MB2700 series (EXPERIMENTAL)
+       Canon MAXIFY MB2710 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2720 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2730 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2740 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2750 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2760 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB2790 (EXPERIMENTAL)(*1)
+
+       Canon MB5100 series (EXPERIMENTAL)
+       Canon MAXIFY MB5110 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5120 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5130 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5140 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5150 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5160 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5170 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5180 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5190 (EXPERIMENTAL)(*1)
+
+       Canon MB5400 series (EXPERIMENTAL)
+       Canon MAXIFY MB5410 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5420 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5430 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5440 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5450 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5460 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5470 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5480 (EXPERIMENTAL)(*1)
+       Canon MAXIFY MB5490 (EXPERIMENTAL)(*1)
+
+       Note 1: Added individual family
+               instances, even though the
+               printer identifies itself
+               by a generic family
+               identification string.
+
+     * Added following models to existing series:
+
+       MG2500 series:
+         Canon PIXMA MG2522
+         Canon PIXMA MG2525
+         Canon PIXMA MG2540S
+         Canon PIXMA MG2545S
+         Canon PIXMA MG2550S
+         Canon PIXMA MG2555S
+
+       iB4000 series:
+         Canon MAXIFY iB4090
+
+     * Removed iP100 (unsupported)
+
+     * Added duplex support to MP530
+
+     * Improved duplex support for the following models:
+
+       MG3600 series
+       MG5600 series
+       MG5700 series
+       MG6600 series
+       MG6800 series
+       iB4000 series
+       MB2000 series
+       MB2300 series
+       MB5000 series
+       MB5300 series
+
+     * Corrected black-only and color-only cartridge support for MP230
+       series
+
+     * Improved printer firmware papersize detection when using
+       automatic paper source selection (Autofeed), by changing paper
+       width from calculated to a constant value for paper sizes known
+       to the driver.
+
+     * Added several resolution modes for Pro9500
+
+  6) Added the Datamax-O'Neil H class series of printers.
+
+  7) Added the two Honeywell printers, RP2 (SAV2) and RP4 (SAV4).
+
+
 * Changes from 5.2.11
 
   1) The Ghostscript IJS driver and Foomatic data generator have been
@@ -293,7 +567,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 	Sinfonia S1245/CE          [experimental]
 	Sinfonia S2145/CS
 	Sinfonia S6145/CS2    [*1]
-	Sinfonia S6245/CE2         [experimental]	
+	Sinfonia S6245/CE2         [experimental]
 	Sony UP-DR150
 	Sony UP-DR200
 
@@ -316,12 +590,12 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 	  Note that without the library, the printer will function but
 	  the output image quality will be quite poor.
 
-     [*2] Optimal quality requires use of an external image processing
-	  library.  Only one option is available:
+     [*2] Printing requires use of an external image processing library.
+	  Only one option is available:
 
 	  * libMitsuD70ImageReProcess -- A reverse-engineered implementation
 	    of the Mitsubishi algorithms, relased under the terms of the GNU
-	    GPLv3+.  Mitsubishi foes not support this in any way.
+	    GPLv3+.  Mitsubishi does not support this in any way.
 	    Unfortunately, at this time it cannot be bundled with Gutenprint.
 
           The backend will attempt to dynamically load the library at
@@ -335,9 +609,9 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
      [*3] The USB PID for the CP820 is unknown at this time,
           so will not be claimed by the improved backend.
 
-  4) Dye-sublimation backend now reports media status via standard 
+  4) Dye-sublimation backend now reports media status via standard
      CUPS marker attributes.  This applies to all models except for:
-     
+
 	Kodak 805 and 1400
 	Sony UP-DR150, UP-DR200, and UP-SL10
 
@@ -423,6 +697,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 
 	Mitsubishi P95DW
 
+
 * Changes from 5.2.10
 
   1) Added support for the following dye sublimation printers:
@@ -443,8 +718,8 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 	Mitsubishi CP-D80DW	  [experimental] [*1]
 	Sinfonia S6145/CS2	  [experimental] [*1]
 
-     [*1] Please note that these models utilize a print engine that 
-	  requires the host system to process the print data using 
+     [*1] Please note that these models utilize a print engine that
+	  requires the host system to process the print data using
 	  unknown algorithms.  Until these algorithms can be determined
 	  and re-implemented, these models are unsuitable for general
 	  use due to very poor output quality.
@@ -474,16 +749,16 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 	Kodak 605
 	Kodak 6800/6850
 	Kodak 1400/805
-	Mitsubishi CP-9550 family 
+	Mitsubishi CP-9550 family
 	Sony UP-DR200
 	Mitsubishi CP-D70DW/D707DW/K60DW-S [experimental] [*1]
 
-     [*1] Please note that these models utilize a print engine that 
-	  requires the host system to process the print data using 
+     [*1] Please note that these models utilize a print engine that
+	  requires the host system to process the print data using
 	  unknown algorithms.  Until these algorithms can be determined
 	  and re-implemented, these models are unsuitable for general
 	  use due to very poor output quality.
-		
+
   3) Added support for the Datamax-O'Neil PCL printers, the Performance
      series (p1115, p1115s, p1120n, p1125, p1725, h8308) and the
      Datamax-O'Neil Workstation printer.
@@ -539,7 +814,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 	Canon iP110 series  (EXPERIMENTAL)
 	Canon PIXMA iP110   (EXPERIMENTAL)(*1)
 	Canon PIXUS iP110   (EXPERIMENTAL)(*1)
-	
+
 	Canon iP2800 series (EXPERIMENTAL)
 	Canon PIXMA iP2810  (EXPERIMENTAL)(*1)
 	Canon PIXMA iP2820  (EXPERIMENTAL)(*1)
@@ -642,7 +917,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 	Canon PIXMA MG5740  (EXPERIMENTAL)(*1)
 	Canon PIXMA MG5750  (EXPERIMENTAL)(*1)
 	Canon PIXMA MG5751  (EXPERIMENTAL)(*1)
-	Canon PIXMA MG5752  (EXPERIMENTAL)(*1)	
+	Canon PIXMA MG5752  (EXPERIMENTAL)(*1)
 	Canon PIXMA MG5753  (EXPERIMENTAL)(*1)
 	Canon PIXMA MG5770  (EXPERIMENTAL)(*1)
 	Canon PIXMA MG5780  (EXPERIMENTAL)(*1)
@@ -926,7 +1201,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
      printers.
 
      A new CUPS backend was added to support USB printers that require a
-     special communications protocol. The backend is called 
+     special communications protocol. The backend is called
      'gutenprint52usb' and requires libusb 1.0 (or newer) in order to build.
 
      The following dye-sublimation printers require this backend in order
@@ -939,7 +1214,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
    	Kodak 6800 Photo Printer
    	Kodak 6850 Photo Printer
 	Kodak 605 Photo Printer
-   	Shinko/Sinfonia CHC-S2145 
+   	Shinko/Sinfonia CHC-S2145
    	Sony UP-DR150  (*1)
         Sony UP-DR200
 	DNP DS40  (*1)
@@ -952,11 +1227,11 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
         Mitsubishi DP-D707DW (EXPERIMENTAL)
 
      *1) Please note that if you were using a Sony UP-DR150, DNP DS40/DS80,
-	 or a Canon SELPHY printer with a previous Gutenprint release, 
-         you will need to remove and re-create your printer queue after 
+	 or a Canon SELPHY printer with a previous Gutenprint release,
+         you will need to remove and re-create your printer queue after
          the upgrade to 5.2.10 is complete.
 
-     For further information about configuration and use of this CUPS 
+     For further information about configuration and use of this CUPS
      backend, please see the README document, section II D.
 
   2) New printers supported in this release:
@@ -1520,7 +1795,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 
        Canon iX7000 series (EXPERIMENTAL)(*1)
        Canon PIXUS iX7000  (EXPERIMENTAL)(*2)
-			   
+
        Canon MX300 series  (EXPERIMENTAL)(*1)
        Canon PIXMA MX308   (EXPERIMENTAL)(*2)
 
@@ -1582,7 +1857,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        Canon PIXMA MX437   (EXPERIMENTAL)(*2)
        Canon PIXMA MX438   (EXPERIMENTAL)(*2)
        Canon PIXMA MX439   (EXPERIMENTAL)(*2)
-			   
+
        Canon MX450 series  (EXPERIMENTAL)
        Canon PIXMA MX451   (EXPERIMENTAL)(*2)
        Canon PIXMA MX452   (EXPERIMENTAL)(*2)
@@ -1620,7 +1895,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        Canon PIXMA MX712   (EXPERIMENTAL)(*2)
        Canon PIXMA MX714   (EXPERIMENTAL)(*2)
        Canon PIXMA MX715   (EXPERIMENTAL)(*2)
-			   
+
        Canon MX720 series  (EXPERIMENTAL)
        Canon PIXMA MX721   (EXPERIMENTAL)(*2)
        Canon PIXMA MX722   (EXPERIMENTAL)(*2)
@@ -1631,11 +1906,11 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 
        Canon MX860 series  (EXPERIMENTAL)(*1)
        Canon PIXUS MX860   (EXPERIMENTAL)(*2)
-       Canon PIXMA MX868   (EXPERIMENTAL)(*2)			   
+       Canon PIXMA MX868   (EXPERIMENTAL)(*2)
 
        Canon MX870 series  (EXPERIMENTAL)(*1)
        Canon PIXUS MX870   (EXPERIMENTAL)(*2)
-       Canon PIXMA MX876   (EXPERIMENTAL)(*2)			   
+       Canon PIXMA MX876   (EXPERIMENTAL)(*2)
 
        Canon MX880 series  (EXPERIMENTAL)(*1)
        Canon PIXMA MX882   (EXPERIMENTAL)(*2)
@@ -1666,14 +1941,14 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        Canon PIXUS MX7600  (EXPERIMENTAL)(*2)
 
        Canon E500 series   (EXPERIMENTAL)(*1)
-			   
+
        Canon E510 series   (EXPERIMENTAL)
        Canon PIXMA E510    (EXPERIMENTAL)(*2)
        Canon PIXMA E518    (EXPERIMENTAL)(*2)
-			   
+
        Canon E600 series   (EXPERIMENTAL)(*1)
        Canon PIXMA E608    (EXPERIMENTAL)(*2)
-			   
+
        Canon E610 series   (EXPERIMENTAL)
        Canon PIXMA E610    (EXPERIMENTAL)(*2)
        Canon PIXMA E618    (EXPERIMENTAL)(*2)
@@ -1706,7 +1981,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
                We have retained support for other media types common
                to recent Canon printers, but it is unconfirmed whether
                the printer firmware will accept these.
-               The lines also lack support for borderless printing 
+               The lines also lack support for borderless printing
                in the Windows driver, and we have not tried to add
                experimental support.
 
@@ -1728,8 +2003,8 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        well as enabling support for more recent printers, it improves support
        for older models as well.
 
-       Please note that if you are using one of these models with a 
-       prior Gutenprint release, you will have to remove and re-create your 
+       Please note that if you are using one of these models with a
+       prior Gutenprint release, you will have to remove and re-create your
        printer queue after upgrading.
 
        Newly added in this release:
@@ -1741,7 +2016,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        Added back after removal in 5.2.9 release:
 
        Canon SELPHY CP600 *1
-       Canon SELPHY CP720 
+       Canon SELPHY CP720
        Canon SELPHY CP780
        Canon SELPHY CP800
        Canon SELPHY ES1
@@ -1777,11 +2052,11 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
 
 	The SELPHY CP820 and CP910, and possibly newer models in the
 	SELPHY CP series utilize an entirely new print data format,
-	and as such are not compatible with previous models in the 
+	and as such are not compatible with previous models in the
 	SELPHY CP family.  We anticipate these models will be supported
 	in a subsequent Gutenprint release.
 
-     - Citizen Dye-Sublimation printers: 
+     - Citizen Dye-Sublimation printers:
 
        Citizen CX
        Citizen CX-W
@@ -1790,7 +2065,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
          These models are identical to the DNP DS40, DS80, and DSRX1,
 	 respectively, and for best results should be used with the
 	 intelligent backend.
-       
+
        Citizen CW-01
        Citizen CW-02
        Citizen OP900
@@ -1806,7 +2081,7 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        DNP DS80
 
 	Support for these printers has been considerably improved:
- 
+
 	 * Addition of an intelligent CUPS backend
 	 * 5x7 and 3.5x5" print support on the DS40
 	 * Matte lamination with printer firmware 1.30 or newer
@@ -1829,13 +2104,13 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        Kodak 6850
        Kodak 605
 
-	These Kodak models require an intelligent CUPS backend, 
+	These Kodak models require an intelligent CUPS backend,
 	which is bundled with Gutenprint.
 
-       Kodak 8500 (EXPERIMENTAL)	
+       Kodak 8500 (EXPERIMENTAL)
        Kodak 9810 (EXPERIMENTAL)
 
-	Neither of these models have been tested and confirmed to work 
+	Neither of these models have been tested and confirmed to work
 	(or not), so feedback is welcome.
 
      - Mitsubishi Dye-Sublimation printers:
@@ -1852,16 +2127,16 @@ III) MAJOR CHANGES FROM PREVIOUS RELEASES
        Mitsubishi CPK60DW-S     (EXPERIMENTAL)
        Mitsubishi CP3800DW      (EXPERIMENTAL)
 
-	None of these models have been tested and confirmed to work 
+	None of these models have been tested and confirmed to work
 	(or not), so feedback is welcome.
 
 	NOTE: With the exception of the CP-K60DW-S, all Mitsubishi
-	printers with red faceplates and/or model designations ending with 
+	printers with red faceplates and/or model designations ending with
 	an '-S' suffix are not currently supported.  These were only sold
-	as part of a Mitsubishi kiosk or lab solution, and were 
+	as part of a Mitsubishi kiosk or lab solution, and were
 	deliberately made incompatible with the non-S models.
 
-	The CP-D70DW and CP-D707DW (and likely the CP-K60DW) require use of 
+	The CP-D70DW and CP-D707DW (and likely the CP-K60DW) require use of
 	an intelligent backend,	which is bundled with Gutenprint.
 
      - Shinko/Sinfonia Dye-Sublimation printers:

@@ -75,6 +75,9 @@
 # Canon SELPHY CP810
 0x04a9 0x3256 blacklist
 
+# Canon SELPHY CP820
+0x04a9 0x327b blacklist
+
 # Canon SELPHY CP900
 0x04a9 0x3255 blacklist
 
@@ -96,7 +99,7 @@
 # Canon SELPHY ES20
 0x04a9 0x3186 blacklist
 
-# Canon SELPHY ES3 
+# Canon SELPHY ES3
 0x04a9 0x31af blacklist
 
 # Canon SELPHY ES30
@@ -177,6 +180,9 @@
 
 # Mitsubishi CP-9810D/DW
 0x06d3 0x3b21 blacklist
+
+# Mitsubishi P93D
+0x06d3 0x0398 blacklist
 
 # Mitsubishi P95D
 0x06d3 0x3b10 blacklist

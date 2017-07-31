@@ -1097,16 +1097,6 @@ DEF_SIMPLE_ACCESSOR(nozzle_separation, unsigned)
 DEF_SIMPLE_ACCESSOR(black_nozzle_separation, unsigned)
 DEF_SIMPLE_ACCESSOR(fast_nozzle_separation, unsigned)
 DEF_SIMPLE_ACCESSOR(separation_rows, unsigned)
-DEF_SIMPLE_ACCESSOR(max_paper_width, unsigned)
-DEF_SIMPLE_ACCESSOR(max_paper_height, unsigned)
-DEF_SIMPLE_ACCESSOR(min_paper_width, unsigned)
-DEF_SIMPLE_ACCESSOR(min_paper_height, unsigned)
-DEF_SIMPLE_ACCESSOR(max_imageable_width, unsigned)
-DEF_SIMPLE_ACCESSOR(max_imageable_height, unsigned)
-DEF_SIMPLE_ACCESSOR(cd_x_offset, int)
-DEF_SIMPLE_ACCESSOR(cd_y_offset, int)
-DEF_SIMPLE_ACCESSOR(cd_page_width, int)
-DEF_SIMPLE_ACCESSOR(cd_page_height, int)
 DEF_SIMPLE_ACCESSOR(paper_extra_bottom, int)
 DEF_SIMPLE_ACCESSOR(extra_feed, unsigned)
 DEF_SIMPLE_ACCESSOR(pseudo_separation_rows, int)
@@ -1126,6 +1116,18 @@ DEF_SIMPLE_ACCESSOR(alignment_passes, int)
 DEF_SIMPLE_ACCESSOR(alignment_choices, int)
 DEF_SIMPLE_ACCESSOR(alternate_alignment_passes, int)
 DEF_SIMPLE_ACCESSOR(alternate_alignment_choices, int)
+
+DEF_SIMPLE_ACCESSOR(max_paper_width, unsigned)
+DEF_SIMPLE_ACCESSOR(max_paper_height, unsigned)
+DEF_SIMPLE_ACCESSOR(min_paper_width, unsigned)
+DEF_SIMPLE_ACCESSOR(min_paper_height, unsigned)
+DEF_SIMPLE_ACCESSOR(max_imageable_width, unsigned)
+DEF_SIMPLE_ACCESSOR(max_imageable_height, unsigned)
+DEF_SIMPLE_ACCESSOR(cd_page_width, int)
+DEF_SIMPLE_ACCESSOR(cd_page_height, int)
+
+DEF_SIMPLE_ACCESSOR(cd_x_offset, int)
+DEF_SIMPLE_ACCESSOR(cd_y_offset, int)
 
 DEF_ROLL_ACCESSOR(left_margin, unsigned)
 DEF_ROLL_ACCESSOR(right_margin, unsigned)
@@ -1625,11 +1627,11 @@ verify_papersize(const stp_vars_t *v, const stp_papersize_t *pt)
   height_limit = escp2_max_paper_height(v);
   min_width_limit = escp2_min_paper_width(v);
   min_height_limit = escp2_min_paper_height(v);
-  
+
   if (pt->paper_size_type != PAPERSIZE_TYPE_STANDARD &&
       pt->paper_size_type != PAPERSIZE_TYPE_ENVELOPE)
     return 0;
-  
+
   if (strlen(pt->name) > 0 &&
       (pt->paper_size_type != PAPERSIZE_TYPE_ENVELOPE ||
        envelope_landscape || pt->height > pt->width) &&
@@ -1781,7 +1783,7 @@ escp2_list_parameters(const stp_vars_t *v)
   tmp_list = stp_dither_list_parameters(v);
   stp_parameter_list_append(ret, tmp_list);
   stp_parameter_list_destroy(tmp_list);
-  
+
   for (i = 0; i < the_parameter_count; i++)
     stp_parameter_list_add_param(ret, &(the_parameters[i]));
   for (i = 0; i < float_parameter_count; i++)
@@ -1905,7 +1907,7 @@ set_gray_value_parameter(const stp_vars_t *v,
       ((expected_channels == 4 && printer_supports_inkset(v, INKSET_QUADTONE)) ||
        (expected_channels == 6 && printer_supports_inkset(v, INKSET_HEXTONE))))
     fill_value_parameters(v, description, STP_ECOLOR_K);
-  else if (ink_name && 
+  else if (ink_name &&
       (ink_name->channels[STP_ECOLOR_K].n_subchannels ==
        expected_channels))
     fill_value_parameters(v, description, STP_ECOLOR_K);
@@ -1956,7 +1958,7 @@ set_gray_transition_parameter(const stp_vars_t *v,
       ((expected_channels == 4 && printer_supports_inkset(v, INKSET_QUADTONE)) ||
        (expected_channels == 6 && printer_supports_inkset(v, INKSET_HEXTONE))))
     fill_transition_parameters(v, description, STP_ECOLOR_K);
-  if (ink_name && 
+  if (ink_name &&
       (ink_name->channels[STP_ECOLOR_K].n_subchannels ==
        expected_channels))
     fill_transition_parameters(v, description, STP_ECOLOR_K);
@@ -4612,4 +4614,3 @@ stp_module_t stp_module_data =
     print_escp2_module_exit,
     (void *) &print_escp2_module_data
   };
-

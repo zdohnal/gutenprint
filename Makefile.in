@@ -225,9 +225,11 @@ BZIP2 = @BZIP2@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+COMPRESS = @COMPRESS@
 CONVERT = @CONVERT@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
+CSUF = @CSUF@
 CUPS_CFLAGS = @CUPS_CFLAGS@
 CUPS_CONFIG = @CUPS_CONFIG@
 CUPS_LIBS = @CUPS_LIBS@
@@ -286,6 +288,7 @@ GUTENPRINT_MICRO_VERSION = @GUTENPRINT_MICRO_VERSION@
 GUTENPRINT_MINOR_VERSION = @GUTENPRINT_MINOR_VERSION@
 GUTENPRINT_RELEASE_VERSION = @GUTENPRINT_RELEASE_VERSION@
 GUTENPRINT_VERSION = @GUTENPRINT_VERSION@
+GZIP = @GZIP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -311,6 +314,7 @@ LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
 LIPO = @LIPO@
 LN_S = @LN_S@
+LRZIP = @LRZIP@
 LTALLOCA = @LTALLOCA@
 LTLIBICONV = @LTLIBICONV@
 LTLIBINTL = @LTLIBINTL@
@@ -338,6 +342,7 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
+PKGROOT = @PKGROOT@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
@@ -346,6 +351,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 RELEASE_DATE = @RELEASE_DATE@
 RM = @RM@
+RZIP = @RZIP@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -358,6 +364,7 @@ VERSION = @VERSION@
 WHICH_PPDS = @WHICH_PPDS@
 XGETTEXT = @XGETTEXT@
 XGETTEXT_015 = @XGETTEXT_015@
+XZ = @XZ@
 YACC = @YACC@
 YFLAGS = @YFLAGS@
 abs_builddir = @abs_builddir@
@@ -487,7 +494,7 @@ MAINTAINERCLEANFILES = \
 	$(CLEANMFOUR) \
 	$(CLEANPO)
 
-EXTRA_DIST = autogen.sh README.package
+EXTRA_DIST = autogen.sh README.package git-version-stamp
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1023,7 +1030,10 @@ dist-time-check:
 	  exit 1; \
 	fi
 
-dist-hook: dist-time-check
+git-version-stamp:
+	if [ -d .git ] ; then scripts/gversion > /dev/null; fi
+
+dist-hook: dist-time-check git-version-stamp
 	for dir in $(DISTDIRS) ; do \
 	  if test -d $(srcdir)/$$dir ; then \
 	    mkdir $(distdir)/$$dir; \
@@ -1065,10 +1075,10 @@ pdf:
 	cd doc ; \
 	$(MAKE) pdf
 
-snapshot:
-	$(MAKE) dist distdir=$(PACKAGE)`date +"%Y%m%d"`
+snapshot: scripts/gversion git-version-stamp
+	$(MAKE) dist distdir=$(PACKAGE)-`scripts/gversion`-`date +"%Y%m%d"`
 
-.PHONY: deb html install-cups install-gimp snapshot ChangeLog Phony dist-time-check
+.PHONY: deb html install-cups install-gimp snapshot ChangeLog Phony dist-time-check git-version-stamp
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
