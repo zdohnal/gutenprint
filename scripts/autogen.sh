@@ -26,7 +26,7 @@ test "$libtool_major" -le 1 && {
 } && {
   echo
   echo "**Warning**: You should have \`libtool' 1.5 or newer installed to"
-  echo "create a gutenprint distribution.  Earlier versions of libtool do"
+  echo "create a Gutenprint distribution.  Earlier versions of libtool do"
   echo "not generate correct code for all platforms."
   echo "Get ftp://ftp.gnu.org/pub/gnu/libtool/libtool-1.5.tar.gz"
   echo "(or a newer version if it is available)"
@@ -35,7 +35,8 @@ test "$libtool_major" -le 1 && {
 
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
   echo
-  echo "**Error**: You must have \`autoconf' installed to compile gutenprint."
+  echo "**Error**: You must have \`autoconf' installed to"
+  echo "create a Gutenprint distribution."
   echo "Download the appropriate package for your distribution,"
   echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
   DIE=1
@@ -48,7 +49,8 @@ test -f $srcdir/ChangeLog || echo > $srcdir/ChangeLog
 (grep "^AM_PROG_LIBTOOL" $srcdir/configure.ac >/dev/null) && {
   (libtool --version) < /dev/null > /dev/null 2>&1 || {
     echo
-    echo "**Error**: You must have \`libtool' installed to compile gutenprint."
+    echo "**Error**: You must have \`libtool' installed to"
+    echo "create a Gutenprint distribution."
     echo "Get ftp://ftp.gnu.org/pub/gnu/libtool/libtool-1.5.tar.gz"
     echo "(or a newer version if it is available)"
     DIE=1
@@ -59,7 +61,8 @@ grep "^AM_GNU_GETTEXT" $srcdir/configure.ac >/dev/null && {
   grep "sed.*POTFILES" $srcdir/configure.ac >/dev/null || \
   (gettext --version) < /dev/null > /dev/null 2>&1 || {
     echo
-    echo "**Error**: You must have \`gettext' installed to compile gutenprint."
+    echo "**Error**: You must have \`gettext' installed to"
+    echo "create a Gutenprint distribution."
     echo "Get ftp://ftp.gnu.org/pub/gnu/gettext/gettext-0.16.tar.gz"
     echo "(or a newer version if it is available)"
     DIE=1
@@ -68,7 +71,8 @@ grep "^AM_GNU_GETTEXT" $srcdir/configure.ac >/dev/null && {
 
 (pkg-config --version) < /dev/null > /dev/null 2>&1 || {
   echo
-  echo "**Error**: You must have \`pkg-config' installed to compile gutenprint."
+  echo "**Error**: You must have \`pkg-config' installed to"
+  echo "create a Gutenprint distribution."
   echo "Download the appropriate package for your distribution,"
   echo "or get the source tarball at http://www.freedesktop.org/"
   DIE=1
@@ -89,7 +93,7 @@ test "$gettext_major" -eq 0 && {
 } && {
   echo
   echo "**Warning**: You must have \`gettext' 0.16 or newer installed to"
-  echo "create a gutenprint distribution.  Earlier versions of gettext do"
+  echo "create a Gutenprint distribution.  Earlier versions of gettext do"
   echo "not generate the correct 'make uninstall' code."
   echo "Get ftp://ftp.gnu.org/gnu/gettext/gettext-0.16.tar.gz"
   echo "(or a newer version if it is available)"
@@ -97,7 +101,8 @@ test "$gettext_major" -eq 0 && {
 
 (autopoint --version) < /dev/null > /dev/null 2>&1 || {
   echo
-  echo "**Error**: You must have \`autopoint' installed to compile gutenprint."
+  echo "**Error**: You must have \`autopoint' installed to"
+  echo "create a Gutenprint distribution."
   echo "Get ftp://ftp.gnu.org/pub/gnu/gettext/gettext-0.11.5.tar.gz"
   echo "(or a newer version if it is available)"
   DIE=1
@@ -106,7 +111,8 @@ test "$gettext_major" -eq 0 && {
 
 (automake --version) < /dev/null > /dev/null 2>&1 || {
   echo
-  echo "**Error**: You must have \`automake' installed to compile gutenprint."
+  echo "**Error**: You must have \`automake' installed to"
+  echo "create a Gutenprint distribution."
   echo "Get ftp://ftp.gnu.org/pub/gnu/automake/automake-1.7.tar.gz"
   echo "(or a newer version if it is available)"
   DIE=1
@@ -288,7 +294,7 @@ fi
   test -d "/usr/share/sgml/docbook_4" || test -d "/usr/share/sgml/docbook/dtd/4.0" || test -d "/usr/share/sgml/docbook_4.1" || test -n "$fedora_docbook"
 } || {
   echo " "
-  echo "***Warning***: You must have "Docbook v4" installed to"
+  echo "***Warning***: You must have Docbook v4 installed to"
   echo "build the Gutenprint user's guide."
   echo " "
 }
@@ -337,32 +343,59 @@ do
 	  # 0.10.40 of gettext appends an entry to the ChangeLog every time
 	  # anyone runs autogen.sh.  Since developers do that a lot, and
 	  # then proceed to commit their entire sandbox, we wind up with
-	  # an ever-growing po/ChangeLog that generates CVS conflicts on
+	  # an ever-growing po/ChangeLog that generates conflicts on
 	  # a routine basis.  There's no good reason for this.
 	  echo 'This ChangeLog is redundant. Please see the main ChangeLog for i18n changes.' > po/ChangeLog
 	  echo >> po/ChangeLog
 	  echo 'This file is present only to keep po/Makefile.in.in happy.' >> po/ChangeLog
 	  echo "Running autopoint...  Ignore non-fatal messages."
 	    autopoint --force
+	    if [ $? -ne 0 ] ; then
+		echo 'Autopoint failed!'
+		exit 1
+	    fi
 	  echo "Making $dr/aclocal.m4 writable ..."
 	  test -r $dr/aclocal.m4 && chmod u+w $dr/aclocal.m4
         fi
       fi
       if grep "^AM_PROG_LIBTOOL" configure.ac >/dev/null; then
 	echo "Running libtoolize..."
-	libtoolize --force --copy
+	libtoolize --force --copy || (echo "libtoolize failed!"; exit 1)
+	if [ $? -ne 0 ] ; then
+	    echo 'libtoolize failed!'
+	    exit 1
+	fi
       fi
       echo "Running aclocal $aclocalinclude ..."
       aclocal $aclocalinclude
+      if [ $? -ne 0 ] ; then
+	  echo 'aclocal failed!'
+	  exit 1
+      fi
       if grep "^AM_CONFIG_HEADER" configure.ac >/dev/null; then
 	echo "Running autoheader..."
 	autoheader
+	if [ $? -ne 0 ] ; then
+	    echo 'autoheader failed!'
+	    exit 1
+	fi
       fi
       echo "Running automake --gnu $am_opt ..."
       automake --add-missing --force-missing --copy --gnu $am_opt
+      if [ $? -ne 0 ] ; then
+	  echo 'automake failed!'
+	  exit 1
+      fi
       echo "Running autoconf ..."
       autoconf
+      if [ $? -ne 0 ] ; then
+	  echo 'autoconf failed!'
+	  exit 1
+      fi
     )
+    if [ $? -ne 0 ] ; then
+	exit $?
+    fi
   fi
 done
 

@@ -1,6 +1,4 @@
 /*
- * "$Id: string-list.h,v 1.4 2013/12/14 19:30:45 rlk Exp $"
- *
  *   libgimpprint string list functions.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
@@ -100,6 +98,3 @@ stp_string_list_is_present(const stp_string_list_t *list,
 #endif
 
 #endif /* GUTENPRINT_STRING_LIST_H */
-/*
- * End of "$Id: string-list.h,v 1.4 2013/12/14 19:30:45 rlk Exp $".
- */

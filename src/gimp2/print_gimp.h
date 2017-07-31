@@ -1,5 +1,4 @@
 /*
- * "$Id: print_gimp.h,v 1.6 2014/01/04 00:31:37 rlk Exp $"
  *
  *   Print plug-in for the GIMP.
  *
@@ -37,7 +36,7 @@
 #include <gutenprintui2/gutenprintui.h>
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-pedantic"
+#pragma GCC diagnostic ignored "-Wpedantic"
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #pragma GCC diagnostic pop

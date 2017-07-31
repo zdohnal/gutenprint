@@ -78,6 +78,15 @@
 # Canon SELPHY CP900
 0x04a9 0x3255 blacklist
 
+# Canon SELPHY CP910
+0x04a9 0x327a blacklist
+
+# Canon SELPHY CP1000
+0x04a9 0x32ae blacklist
+
+# Canon SELPHY CP1200
+0x04a9 0x32b1 blacklist
+
 # Canon SELPHY ES1
 0x04a9 0x3141 blacklist
 
@@ -135,17 +144,42 @@
 # Sony UP-CR10L
 0x054c 0x0226 blacklist
 
-# Mitsubishi CP-D70/CP-D707
+# Mitsubishi CP-D70DW/CP-D707DW
 0x06d3 0x3b30 blacklist
+
+# Mitsubishi CP-D80DW
+0x06d3 0x3b36 blacklist
 
 # Mitsubishi CP-K60DW-S
 0x06d3 0x3b31 blacklist
+
+# Mitsubishi CP-9000D/DW/AM
+0x06d3 0x0394 blacklist
+0x06d3 0x0395 blacklist
+
+# Mitsubishi CP-9500D
+0x06d3 0x0393 blacklist
 
 # Mitsubishi CP-9550D/DW
 0x06d3 0x03a1 blacklist
 
 # Mitsubishi CP-9550DZ/DW-S
 0x06d3 0x03a5 blacklist
+
+# Mitsubishi CP-9600D/DW
+0x06d3 0x03a9 blacklist
+
+# Mitsubishi CP-9800D/DW
+0x06d3 0x03ad blacklist
+
+# Mitsubishi CP-9800DW-S
+0x06d3 0x03ae blacklist
+
+# Mitsubishi CP-9810D/DW
+0x06d3 0x3b21 blacklist
+
+# Mitsubishi P95D
+0x06d3 0x3b10 blacklist
 
 # Citizen CW-01
 0x1343 0x0002 blacklist
@@ -159,5 +193,18 @@
 # DNP DS-RX1 + Citizen CY
 0x1343 0x0005 blacklist
 
+# Citizen CW-02
+0x1343 0x0006 blacklist
+
+# DNP DS80D
+0x1343 0x0007 blacklist
+
 # DNP DS620
+0x1343 0x0008 blacklist
 0x1452 0x8b01 blacklist
+
+# DNP DS820
+0x1452 0x9001 blacklist
+
+# CIAAT Brava 21
+0x10ce 0x001e blacklist

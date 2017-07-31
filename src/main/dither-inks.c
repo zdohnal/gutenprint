@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-inks.c,v 1.28 2014/01/04 00:31:37 rlk Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *

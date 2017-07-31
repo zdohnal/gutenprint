@@ -1,6 +1,4 @@
 /*
- * "$Id: dither-impl.h,v 1.32 2008/02/18 14:20:17 rlk Exp $"
- *
  *   Internal implementation of dither algorithms
  *
  *   Copyright 1997-2003 Michael Sweet (mike@easysw.com) and
@@ -259,6 +257,3 @@ do									\
 #endif
 
 #endif /* GUTENPRINT_INTERNAL_DITHER_IMPL_H */
-/*
- * End of "$Id: dither-impl.h,v 1.32 2008/02/18 14:20:17 rlk Exp $".
- */

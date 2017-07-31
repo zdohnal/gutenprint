@@ -1,6 +1,4 @@
 /*
- * "$Id: paper.h,v 1.5 2015/09/07 21:57:37 speachy Exp $"
- *
  *   libgimpprint paper functions.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
@@ -156,6 +154,3 @@ extern void stp_default_media_size(const stp_vars_t *v,
 #endif
 
 #endif /* GUTENPRINT_PAPER_H */
-/*
- * End of "$Id: paper.h,v 1.5 2015/09/07 21:57:37 speachy Exp $".
- */

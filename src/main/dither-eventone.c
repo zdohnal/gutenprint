@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-eventone.c,v 1.42 2008/02/19 01:13:46 rlk Exp $"
  *
  *   EvenTone dither implementation for Gimp-Print
  *

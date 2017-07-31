@@ -1,5 +1,4 @@
 /*
- * "$Id: print-ps.c,v 1.105 2012/01/19 13:25:40 m0m Exp $"
  *
  *   Print plug-in Adobe PostScript driver for the GIMP.
  *
@@ -40,6 +39,7 @@
 #endif
 #include <stdio.h>
 #include <unistd.h>
+#include <strings.h>
 #include "xmlppd.h"
 
 #ifdef _MSC_VER

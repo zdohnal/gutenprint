@@ -1,5 +1,4 @@
 /*
- * "$Id: print-list.c,v 1.27 2014/01/04 00:31:38 rlk Exp $"
  *
  *   Gutenprint list functions.  A doubly-linked list implementation,
  *   with callbacks for freeing, sorting, and retrieving nodes by name

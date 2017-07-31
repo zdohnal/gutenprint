@@ -1,5 +1,4 @@
 /*
- * "$Id: print-color.c,v 1.148 2014/01/24 01:55:56 rlk Exp $"
  *
  *   Gutenprint color management module - traditional Gutenprint algorithm.
  *
@@ -1476,6 +1475,7 @@ stpi_compute_lut(stp_vars_t *v)
 
   for (i = 0; i < STP_CHANNEL_LIMIT; i++)
     {
+      STPI_ASSERT(i < raw_channel_param_count, v);
       if (lut->output_color_description->channel_count < 1 &&
 	  i < lut->out_channels)
 	setup_channel(v, i, &(raw_channel_params[i]));

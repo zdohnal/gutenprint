@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.15 2014/01/23 13:22:41 rlk Exp $
 ## Copyright (C) 2008 Robert Krawitz
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -64,13 +63,16 @@ pkgxmldata_DATA =				\
 	pro_ultrachrome_k3v.xml			\
 	pro_ultrachrome_k3v4.xml		\
 	pro_ultrachrome_k3v10.xml		\
+	pro_ultrachrome_k3v10a.xml		\
+	pro_ultrachrome_k3v10b.xml		\
 	standard.xml				\
 	standard_gen0.xml			\
 	sx445.xml				\
 	ultrachrome.xml				\
 	wf40.xml				\
 	wf500.xml				\
-	x80.xml
+	x80.xml					\
+	xp100.xml
 
 xml-stamp: $(pkgxmldata_DATA) Makefile.am
 	-rm -f $@ $@.tmp

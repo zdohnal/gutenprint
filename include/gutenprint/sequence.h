@@ -1,5 +1,4 @@
 /*
- * "$Id: sequence.h,v 1.2 2008/01/21 23:19:38 rlk Exp $"
  *
  *   libgimpprint sequence functions.
  *

@@ -1,6 +1,4 @@
 /*
- * "$Id: mxml.h,v 1.2 2008/06/08 15:10:08 rlk Exp $"
- *
  * Header file for mini-XML, a small XML-like file parsing library.
  *
  * Copyright 2003 by Michael Sweet.
@@ -175,8 +173,3 @@ extern stp_mxml_node_t	*stp_mxmlWalkPrev(stp_mxml_node_t *node, stp_mxml_node_t 
 }
 #  endif /* __cplusplus */
 #endif /* !GUTENPRINT_MXML_H */
-
-
-/*
- * End of "$Id: mxml.h,v 1.2 2008/06/08 15:10:08 rlk Exp $".
- */

@@ -1,5 +1,4 @@
 /*
- * "$Id: channel.c,v 1.35 2011/12/30 00:36:10 rlk Exp $"
  *
  *   Dither routine entrypoints
  *

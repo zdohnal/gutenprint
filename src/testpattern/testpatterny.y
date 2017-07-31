@@ -1,5 +1,4 @@
 /*
- * "$Id: testpatterny.y,v 1.40 2010/09/06 17:08:39 rlk Exp $"
  *
  *   Test pattern generator for Gimp-Print
  *
@@ -27,6 +26,7 @@
 #endif
 
 #include <string.h>
+#include <strings.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "testpattern.h"
@@ -296,7 +296,7 @@ printer: PRINTER tSTRING
 	{
 	  if (getenv("STP_TESTPATTERN_DEBUG"))
 	    fprintf(stderr, ">>>printer %s\n", $2);
-	  global_printer = strdup($2);
+	  global_printer = stp_strdup($2);
 	  free($2);
 	}
 ;

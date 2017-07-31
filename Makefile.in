@@ -85,8 +85,8 @@ host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/scripts/global.mk INSTALL NEWS README \
 	AUTHORS ChangeLog $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
-	$(srcdir)/config.h.in $(top_srcdir)/scripts/mkinstalldirs \
-	ABOUT-NLS COPYING $(top_srcdir)/scripts/compile \
+	$(srcdir)/config.h.in ABOUT-NLS COPYING \
+	$(top_srcdir)/scripts/compile \
 	$(top_srcdir)/scripts/config.guess \
 	$(top_srcdir)/scripts/config.rpath \
 	$(top_srcdir)/scripts/config.sub \
@@ -95,21 +95,20 @@ DIST_COMMON = $(top_srcdir)/scripts/global.mk INSTALL NEWS README \
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
-	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/isc-posix.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
-	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/m4/stp.m4 \
-	$(top_srcdir)/m4/stp_cups.m4 $(top_srcdir)/m4/stp_gimp.m4 \
-	$(top_srcdir)/m4/stp_option.m4 $(top_srcdir)/m4/stp_release.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/nls.m4 \
+	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
+	$(top_srcdir)/m4/stp.m4 $(top_srcdir)/m4/stp_cups.m4 \
+	$(top_srcdir)/m4/stp_gimp.m4 $(top_srcdir)/m4/stp_option.m4 \
+	$(top_srcdir)/m4/stp_release.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
-mkinstalldirs = $(SHELL) $(top_srcdir)/scripts/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
@@ -222,6 +221,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_CUPS_PPDS = @BUILD_CUPS_PPDS@
+BZIP2 = @BZIP2@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -254,9 +254,6 @@ ENABLE_STATIC = @ENABLE_STATIC@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 FIND = @FIND@
-FOOMATIC_CONFIGURE = @FOOMATIC_CONFIGURE@
-FOOMATIC_KITLOAD = @FOOMATIC_KITLOAD@
-FOOMATIC_PPDFILE = @FOOMATIC_PPDFILE@
 GENPPD_LIBS = @GENPPD_LIBS@
 GIMP2_CFLAGS = @GIMP2_CFLAGS@
 GIMP2_LIBS = @GIMP2_LIBS@
@@ -289,9 +286,6 @@ GUTENPRINT_MICRO_VERSION = @GUTENPRINT_MICRO_VERSION@
 GUTENPRINT_MINOR_VERSION = @GUTENPRINT_MINOR_VERSION@
 GUTENPRINT_RELEASE_VERSION = @GUTENPRINT_RELEASE_VERSION@
 GUTENPRINT_VERSION = @GUTENPRINT_VERSION@
-IJS_CFLAGS = @IJS_CFLAGS@
-IJS_CONFIG = @IJS_CONFIG@
-IJS_LIBS = @IJS_LIBS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -312,6 +306,7 @@ LIBREADLINE_DEPS = @LIBREADLINE_DEPS@
 LIBS = $(INTLLIBS) @LIBS@
 LIBTOOL = @LIBTOOL@
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
+LIBUSB_BACKEND_LIBDEPS = @LIBUSB_BACKEND_LIBDEPS@
 LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
 LIPO = @LIPO@
@@ -473,9 +468,10 @@ CLEANPO = \
 	po/remove-potcdate.sin \
 	po/Rules-quot
 
-CLEANFILES = .noupdate ChangeLog.tmp
+CLEANFILES = .noupdate
 MAINTAINERCLEANFILES = \
 	ABOUT-NLS \
+	ChangeLog \
 	INSTALL \
 	aclocal.m4 \
 	config.h.in \
@@ -491,7 +487,7 @@ MAINTAINERCLEANFILES = \
 	$(CLEANMFOUR) \
 	$(CLEANPO)
 
-EXTRA_DIST = autogen.sh ChangeLogStamp README.package
+EXTRA_DIST = autogen.sh README.package
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1004,43 +1000,15 @@ install-data-local: NEWS AUTHORS COPYING README
 	$(INSTALL_DATA) $(srcdir)/COPYING $(DESTDIR)$(docdir)
 	$(INSTALL_DATA) $(srcdir)/README $(DESTDIR)$(docdir)
 
-# This rather strange-looking code ensures that the change log is only
-# rebuilt if any of the CVS/Entries files have changed since the change log
-# was last built.
+# git log is local, so it's fast enough that we don't need to
+# engage in any subterfuge like we did with CVS.  It's really fast
+# when we use a static file from the pre-Git era (since there are no
+# live branches from that time) to save a lot of diffs.
 
-ChangeLogPhony:
-	@cd $(top_srcdir) ; \
-	for f in `find . -name Entries -print | grep CVS` ; do \
-	  if @TEST@ ! -f ChangeLogStamp -o ChangeLogStamp -ot $$f ; then \
-	    rm -f ChangeLogStamp ; \
-	    touch ChangeLogStamp ; \
-	  fi ; \
-	done
-
-ChangeLogStamp: ChangeLogPhony
-	@@TRUE@
-
-ChangeLog: ChangeLogStamp
-	@cd $(top_srcdir) ; \
-	if test -f $(top_builddir)/.noupdate ; then \
-	  echo "$@: .noupdate found: NOT updating $@ from CVS" ; \
-	elif test -d CVS ; then \
-	  echo "$@: Updating $@ from CVS" ; \
-	  cvs log | $(PERL) scripts/mkchlog -e @sourceforge.net -X src/xml/escp2/resolutions -s '^(guten|gimp-|)print-[0-9]+_' > $@.tmp ; \
-	  if test -s $@.tmp ; then \
-	    mv $@.tmp $@ ; \
-	  else \
-	    echo "$@: Failed to update $@ ['touch .noupdate' to skip]" ; \
-	    $(RM) $@.tmp ; \
-	    exit 1 ; \
-	  fi \
-	elif test -s $@ ; then \
-	  echo "$@: This is not a CVS version of Gutenprint" ; \
-	  echo "$@: Not updating $@ from CVS!" ; \
-	else \
-	  echo "$@: No $@ or $@ of zero size found!" ; \
-	  echo "$@: Failed to update $@ ['touch .noupdate' to skip]" ; \
-	  exit 1 ; \
+ChangeLog:
+	if [ -d .git -a -f ChangeLog.pre-5.2.11 ] ; then \
+	  $(MAKE) -C scripts mkgitlog; \
+	  scripts/mkgitlog -i ChangeLog.pre-5.2.11 -r gutenprint-5_2_11 > ChangeLog; \
 	fi
 
 configure.in:
@@ -1077,10 +1045,6 @@ install-cups: all
 	cd src/cups ; \
 	$(MAKE) install
 
-install-ghost: all
-	cd src/ghost ; \
-	$(MAKE) install
-
 install-gimp: all
 	cd src/gimp ; \
 	$(MAKE) install
@@ -1104,7 +1068,7 @@ pdf:
 snapshot:
 	$(MAKE) dist distdir=$(PACKAGE)`date +"%Y%m%d"`
 
-.PHONY: deb html install-cups install-gimp install-ghost snapshot ChangeLog Phony dist-time-check
+.PHONY: deb html install-cups install-gimp snapshot ChangeLog Phony dist-time-check
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -1,5 +1,4 @@
 /*		-*-Mode: C-*-
- * "$Id: printrcl.l,v 1.3 2014/01/04 00:31:37 rlk Exp $"
  *
  *   printrc parser
  *

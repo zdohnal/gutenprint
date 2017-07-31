@@ -1,5 +1,4 @@
 /*
- * "$Id: printrc.h,v 1.1 2004/09/17 18:38:14 rleigh Exp $"
  *
  *   Print plug-in for the GIMP.
  *

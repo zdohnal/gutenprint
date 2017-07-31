@@ -1,5 +1,4 @@
 /*
- * "$Id: xml-curve.c,v 1.7 2008/08/02 15:10:56 rleigh Exp $"
  *
  *   Copyright 2002 Robert Krawitz (rlk@alum.mit.edu)
  *

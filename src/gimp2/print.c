@@ -1,5 +1,4 @@
 /*
- * "$Id: print.c,v 1.10 2014/01/04 00:31:37 rlk Exp $"
  *
  *   Print plug-in for the GIMP.
  *

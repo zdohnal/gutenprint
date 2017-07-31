@@ -1,5 +1,4 @@
 /*
- * "$Id: testpattern.c,v 1.65 2015/04/11 20:35:42 rlk Exp $"
  *
  *   Test pattern generator for Gutenprint
  *

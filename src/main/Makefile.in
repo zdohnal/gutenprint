@@ -85,24 +85,23 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/scripts/global.mk $(srcdir)/Makefile.in \
-	$(srcdir)/Makefile.am $(top_srcdir)/scripts/mkinstalldirs \
-	$(srcdir)/gutenprint.pc.in $(top_srcdir)/scripts/depcomp
+	$(srcdir)/Makefile.am $(srcdir)/gutenprint.pc.in \
+	$(top_srcdir)/scripts/depcomp
 subdir = src/main
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
-	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/isc-posix.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
-	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/m4/stp.m4 \
-	$(top_srcdir)/m4/stp_cups.m4 $(top_srcdir)/m4/stp_gimp.m4 \
-	$(top_srcdir)/m4/stp_option.m4 $(top_srcdir)/m4/stp_release.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/nls.m4 \
+	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
+	$(top_srcdir)/m4/stp.m4 $(top_srcdir)/m4/stp_cups.m4 \
+	$(top_srcdir)/m4/stp_gimp.m4 $(top_srcdir)/m4/stp_option.m4 \
+	$(top_srcdir)/m4/stp_release.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/scripts/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES = gutenprint.pc
 CONFIG_CLEAN_VPATH_FILES =
@@ -166,8 +165,8 @@ am__libgutenprint_la_SOURCES_DIST = array.c bit-ops.c channel.c \
 	canon-printers.h canon-media-mode.h print-escp2.c \
 	escp2-driver.c print-escp2.h print-escp2-data.c \
 	escp2-channels.c escp2-papers.c escp2-resolutions.c \
-	print-lexmark.c print-pcl.c print-ps.c xmlppd.c xmlppd.h \
-	print-olympus.c print-raw.c
+	print-lexmark.c print-pcl.c print-dpl.c print-ps.c xmlppd.c \
+	xmlppd.h print-olympus.c print-raw.c
 am__objects_1 = mxml-attr.lo mxml-file.lo mxml-node.lo mxml-search.lo
 am__objects_2 =
 am__objects_3 = print-color.lo color-conversions.lo
@@ -176,13 +175,14 @@ am__objects_5 = print-escp2.lo escp2-driver.lo print-escp2-data.lo \
 	escp2-channels.lo escp2-papers.lo escp2-resolutions.lo
 am__objects_6 = print-lexmark.lo
 am__objects_7 = print-pcl.lo
-am__objects_8 = print-ps.lo xmlppd.lo
-am__objects_9 = print-olympus.lo
-am__objects_10 = print-raw.lo
-am__objects_11 = $(am__objects_3) $(am__objects_4) $(am__objects_5) \
+am__objects_8 = print-dpl.lo
+am__objects_9 = print-ps.lo xmlppd.lo
+am__objects_10 = print-olympus.lo
+am__objects_11 = print-raw.lo
+am__objects_12 = $(am__objects_3) $(am__objects_4) $(am__objects_5) \
 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
-	$(am__objects_9) $(am__objects_10)
-@BUILD_MODULES_FALSE@am__objects_12 = $(am__objects_11)
+	$(am__objects_9) $(am__objects_10) $(am__objects_11)
+@BUILD_MODULES_FALSE@am__objects_13 = $(am__objects_12)
 am_libgutenprint_la_OBJECTS = array.lo bit-ops.lo channel.lo color.lo \
 	curve.lo curve-cache.lo dither-ed.lo dither-eventone.lo \
 	dither-inks.lo dither-main.lo dither-ordered.lo \
@@ -191,7 +191,7 @@ am_libgutenprint_la_OBJECTS = array.lo bit-ops.lo channel.lo color.lo \
 	print-dither-matrices.lo print-list.lo print-papers.lo \
 	print-util.lo print-vars.lo print-version.lo print-weave.lo \
 	printers.lo sequence.lo string-list.lo xml.lo $(am__objects_1) \
-	$(am__objects_2) $(am__objects_12)
+	$(am__objects_2) $(am__objects_13)
 libgutenprint_la_OBJECTS = $(am_libgutenprint_la_OBJECTS)
 libgutenprint_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -205,6 +205,13 @@ print_canon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_CFLAGS) $(CFLAGS) $(print_canon_la_LDFLAGS) $(LDFLAGS) -o \
 	$@
 @BUILD_MODULES_TRUE@am_print_canon_la_rpath = -rpath $(pkgmoduledir)
+print_dpl_la_LIBADD =
+am_print_dpl_la_OBJECTS = print-dpl.lo
+print_dpl_la_OBJECTS = $(am_print_dpl_la_OBJECTS)
+print_dpl_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(print_dpl_la_LDFLAGS) $(LDFLAGS) -o $@
+@BUILD_MODULES_TRUE@am_print_dpl_la_rpath = -rpath $(pkgmoduledir)
 print_dyesub_la_LIBADD =
 am_print_dyesub_la_OBJECTS = print-olympus.lo
 print_dyesub_la_OBJECTS = $(am_print_dyesub_la_OBJECTS)
@@ -287,15 +294,16 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(color_traditional_la_SOURCES) $(libgutenprint_la_SOURCES) \
-	$(print_canon_la_SOURCES) $(print_dyesub_la_SOURCES) \
-	$(print_escp2_la_SOURCES) $(print_lexmark_la_SOURCES) \
-	$(print_pcl_la_SOURCES) $(print_ps_la_SOURCES) \
-	$(print_raw_la_SOURCES)
-DIST_SOURCES = $(color_traditional_la_SOURCES) \
-	$(am__libgutenprint_la_SOURCES_DIST) $(print_canon_la_SOURCES) \
+	$(print_canon_la_SOURCES) $(print_dpl_la_SOURCES) \
 	$(print_dyesub_la_SOURCES) $(print_escp2_la_SOURCES) \
 	$(print_lexmark_la_SOURCES) $(print_pcl_la_SOURCES) \
 	$(print_ps_la_SOURCES) $(print_raw_la_SOURCES)
+DIST_SOURCES = $(color_traditional_la_SOURCES) \
+	$(am__libgutenprint_la_SOURCES_DIST) $(print_canon_la_SOURCES) \
+	$(print_dpl_la_SOURCES) $(print_dyesub_la_SOURCES) \
+	$(print_escp2_la_SOURCES) $(print_lexmark_la_SOURCES) \
+	$(print_pcl_la_SOURCES) $(print_ps_la_SOURCES) \
+	$(print_raw_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -332,6 +340,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_CUPS_PPDS = @BUILD_CUPS_PPDS@
+BZIP2 = @BZIP2@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -364,9 +373,6 @@ ENABLE_STATIC = @ENABLE_STATIC@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 FIND = @FIND@
-FOOMATIC_CONFIGURE = @FOOMATIC_CONFIGURE@
-FOOMATIC_KITLOAD = @FOOMATIC_KITLOAD@
-FOOMATIC_PPDFILE = @FOOMATIC_PPDFILE@
 GENPPD_LIBS = @GENPPD_LIBS@
 GIMP2_CFLAGS = @GIMP2_CFLAGS@
 GIMP2_LIBS = @GIMP2_LIBS@
@@ -399,9 +405,6 @@ GUTENPRINT_MICRO_VERSION = @GUTENPRINT_MICRO_VERSION@
 GUTENPRINT_MINOR_VERSION = @GUTENPRINT_MINOR_VERSION@
 GUTENPRINT_RELEASE_VERSION = @GUTENPRINT_RELEASE_VERSION@
 GUTENPRINT_VERSION = @GUTENPRINT_VERSION@
-IJS_CFLAGS = @IJS_CFLAGS@
-IJS_CONFIG = @IJS_CONFIG@
-IJS_LIBS = @IJS_LIBS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -422,6 +425,7 @@ LIBREADLINE_DEPS = @LIBREADLINE_DEPS@
 LIBS = $(INTLLIBS) @LIBS@
 LIBTOOL = @LIBTOOL@
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
+LIBUSB_BACKEND_LIBDEPS = @LIBUSB_BACKEND_LIBDEPS@
 LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
 LIPO = @LIPO@
@@ -551,6 +555,7 @@ pkgmoduledir = $(pkglibdir)/@GUTENPRINT_MAJOR_VERSION@.@GUTENPRINT_MINOR_VERSION
 @BUILD_MODULES_TRUE@	print-escp2.la \
 @BUILD_MODULES_TRUE@	print-lexmark.la \
 @BUILD_MODULES_TRUE@	print-pcl.la \
+@BUILD_MODULES_TRUE@	print-dpl.la \
 @BUILD_MODULES_TRUE@	print-ps.la \
 @BUILD_MODULES_TRUE@	print-dyesub.la \
 @BUILD_MODULES_TRUE@	print-raw.la
@@ -585,6 +590,8 @@ print_lexmark_la_SOURCES = print-lexmark.c
 print_lexmark_la_LDFLAGS = -module -avoid-version
 print_pcl_la_SOURCES = print-pcl.c
 print_pcl_la_LDFLAGS = -module -avoid-version
+print_dpl_la_SOURCES = print-dpl.c
+print_dpl_la_LDFLAGS = -module -avoid-version
 print_ps_la_SOURCES = print-ps.c xmlppd.c xmlppd.h
 print_ps_la_LDFLAGS = -module -avoid-version
 print_dyesub_la_SOURCES = print-olympus.c
@@ -598,6 +605,7 @@ module_SOURCES = \
 	$(print_escp2_la_SOURCES)		\
 	$(print_lexmark_la_SOURCES)		\
 	$(print_pcl_la_SOURCES)			\
+	$(print_dpl_la_SOURCES)			\
 	$(print_ps_la_SOURCES)			\
 	$(print_dyesub_la_SOURCES)		\
 	$(print_raw_la_SOURCES)
@@ -780,6 +788,9 @@ libgutenprint.la: $(libgutenprint_la_OBJECTS) $(libgutenprint_la_DEPENDENCIES) $
 print-canon.la: $(print_canon_la_OBJECTS) $(print_canon_la_DEPENDENCIES) $(EXTRA_print_canon_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(print_canon_la_LINK) $(am_print_canon_la_rpath) $(print_canon_la_OBJECTS) $(print_canon_la_LIBADD) $(LIBS)
 
+print-dpl.la: $(print_dpl_la_OBJECTS) $(print_dpl_la_DEPENDENCIES) $(EXTRA_print_dpl_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(print_dpl_la_LINK) $(am_print_dpl_la_rpath) $(print_dpl_la_OBJECTS) $(print_dpl_la_LIBADD) $(LIBS)
+
 print-dyesub.la: $(print_dyesub_la_OBJECTS) $(print_dyesub_la_DEPENDENCIES) $(EXTRA_print_dyesub_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(print_dyesub_la_LINK) $(am_print_dyesub_la_rpath) $(print_dyesub_la_OBJECTS) $(print_dyesub_la_LIBADD) $(LIBS)
 
@@ -834,6 +845,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-canon.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-color.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-dither-matrices.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-dpl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-escp2-data.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-escp2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print-lexmark.Plo@am__quote@

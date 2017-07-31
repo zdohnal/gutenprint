@@ -1,6 +1,4 @@
 /*
- * "$Id: plist.c,v 1.20 2014/01/04 00:31:37 rlk Exp $"
- *
  *   Print plug-in for the GIMP.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
@@ -34,8 +32,10 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #include <errno.h>
 #include <locale.h>
+#include <stdlib.h>
 
 #include <sys/types.h>
 #include <signal.h>
@@ -370,6 +370,7 @@ stpui_printer_initialize(stpui_plist_t *printer)
   stp_set_errdata(printer->v, stderr);
   stpui_plist_set_copy_count(printer, 1);
   stp_set_string_parameter(printer->v, "InputImageType", image_type);
+  stp_set_string_parameter(printer->v, "JobMode", "Page");  
   if (image_raw_channels)
     {
       (void) sprintf(tmp, "%d", image_raw_channels);
@@ -1825,7 +1826,3 @@ stpui_print(const stpui_plist_t *printer, stpui_image_t *image)
 
   return 0;
 }
-
-/*
- * End of "$Id: plist.c,v 1.20 2014/01/04 00:31:37 rlk Exp $".
- */

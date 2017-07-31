@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.25 2014/02/03 16:04:21 jlabovitz Exp $
 ## Copyright (C) 2001 Andy Stewart and Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify

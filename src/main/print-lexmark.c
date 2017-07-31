@@ -1,6 +1,5 @@
 
 /*
- * "$Id: print-lexmark.c,v 1.165 2015/09/09 23:57:32 speachy Exp $"
  *
  *   Print plug-in Lexmark driver for the GIMP.
  *
@@ -952,7 +951,7 @@ get_media_type(const char *name, const lexmark_cap_t * caps)
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-function"
-#pragma GCC diagnostic ignored "-pedantic"
+#pragma GCC diagnostic ignored "-Wpedantic"
 static inline int
 lexmark_source_type(const char *name, const lexmark_cap_t * caps)
 {

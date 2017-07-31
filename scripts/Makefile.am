@@ -1,5 +1,4 @@
 ## Process this file with automake to produce Makefile.in
-## $Id: Makefile.am,v 1.5 2005/11/21 11:16:22 rleigh Exp $
 ## Copyright (C) 2000 Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -29,11 +28,11 @@ include $(top_srcdir)/scripts/global.mk
 EXTRA_DIST = \
 	autogen.sh \
 	global.mk \
-	mkchlog
+	mkgitlog
 
 
 ## Clean
 
 MAINTAINERCLEANFILES = \
-	Makefile.in
-
+	Makefile.in \
+	mkgitlog

@@ -1,5 +1,4 @@
 /*
- * "$Id: image.c,v 1.6 2004/09/17 18:38:21 rleigh Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *

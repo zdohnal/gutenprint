@@ -1,5 +1,4 @@
 /*
- * "$Id: array.h,v 1.1 2004/09/17 18:38:01 rleigh Exp $"
  *
  *   Copyright 2003 Roger Leigh (rleigh@debian.org)
  *

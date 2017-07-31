@@ -1,5 +1,4 @@
 /*
- * "$Id: color-conversions.c,v 1.20 2005/07/04 00:23:54 rlk Exp $"
  *
  *   Gimp-Print color management module - traditional Gimp-Print algorithm.
  *

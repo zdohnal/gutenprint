@@ -1,5 +1,4 @@
 /*
- * "$Id: print-dither-matrices.c,v 1.39 2014/01/04 00:31:38 rlk Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *

@@ -1,6 +1,4 @@
 /*
- * "$Id: genppd.c,v 1.205 2015/10/17 16:27:18 rlk Exp $"
- *
  *   PPD file generation program for the CUPS drivers.
  *
  *   Copyright 1993-2008 by Mike Sweet and Robert Krawitz.
@@ -57,6 +55,9 @@
 #include <ctype.h>
 #include <errno.h>
 #include <libgen.h>
+#include <strings.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #if defined(HAVE_VARARGS_H) && !defined(HAVE_STDARG_H)
 #include <varargs.h>
 #else
@@ -226,13 +227,6 @@ static int	write_ppd(gpFile fp, const stp_printer_t *p,
  * 'main()' - Process files on the command-line...
  */
 
-const char slang_c[] = "LANG=C";
-const char slcall_c[] = "LC_ALL=C";
-const char slcnumeric_c[] = "LC_NUMERIC=C";
-char lang_c[sizeof(slang_c) + 1];
-char lcall_c[sizeof(slcall_c) + 1];
-char lcnumeric_c[sizeof(slcnumeric_c) + 1];
-
 int				    /* O - Exit status */
 main(int  argc,			    /* I - Number of command-line arguments */
      char *argv[])		    /* I - Command-line arguments */
@@ -241,12 +235,9 @@ main(int  argc,			    /* I - Number of command-line arguments */
   * Force POSIX locale, since stp_init incorrectly calls setlocale...
   */
 
-  strcpy(lang_c, slang_c);
-  strcpy(lcall_c, slcall_c);
-  strcpy(lcnumeric_c, slcnumeric_c);
-  putenv(lang_c);
-  putenv(lcall_c);
-  putenv(lcnumeric_c);
+  (void) setenv("LANG", "C", 1);
+  (void) setenv("LC_ALL", "C", 1);
+  (void) setenv("LC_NUMERIC", "C", 1);
 
  /*
   * Initialise libgutenprint
@@ -465,6 +456,10 @@ main(int  argc,			    /* I - Number of command-line arguments */
   int           opt_printmodels = 0;/* Print available models */
   int           which_ppds = 2;	    /* Simplified PPD's = 1, full = 2,
 				       no color opts = 4 */
+  unsigned      parallel = 1;	    /* Generate PPD files in parallel */
+  unsigned      rotor = 0;	    /* Rotor for generating PPD files in parallel */
+  pid_t         *subprocesses = NULL;
+  int		parent = 1;
 
  /*
   * Parse command-line args...
@@ -609,6 +604,32 @@ main(int  argc,			    /* I - Number of command-line arguments */
   * Write PPD files...
   */
 
+  if (getenv("STP_PARALLEL"))
+    {
+      parallel = atoi(getenv("STP_PARALLEL"));
+      if (parallel < 1 || parallel > 256)
+	parallel = 1;
+    }
+  if (parallel)
+    {
+      subprocesses = stp_malloc(sizeof(pid_t) * parallel);
+      for (rotor = 0; rotor < parallel; rotor++)
+	{
+	  pid_t pid = fork();
+	  if (pid == 0)		/* Child */
+	    {
+	      parent = 0;
+	      break;
+	    }
+	  else if (pid > 0)
+	    subprocesses[rotor] = pid;
+	  else
+	    {
+	      fprintf(stderr, "Cannot fork: %s\n", strerror(errno));
+	      return 1;
+	    }
+	}
+    }
   if (models)
     {
       int n;
@@ -618,16 +639,19 @@ main(int  argc,			    /* I - Number of command-line arguments */
 	  if (!printer)
 	    printer = stp_get_printer_by_long_name(models[n]);
 
-	  if (printer)
+	  if (n % parallel == rotor && printer)
 	    {
-	      if (generate_model_ppds(prefix, verbose, printer, language,
-				      which_ppds))
-		return 1;
-	    }
-	  else
-	    {
-	      printf("Driver not found: %s\n", models[n]);
-	      return (1);
+	      if (printer)
+		{
+		  if (generate_model_ppds(prefix, verbose, printer, language,
+					  which_ppds))
+		    return 1;
+		}
+	      else
+		{
+		  printf("Driver not found: %s\n", models[n]);
+		  return (1);
+		}
 	    }
 	}
       stp_free(models);
@@ -637,16 +661,32 @@ main(int  argc,			    /* I - Number of command-line arguments */
       for (i = 0; i < stp_printer_model_count(); i++)
 	{
 	  printer = stp_get_printer_by_index(i);
-
-	  if (printer)
+	  
+	  if (i % parallel == rotor && printer)
 	    {
+	      if (! verbose && (i % 50) == 0)
+		fputc('.',stderr);
 	      if (generate_model_ppds(prefix, verbose, printer, language,
 				      which_ppds))
 		return 1;
 	    }
 	}
     }
-  if (!verbose)
+  if (subprocesses)
+    {
+      pid_t pid;
+      do
+	{
+	  int status;
+	  pid = waitpid(-1, &status, 0);
+	  if (pid > 0 && (!WIFEXITED(status) || WEXITSTATUS(status) != 0))
+	    {
+	      fprintf(stderr, "failed!\n");
+	      return 1;
+	    }
+	} while (pid > 0);
+    }
+  if (parent && !verbose)
     fprintf(stderr, " done.\n");
 
   return (0);
@@ -687,7 +727,6 @@ generate_ppd(
 		ppd_location[1024];	/* Installed location */
   struct stat   dir;                    /* Prefix dir status */
   const char    *ppd_infix;
-  static int	ppd_counter = 0; 	/* Notification counter */
 
  /*
   * Skip the PostScript drivers...
@@ -751,8 +790,6 @@ generate_ppd(
 
   if (verbose)
     fprintf(stderr, "Writing %s...\n", filename);
-  else if ((ppd_counter++ % 50) == 0)
-    fprintf(stderr, ".");
 
   snprintf(ppd_location, sizeof(ppd_location), "%s%s%s/%s",
 	   cups_modeldir,
@@ -1550,9 +1587,17 @@ print_one_option(gpFile fp, stp_vars_t *v, const stp_string_list_t *po,
   int skip_color = (ppd_type == PPD_NO_COLOR_OPTS && is_color_opt);
   if (is_color_opt)
     gpprintf(fp, "*ColorKeyWords: \"Stp%s\"\n", desc->name);
-  gpprintf(fp, "*OpenUI *Stp%s/%s: PickOne\n",
-	   desc->name, stp_i18n_lookup(po, desc->text));
-  gpprintf(fp, "*OrderDependency: 10 AnySetup *Stp%s\n", desc->name);
+
+#ifndef FULL_RAW
+  if (desc->p_type != STP_PARAMETER_TYPE_RAW)
+    {
+#endif
+      gpprintf(fp, "*OpenUI *Stp%s/%s: PickOne\n",
+	       desc->name, stp_i18n_lookup(po, desc->text));
+      gpprintf(fp, "*OrderDependency: 10 AnySetup *Stp%s\n", desc->name);
+#ifndef FULL_RAW
+    }
+#endif
   switch (desc->p_type)
     {
     case STP_PARAMETER_TYPE_STRING_LIST:
@@ -1588,6 +1633,22 @@ print_one_option(gpFile fp, stp_vars_t *v, const stp_string_list_t *po,
 	    gpprintf(fp, "*Stp%s %s/%s: \"\"\n",
 		     desc->name, opt->name, stp_i18n_lookup(po, opt->text));
 	}
+      break;
+    case STP_PARAMETER_TYPE_RAW:
+      print_close_ui = 0;
+#ifdef FULL_RAW /* XXX not sure if the standalone Custom... bit is sufficient */
+      gpprintf(fp, "*StpStp%s: %d %d %d %d %d %.3f %.3f %.3f\n",
+              desc->name, desc->p_type, desc->is_mandatory, desc->p_class,
+              desc->p_level, desc->channel, 0.0, 0.0, 0.0);
+      gpprintf(fp, "*DefaultStp%s: None\n", desc->name);
+      gpprintf(fp, "*StpDefaultStp%s: None\n", desc->name);
+      gpprintf(fp, "*Stp%s %s/%s: \"\"\n", desc->name, "None", _("None"));
+      gpprintf(fp, "*CloseUI: *Stp%s\n", desc->name);
+#endif
+      gpprintf(fp, "*CustomStp%s True: \"pop\"\n", desc->name);
+      gpprintf(fp, "*ParamCustomStp%s Text/%s: 1 string %d %d\n\n",
+              desc->name, _("Text"), 0, 0);
+
       break;
     case STP_PARAMETER_TYPE_BOOLEAN:
       gpprintf(fp, "*OPOptionHints Stp%s: \"checkbox\"\n", lparam->name);
@@ -1999,11 +2060,8 @@ write_ppd(
     }
   stp_parameter_description_destroy(&desc);
 
-  stp_describe_parameter(v, "NativeCopies", &desc);
-  if (desc.p_type == STP_PARAMETER_TYPE_BOOLEAN)
+  if (stp_check_boolean_parameter(v, "NativeCopies", STP_PARAMETER_ACTIVE))
     nativecopies = stp_get_boolean_parameter(v, "NativeCopies");
-
-  stp_parameter_description_destroy(&desc);
 
   if (nativecopies)
     gpputs(fp, "*cupsManualCopies: False\n");
@@ -2393,6 +2451,7 @@ write_ppd(
 	      if (lparam->p_class != j || lparam->p_level != k ||
 		  is_special_option(lparam->name) || lparam->read_only ||
 		  (lparam->p_type != STP_PARAMETER_TYPE_STRING_LIST &&
+		   lparam->p_type != STP_PARAMETER_TYPE_RAW &&
 		   lparam->p_type != STP_PARAMETER_TYPE_BOOLEAN &&
 		   lparam->p_type != STP_PARAMETER_TYPE_DIMENSION &&
 		   lparam->p_type != STP_PARAMETER_TYPE_INT &&
@@ -2431,33 +2490,6 @@ write_ppd(
 	  gpputs(fp, "\n");
 	}
     }
-  stp_parameter_description_destroy(&desc);
-
-  /* Constraints */
-  stp_describe_parameter(v, "PPDUIConstraints", &desc);
-  if (desc.is_active && desc.p_type == STP_PARAMETER_TYPE_STRING_LIST)
-    {
-      num_opts = stp_string_list_count(desc.bounds.str);
-      if (num_opts > 0)
-	{
-          gpputs(fp, "*% ===== Constraints ===== \n");
-	  for (i = 0; i < num_opts; i++)
-	    {
-	      char *opt1, *opt2;
-	      opt = stp_string_list_param(desc.bounds.str, i);
-	      opt1 = stp_strdup(opt->text);
-	      opt2 = strrchr(opt1, '*');
-	      if (opt2)
-	        {
-		  opt2[-1] = 0;
-		  gpprintf(fp, "*%s: %s %s\n", opt->name, opt1, opt2);
-		  gpprintf(fp, "*%s: %s %s\n", opt->name, opt2, opt1);
-		}
-	      stp_free(opt1);
-	    }
-	  gpputs(fp, "\n");      
-	}
-    }  
   stp_parameter_description_destroy(&desc);
 
   if (!language)
@@ -2739,8 +2771,3 @@ write_ppd(
 
   return (0);
 }
-
-
-/*
- * End of "$Id: genppd.c,v 1.205 2015/10/17 16:27:18 rlk Exp $".
- */

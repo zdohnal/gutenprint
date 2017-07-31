@@ -1,6 +1,4 @@
 /*
- * "$Id: curve-cache.h,v 1.2 2005/10/18 02:08:16 rlk Exp $"
- *
  *   Gimp-Print color management module - traditional Gimp-Print algorithm.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and

@@ -1,5 +1,4 @@
 /*
- * "$Id: print-weave.c,v 1.81 2012/05/26 16:03:19 rlk Exp $"
  *
  *   Softweave calculator for Gutenprint.
  *

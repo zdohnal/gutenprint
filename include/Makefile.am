@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.8 2006/09/22 13:29:50 faust3 Exp $
 ## Copyright (C) 2000,2004 Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify

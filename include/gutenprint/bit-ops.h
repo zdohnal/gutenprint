@@ -1,5 +1,4 @@
 /*
- * "$Id: bit-ops.h,v 1.5 2012/04/19 14:41:03 gernot2270 Exp $"
  *
  *   Softweave calculator for gimp-print.
  *

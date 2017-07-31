@@ -1,5 +1,4 @@
 /*
- * "$Id: print-canon.c,v 1.586 2015/10/01 15:22:29 gernot2270 Exp $"
  *
  *   Print plug-in CANON BJL driver for the GIMP.
  *
@@ -4609,11 +4608,19 @@ canon_init_setESC_P(const stp_vars_t *v, const canon_privdata_t *init)
   
   if ( init->caps->ESC_P_len == 9 ) /* support for new devices from October 2012. */
     {/* the 4th of the 6 bytes is the media type. 2nd byte is media size. Both read from canon-media array. */
-  
+
+      if ( !(strcmp(init->caps->name,"PIXMA MG7700")) ) {
+	/* output with 3 extra 0s at the end */
+	canon_cmd( v,ESC28,0x50,12,0x00,arg_ESCP_1,0x00,arg_ESCP_2,0x01,0x00,0x01,0x00,arg_ESCP_9,0x00,0x00,0x00);
+      }
+      else {
+      
       /* arg_ESCP_1 = 0x03; */ /* A4 size */
       /* arg_ESCP_2 = 0x00; */ /* plain media */
       /*                             size                media                      tray */
       canon_cmd( v,ESC28,0x50,9,0x00,arg_ESCP_1,0x00,arg_ESCP_2,0x01,0x00,0x01,0x00,arg_ESCP_9);
+
+      }
     }
   else if ( init->caps->ESC_P_len == 8 ) /* support for new devices from 2012. */
     {/* the 4th of the 6 bytes is the media type. 2nd byte is media size. Both read from canon-media array. */
@@ -4943,7 +4950,7 @@ canon_init_setImage(const stp_vars_t *v, const canon_privdata_t *init)
        generic condition based on CANON_INK_CMY */
     if (init->used_inks == CANON_INK_CMY) arg_74_3= 0x02; /* for BC-06 cartridge!!! */
     /* example of better way: for BJC-3000 series */
-    if  (!strcmp(init->caps->name,"3000") || !strcmp(init->caps->name,"4300")) {
+    if  ( !strcmp(init->caps->name,"3000") || !strcmp(init->caps->name,"4300")) {
       /* but if photo cartridge selection, set differently again */
       if (init->mode->flags & MODE_FLAG_PHOTO)
 	arg_74_3= 0x0a;
@@ -4954,6 +4961,15 @@ canon_init_setImage(const stp_vars_t *v, const canon_privdata_t *init)
 	/* other media */
 	arg_74_3= 0x09; /* return to default after broken code above */
     }
+    if  ( (!strcmp(init->caps->name,"2000")) || (!strcmp(init->caps->name,"2100")) ) {
+      /* but if photo cartridge selection, set differently again */
+      if (init->mode->flags & MODE_FLAG_PHOTO)
+	arg_74_3= 0x0a;
+      else
+	/* other media */
+	arg_74_3= 0x09; /* return to default after broken code above */
+    }
+
   }
 
   /* workaround for the bjc8200 in 6color mode - not really understood */

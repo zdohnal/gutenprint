@@ -1,5 +1,4 @@
 /*
- * "$Id: printer_options.c,v 1.7 2015/10/04 15:09:54 rlk Exp $"
  *
  *   Dump the per-printer options for the OpenPrinting database
  *

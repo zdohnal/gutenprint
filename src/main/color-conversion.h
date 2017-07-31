@@ -1,5 +1,4 @@
 /*
- * "$Id: color-conversion.h,v 1.12 2008/01/21 23:19:39 rlk Exp $"
  *
  *   Gutenprint color management module - traditional Gimp-Print algorithm.
  *

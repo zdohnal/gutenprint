@@ -1,4 +1,3 @@
-.\" $Id: cups-genppdupdate.8.in,v 1.5 2006/03/29 02:35:25 rlk Exp $
 .\" Copyright (C) 2000 Roger Leigh <rleigh@debian.org>
 .\"
 .\" This program is free software; you can redistribute it and/or modify
@@ -38,8 +37,7 @@ Gutenprint PPD files in \fI@cups_conf_serverroot@/ppd\fP.  Otherwise,
 \fBcups\-genppdupdate\fP updates all files or queues listed on the command
 line.
 .PP
-\fBcups\-genppdupdate\fP does not update Foomatic PPD files or PPD files from
-Gimp-Print 4.2 or earlier.
+\fBcups\-genppdupdate\fP does not update PPD files from Gimp-Print 4.2 or earlier.
 .PP
 \fBcups\-genppdupdate\fP does \fBnot\fP restart cupsd.  cupsd will need
 manually reloading (or send SIGHUP) once \fBcups\-genppdupdate\fP has

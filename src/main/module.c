@@ -1,5 +1,4 @@
 /*
- * "$Id: module.c,v 1.27 2012/01/19 13:25:40 m0m Exp $"
  *
  *   Gutenprint module loader - load modules with libltdl/libdl.
  *
@@ -43,9 +42,12 @@ typedef struct stpi_internal_module_class
 
 static void module_list_freefunc(void *item);
 static int stp_module_register(stp_module_t *module);
-#ifdef USE_DLOPEN
+#if defined(MODULE) && defined(USE_DLOPEN)
 static void *stp_dlsym(void *handle, const char *symbol, const char *modulename);
 #endif
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-const-variable"
 
 static const stpi_internal_module_class_t module_classes[] =
   {
@@ -55,12 +57,14 @@ static const stpi_internal_module_class_t module_classes[] =
     {STP_MODULE_CLASS_DITHER, N_("Dither algorithm")},
     {STP_MODULE_CLASS_INVALID, NULL} /* Must be last */
   };
+#pragma GCC diagnostic pop
 
-#if !defined(USE_LTDL) && !defined(USE_DLOPEN)
+#if !defined(MODULE)
 extern stp_module_t print_canon_LTX_stp_module_data;
 extern stp_module_t print_escp2_LTX_stp_module_data;
 extern stp_module_t print_lexmark_LTX_stp_module_data;
 extern stp_module_t print_pcl_LTX_stp_module_data;
+extern stp_module_t print_dpl_LTX_stp_module_data;
 extern stp_module_t print_ps_LTX_stp_module_data;
 extern stp_module_t print_dyesub_LTX_stp_module_data;
 extern stp_module_t print_raw_LTX_stp_module_data;
@@ -75,6 +79,7 @@ static stp_module_t *static_modules[] =
     &print_canon_LTX_stp_module_data,
     &print_escp2_LTX_stp_module_data,
     &print_pcl_LTX_stp_module_data,
+    &print_dpl_LTX_stp_module_data,
     &print_lexmark_LTX_stp_module_data,
     &print_dyesub_LTX_stp_module_data,
     &print_raw_LTX_stp_module_data,
@@ -95,7 +100,7 @@ module_list_freefunc(void *item /* module to remove */)
   stp_module_t *module = (stp_module_t *) item;
   if (module && module->fini) /* Call the module exit function */
     module->fini();
-#if defined(USE_LTDL) || defined(USE_DLOPEN)
+#if defined(MODULE)
   if (module && module->handle)
     DLCLOSE(module->handle); /* Close the module if it's not static */
 #endif
@@ -112,7 +117,7 @@ int stp_module_load(void)
   static int ltdl_is_initialised = 0;        /* Is libltdl initialised? */
 #endif
   static int module_list_is_initialised = 0; /* Is the module list initialised? */
-#if defined(USE_LTDL) || defined(USE_DLOPEN)
+#if defined(MODULE)
   stp_list_t *dir_list;                      /* List of directories to scan */
   stp_list_t *file_list;                     /* List of modules to open */
   stp_list_item_t *file;                     /* Pointer to current module */
@@ -142,7 +147,7 @@ int stp_module_load(void)
     }
 
   /* search for available modules */
-#if defined (USE_LTDL) || defined (USE_DLOPEN)
+#if defined(MODULE)
   if (!(dir_list = stp_list_create()))
     return 1;
   stp_list_set_freefunc(dir_list, stp_list_node_free_data);
@@ -239,7 +244,7 @@ stp_module_get_class(stp_module_class_t class /* Module class */)
 int
 stp_module_open(const char *modulename /* Module filename */)
 {
-#if defined(USE_LTDL) || defined(USE_DLOPEN)
+#if defined(MODULE)
 #ifdef USE_LTDL
   lt_dlhandle module;                  /* Handle for module */
 #else
@@ -360,7 +365,7 @@ stp_module_close(stp_list_item_t *module /* Module to close */)
 /*
  * If using dlopen, add modulename_LTX_ to symbol name
  */
-#ifdef USE_DLOPEN
+#if defined(MODULE) && defined(USE_DLOPEN)
 static void *stp_dlsym(void *handle,           /* Module */
 		       const char *symbol,     /* Symbol name */
 		       const char *modulename) /* Module name */

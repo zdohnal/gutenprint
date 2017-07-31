@@ -1,5 +1,4 @@
 /*
- * "$Id: array.c,v 1.17 2010/08/04 00:33:55 rlk Exp $"
  *
  *   Array data type.  This type is designed to be derived from by
  *   the curve and dither matrix types.

@@ -1,6 +1,4 @@
 /*
- * "$Id: rastertoprinter.c,v 1.143 2014/01/04 00:31:37 rlk Exp $"
- *
  *   Gutenprint based raster filter for the Common UNIX Printing System.
  *
  *   Copyright 1993-2008 by Mike Sweet.
@@ -53,6 +51,8 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/times.h>
+#include <strings.h>
+#include <sys/time.h>
 #ifdef HAVE_LIMITS_H
 #include <limits.h>
 #endif
@@ -1091,11 +1091,9 @@ main(int  argc,				/* I - Number of command-line arguments */
   stp_vars_t		*default_settings;
   int			initialized_job = 0;
   const char            *version_id;
-  const char            *release_version_id;
   struct tms		tms;
   long			clocks_per_sec;
   struct timeval	t1, t2;
-  struct timezone	tz;
   char			*page_size_name = NULL;
   int			aborted = 0;
 #ifdef ENABLE_CUPS_LOAD_SAVE_OPTIONS
@@ -1123,11 +1121,9 @@ main(int  argc,				/* I - Number of command-line arguments */
 
   theImage.rep = &cups;
 
-  (void) gettimeofday(&t1, &tz);
+  (void) gettimeofday(&t1, NULL);
   stp_init();
   version_id = stp_get_version();
-  release_version_id = stp_get_release_version();
-  default_settings = stp_vars_create();
 
  /*
   * Check for valid arguments...
@@ -1209,13 +1205,13 @@ main(int  argc,				/* I - Number of command-line arguments */
 		strlen(CUPS_PPD_NICKNAME_STRING)) != ' ')))
   {
     stp_i18n_printf(po, _("ERROR: The PPD version (%s) is not compatible with "
-                          "Gutenprint %s.\n"),
+                          "Gutenprint %s.  Please run `%scups-genppdupdate' as administrator.\n"),
 	            ppd->nickname+strlen(ppd->modelname)+strlen(CUPS_PPD_NICKNAME_STRING),
-	            version_id);
+	            version_id, SBINDIR);
     fprintf(stderr, "DEBUG: Gutenprint: If you have upgraded your version of Gutenprint\n");
     fprintf(stderr, "DEBUG: Gutenprint: recently, you must reinstall all printer queues.\n");
     fprintf(stderr, "DEBUG: Gutenprint: If the previous installed version of Gutenprint\n");
-    fprintf(stderr, "DEBUG: Gutenprint: was 5.0.0 or higher, you can use the `cups-genppdupdate.%s'\n", release_version_id);
+    fprintf(stderr, "DEBUG: Gutenprint: was 5.0.0 or higher, you can use the `cups-genppdupdate'\n");
     fprintf(stderr, "DEBUG: Gutenprint: program to do this; if the previous installed version\n");
     fprintf(stderr, "DEBUG: Gutenprint: was older, you can use the Modify Printer command via\n");
     fprintf(stderr, "DEBUG: Gutenprint: the CUPS web interface: http://localhost:631/printers.\n");
@@ -1293,6 +1289,7 @@ main(int  argc,				/* I - Number of command-line arguments */
   if (! suppress_messages)
     fprintf(stderr, "DEBUG: Gutenprint: Using fd %d\n", fd);
 
+  default_settings = stp_vars_create_copy(stp_printer_get_defaults(printer));
   stp_set_printer_defaults(default_settings, printer);
 #ifdef ENABLE_CUPS_LOAD_SAVE_OPTIONS
   if (load_file_name)
@@ -1355,7 +1352,16 @@ main(int  argc,				/* I - Number of command-line arguments */
 	  fprintf(stderr, "DEBUG: Gutenprint: Interim page settings:\n");
 	  stpi_vars_print_error(v, "DEBUG");
 	}
+
       stp_merge_printvars(v, stp_printer_get_defaults(printer));
+
+      /* Pass along Collation settings */
+      stp_set_boolean_parameter(v, "Collate", cups.header.Collate);
+      stp_set_boolean_parameter_active(v, "Collate", STP_PARAMETER_ACTIVE);
+      /* Pass along Copy settings */
+      stp_set_int_parameter(v, "NumCopies", cups.header.NumCopies);
+      stp_set_int_parameter_active(v, "NumCopies", STP_PARAMETER_ACTIVE);
+      /* Pass along the page number */
       stp_set_int_parameter(v, "PageNumber", cups.page);
       cups.row = 0;
       if (! suppress_messages)
@@ -1406,7 +1412,7 @@ main(int  argc,				/* I - Number of command-line arguments */
     }
   cupsRasterClose(cups.ras);
   (void) times(&tms);
-  (void) gettimeofday(&t2, &tz);
+  (void) gettimeofday(&t2, NULL);
   clocks_per_sec = sysconf(_SC_CLK_TCK);
   fprintf(stderr, "DEBUG: Gutenprint: stats %.0fB, %.3fu, %.3fs, %.3fel\n",
 	  total_bytes_printed,
@@ -1707,8 +1713,3 @@ Image_width(stp_image_t *image)	/* I - Image */
     fprintf(stderr, "DEBUG: Gutenprint: Image_width %d\n", cups->adjusted_width);
   return (cups->adjusted_width);
 }
-
-
-/*
- * End of "$Id: rastertoprinter.c,v 1.143 2014/01/04 00:31:37 rlk Exp $".
- */

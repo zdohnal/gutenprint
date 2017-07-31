@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-very-fast.c,v 1.15 2004/09/17 18:38:20 rleigh Exp $"
  *
  *   Very fast dither algorithm
  *

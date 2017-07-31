@@ -1,6 +1,4 @@
 /*
- * "$Id: color.h,v 1.2 2005/10/18 02:08:16 rlk Exp $"
- *
  *   libgimpprint color functions.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
@@ -138,6 +136,3 @@ stp_color_get_long_name(const stp_color_t *c);
 
 
 #endif /* GUTENPRINT_COLOR_H */
-/*
- * End of "$Id: color.h,v 1.2 2005/10/18 02:08:16 rlk Exp $".
- */

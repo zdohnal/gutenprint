@@ -1,5 +1,4 @@
 /*
- * "$Id: testpattern.h,v 1.21 2014/01/23 13:22:41 rlk Exp $"
  *
  *   Test pattern generator for Gimp-Print
  *

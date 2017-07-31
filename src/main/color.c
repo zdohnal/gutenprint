@@ -1,5 +1,4 @@
 /*
- * "$Id: color.c,v 1.11 2010/08/04 00:33:56 rlk Exp $"
  *
  *   Gimp-Print color module interface.
  *
@@ -44,8 +43,7 @@ static stp_list_t *color_list = NULL;
 static int
 stpi_init_color_list(void)
 {
-  if(color_list)
-    stp_list_destroy(color_list);
+  STPI_ASSERT(color_list == NULL, NULL);
   color_list = stp_list_create();
   stp_list_set_namefunc(color_list, stpi_color_namefunc);
   stp_list_set_long_namefunc(color_list, stpi_color_long_namefunc);

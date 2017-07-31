@@ -1,5 +1,4 @@
 /*
- * "$Id: curve-cache.c,v 1.6 2005/10/18 02:08:17 rlk Exp $"
  *
  *   Gimp-Print color management module - traditional Gimp-Print algorithm.
  *

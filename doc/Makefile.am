@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.50 2012/05/26 19:09:01 rlk Exp $
 ## Copyright (C) 2000 Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -75,7 +74,8 @@ install-data-local: FAQ.html gutenprint-users-manual.odt gutenprint-users-manual
 ## Clean
 
 maintainer-clean-local:
-	$(RM) -r gutenprint
+	$(RM) -rf gutenprint
+	$(RM) -rf gutenprintui2
 
 MAINTAINERCLEANFILES = \
 	Makefile.in \

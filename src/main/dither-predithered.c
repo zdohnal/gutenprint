@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-predithered.c,v 1.3 2005/07/28 01:00:51 rlk Exp $"
  *
  *   Very fast dither algorithm
  *

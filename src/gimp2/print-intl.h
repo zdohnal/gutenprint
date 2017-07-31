@@ -1,5 +1,4 @@
 /*
- * "$Id: print-intl.h,v 1.3 2004/09/17 18:38:13 rleigh Exp $"
  *
  *   I18N header file for the GIMP2 Print plugin.
  *

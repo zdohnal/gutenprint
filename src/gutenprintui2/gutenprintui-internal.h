@@ -1,5 +1,4 @@
 /*
- * "$Id: gutenprintui-internal.h,v 1.6 2014/01/04 00:31:37 rlk Exp $"
  *
  *   Print plug-in for the GIMP.
  *

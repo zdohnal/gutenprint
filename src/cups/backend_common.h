@@ -1,7 +1,7 @@
 /*
  *   CUPS Backend common code
  *
- *   (c) 2013-2015 Solomon Peachy <pizza@shaftnet.org>
+ *   (c) 2013-2016 Solomon Peachy <pizza@shaftnet.org>
  *
  *   The latest version of this program can be found at:
  *
@@ -95,27 +95,37 @@ enum {
 	P_CP790,
 	P_CP_XXX,
 	P_CP10,
+	P_CP910,
 	P_KODAK_6800,
 	P_KODAK_6850,
 	P_KODAK_1400_805,
 	P_KODAK_605,
+	P_KODAK_305,
 	P_SHINKO_S2145,
 	P_SHINKO_S1245,
 	P_SHINKO_S6245,
-	P_SHINKO_S6145,	
-        P_SHINKO_S6145D,
+	P_SHINKO_S6145,
+	P_SHINKO_S6145D,
 	P_SONY_UPDR150,
 	P_SONY_UPCR10,
 	P_MITSU_D70X,
-	P_MITSU_K60,	
+	P_MITSU_D80,
+	P_MITSU_K60,
 	P_MITSU_9550,
-	P_MITSU_9550S,	
+	P_MITSU_9550S,
+	P_MITSU_9600,
+	P_MITSU_9800,
+	P_MITSU_9800S,
+	P_MITSU_9810,
+	P_MITSU_P95D,
 	P_DNP_DS40,
 	P_DNP_DS80,
 	P_DNP_DS80D,
 	P_CITIZEN_CW01,
 	P_DNP_DSRX1,
 	P_DNP_DS620,
+	P_DNP_DS820,
+	P_FUJI_ASK300,
 	P_END,
 };
 
@@ -131,7 +141,7 @@ struct dyesub_backend {
 	char *name;
 	char *version;
 	char *uri_prefix;
-	void (*cmdline_usage)(void);
+	void (*cmdline_usage)(void);  /* Optional */
 	void *(*init)(void);
 	void (*attach)(void *ctx, struct libusb_device_handle *dev,
 		       uint8_t endp_up, uint8_t endp_down, uint8_t jobid);
@@ -139,7 +149,7 @@ struct dyesub_backend {
 	int  (*cmdline_arg)(void *ctx, int argc, char **argv);
 	int  (*read_parse)(void *ctx, int data_fd);
 	int  (*main_loop)(void *ctx, int copies);
-	int  (*query_serno)(struct libusb_device_handle *dev, uint8_t endp_up, uint8_t endp_down, char *buf, int buf_len);
+	int  (*query_serno)(struct libusb_device_handle *dev, uint8_t endp_up, uint8_t endp_down, char *buf, int buf_len); /* Optional */
 	struct device_id devices[];
 };
 
@@ -154,6 +164,7 @@ void print_license_blurb(void);
 void print_help(char *argv0, struct dyesub_backend *backend);
 
 uint16_t uint16_to_packed_bcd(uint16_t val);
+uint32_t packed_bcd_to_uint32(char *in, int len);
 
 /* Global data */
 extern int terminate;
@@ -163,8 +174,6 @@ extern int extra_vid;
 extern int extra_pid;
 extern int extra_type;
 extern int copies;
-extern char *use_serno;
-extern int current_page;
 
 #if defined(BACKEND)
 extern struct dyesub_backend BACKEND;
@@ -181,7 +190,7 @@ extern struct dyesub_backend BACKEND;
 #define CUPS_BACKEND_RETRY_CURRENT 7 /* Retry immediately */
 
 /* Argument processing */
-#define GETOPT_LIST_GLOBAL "d:DfGhP:S:T:V:"
+#define GETOPT_LIST_GLOBAL "d:DfGh"
 #define GETOPT_PROCESS_GLOBAL \
 			case 'd': \
 				copies = atoi(optarg); \
@@ -197,18 +206,6 @@ extern struct dyesub_backend BACKEND;
 				exit(0); \
 			case 'h': \
 				print_help(argv[0], &BACKEND); \
-				exit(0); \
-			case 'P': \
-				extra_pid = strtol(optarg, NULL, 16); \
-				break; \
-			case 'S': \
-				use_serno = optarg; \
-				break; \
-			case 'T': \
-				extra_type = atoi(optarg); \
-				break; \
-			case 'V': \
-				extra_pid = strtol(optarg, NULL, 16); \
-				break;
+				exit(0);
 
 #endif /* __BACKEND_COMMON_H */

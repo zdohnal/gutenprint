@@ -1,5 +1,4 @@
 /*
- * "$Id: escp2-papers.c,v 1.120 2013/12/14 19:36:29 rlk Exp $"
  *
  *   Print plug-in EPSON ESC/P2 driver for the GIMP.
  *
@@ -27,6 +26,7 @@
 #include <gutenprint/gutenprint.h>
 #include "gutenprint-internal.h"
 #include <gutenprint/gutenprint-intl-internal.h>
+#include <strings.h>
 #include "print-escp2.h"
 
 static stp_mxml_node_t *

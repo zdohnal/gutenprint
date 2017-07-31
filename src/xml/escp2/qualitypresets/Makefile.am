@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.5 2011/12/14 03:02:58 rlk Exp $
 ## Copyright (C) 2008 Robert Krawitz
 ##
 ## This program is free software; you can redistribute it and/or modify

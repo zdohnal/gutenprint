@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-main.c,v 1.63 2010/12/05 21:38:14 rlk Exp $"
  *
  *   Dither routine entrypoints
  *

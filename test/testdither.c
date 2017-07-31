@@ -1,6 +1,4 @@
 /*
- * "$Id: testdither.c,v 1.49 2006/05/07 13:26:27 rlk Exp $"
- *
  *   Test/profiling program for dithering code.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com)
@@ -1006,8 +1004,3 @@ write_photo(FILE          *fp,
     }
   }
 }
-
-
-/*
- * End of "$Id: testdither.c,v 1.49 2006/05/07 13:26:27 rlk Exp $".
- */

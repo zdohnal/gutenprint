@@ -1,5 +1,4 @@
 /*
- * "$Id: print-papers.c,v 1.44 2015/09/07 21:57:37 speachy Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *

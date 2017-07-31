@@ -1,4 +1,3 @@
-dnl $Id: configure.ac,v 1.269 2016/01/14 03:02:49 rlk Exp $
 dnl Copyright (C) 2001-2004 Roger Leigh
 dnl 
 dnl This program is free software; you can redistribute it and/or modify
@@ -77,17 +76,17 @@ dnl
 pushdef([GUTENPRINT_NAME],              [gutenprint])
 pushdef([GUTENPRINT_MAJOR_VERSION],     [5])
 pushdef([GUTENPRINT_MINOR_VERSION],     [2])
-pushdef([GUTENPRINT_MICRO_VERSION],     [11])
+pushdef([GUTENPRINT_MICRO_VERSION],     [12])
 pushdef([GUTENPRINT_EXTRA_VERSION],     [])
-pushdef([GUTENPRINT_CURRENT_INTERFACE], [6])
-pushdef([GUTENPRINT_BINARY_AGE],        [4])
+pushdef([GUTENPRINT_CURRENT_INTERFACE], [7])
+pushdef([GUTENPRINT_BINARY_AGE],        [5])
 pushdef([GUTENPRINTUI2_CURRENT_INTERFACE], [1])
 pushdef([GUTENPRINTUI2_BINARY_AGE],        [0])
 pushdef([GUTENPRINT_VERSION], GUTENPRINT_MAJOR_VERSION.GUTENPRINT_MINOR_VERSION.GUTENPRINT_MICRO_VERSION[]GUTENPRINT_EXTRA_VERSION)
 
 AC_INIT(GUTENPRINT_NAME, GUTENPRINT_VERSION, [gimp-print-devel@lists.sourceforge.net])
 AC_PREREQ(2.53)
-AC_REVISION($Revision: 1.269 $)
+AC_REVISION($Revision$)
 AC_CONFIG_SRCDIR(src/main/print-vars.c)
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR(scripts)
@@ -217,7 +216,7 @@ AC_DEFINE_UNQUOTED(OSTYPE, ["${OSTYPE}"], [The operating system to build for])
 
 
 dnl Command line options.
-AC_PATH_PROG(CUPS_CONFIG, cups-config)
+AC_PATH_TOOL(CUPS_CONFIG, cups-config)
 if test -z "${CUPS_CONFIG}" ; then
   BUILD_CUPS="no"
 else
@@ -344,45 +343,6 @@ ENABLE_SHARED="$enable_shared"
 AC_DEFINE_UNQUOTED(ENABLE_SHARED, "${ENABLE_SHARED}", [Shared libraries are built.])
 AC_SUBST(ENABLE_SHARED)
 
-AC_PATH_PROG(FOOMATIC_CONFIGURE, foomatic-configure)
-if test -z "${FOOMATIC_CONFIGURE}" ; then
-  BUILD_FOOMATIC="no"
-else
-  BUILD_FOOMATIC="yes"
-fi
-STP_ARG_WITH([foomatic],
-             [build foomatic data files],
-             [BUILD_FOOMATIC],
-             [(automatic)])
-
-
-AC_PATH_PROG(FOOMATIC_PPDFILE, foomatic-ppdfile)
-if test -z "${FOOMATIC_PPDFILE}" ; then
-  BUILD_FOOMATIC_3="no"
-else
-  BUILD_FOOMATIC_3="yes"
-fi
-STP_ARG_WITH([foomatic3],
-             [make use of foomatic 3 extra features],
-             [BUILD_FOOMATIC_3],
-             [(automatic)])
-
-if test "$BUILD_FOOMATIC_3" = "yes" ; then
-   BUILD_FOOMATIC=yes
-fi
-
-AC_PATH_PROG(IJS_CONFIG, ijs-config)
-
-if test -z "${IJS_CONFIG}"  ; then
-  BUILD_GHOSTSCRIPT="no"
-else
-  BUILD_GHOSTSCRIPT="yes"
-fi
-STP_ARG_WITH([ghostscript],
-             [build Ghostscript driver],
-             [BUILD_GHOSTSCRIPT],
-             [(automatic)])
-
 STP_ARG_WITH_DETAILED([modules],
                       [],
                       [enable loadable modules],
@@ -442,14 +402,16 @@ dnl if test -z "${[EXTRA_LIBREADLINE_DEPS]}" ; then
 dnl   [EXTRA_LIBREADLINE_DEPS]=""
 dnl fi
 
-# libusb-1.0 (For CUPS backends)
-PKG_CHECK_MODULES([LIBUSB], [libusb-1.0],
-                  [HAVE_LIBUSB=yes
-                   BUILD_LIBUSB_BACKENDS=yes],
-                  [HAVE_LIBUSB=no
-	           BUILD_LIBUSB_BACKENDS=no])
+# libusb-1.0 (For CUPS backends, but only bother if CUPS is enabled)
+if test "x$BUILD_CUPS" = "xyes" ; then
+ PKG_CHECK_MODULES([LIBUSB], [libusb-1.0],
+                   [HAVE_LIBUSB=yes
+                    BUILD_LIBUSB_BACKENDS=yes],
+                   [HAVE_LIBUSB=no
+	            BUILD_LIBUSB_BACKENDS=no])
+fi
 
-AC_PATH_PROGS([GIMPTOOL2_CHECK], [gimptool-2.0 gimptool])
+AC_PATH_TOOL([GIMPTOOL2_CHECK], [gimptool-2.0 gimptool])
 if test -z "${GIMPTOOL2_CHECK}" ; then
   BUILD_GIMP2="no"
 else
@@ -541,7 +503,7 @@ fi
 dnl aclocal flags.
 dnl AM_ACLOCAL_INCLUDE(m4 m4local)
 
-dnl Checks for programs.
+dnl Checks for programs used in the build process
 AM_ICONV_LINK
 AC_ISC_POSIX
 AC_PROG_AWK
@@ -552,6 +514,8 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AM_PROG_LEX
 AC_PROG_YACC
+AC_PROG_MKDIR_P
+AC_PATH_PROG([BZIP2], [bzip2])
 AC_PATH_PROG([TEST], [test])
 AC_PATH_PROG([TRUE], [true])
 AC_PATH_PROG([FIND], [find])
@@ -608,24 +572,6 @@ fi
 
 dnl CUPS checks
 STP_CUPS_PROGS
-
-dnl foomatic checks
-if test x${BUILD_FOOMATIC} = xyes ; then
-  PATH_SBIN=$PATH:/usr/sbin:/usr/local/sbin
-  AC_PATH_PROG(FOOMATIC_KITLOAD, foomatic-kitload, , [$PATH_SBIN])
-  if test -z "$FOOMATIC_KITLOAD" ; then
-    AC_MSG_WARN(Cannot find foomatic-kitload; attempt to install foomatic will fail)
-  fi
-fi
-
-dnl ijs checks
-if test x${BUILD_GHOSTSCRIPT} = xyes ; then
-  if test -z "$IJS_CONFIG" ; then
-    AC_MSG_ERROR(Cannot find ijs-config; please ensure Ghostscript 6.53 or above is installed);
-  fi
-  IJS_CFLAGS=`$IJS_CONFIG --cflags`
-  IJS_LIBS=`$IJS_CONFIG --libs`
-fi
 
 GUTENPRINT_RELEASE_VERSION=${GUTENPRINT_MAJOR_VERSION}.${GUTENPRINT_MINOR_VERSION}
 AH_TEMPLATE(GUTENPRINT_RELEASE_VERSION,, [Gutenprint release version])
@@ -696,7 +642,7 @@ dnl Compiler flags
 if test x$ac_compiler_gnu = "xyes"; then
   STP_ADD_COMPILER_ARGS([-Wall -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wwrite-strings -Werror-implicit-function-declaration -Winline -Wformat=2 -finline-limit=131072],, [GNUCFLAGS])
   if test x${USE_MAINTAINER_MODE} = xyes ; then
-    STP_ADD_COMPILER_ARGS([-pedantic -Waggregate-return -Wcast-qual -Wshadow -Wredundant-decls],, [GNUCFLAGS])
+    STP_ADD_COMPILER_ARGS([-D_POSIX_C_SOURCE=200809L -std=c99 -pedantic -Waggregate-return -Wcast-qual -Wshadow -Wredundant-decls],, [GNUCFLAGS])
   fi
   if test x$ENABLE_DEBUG = xyes ; then
     STP_ADD_COMPILER_ARG([-g])
@@ -847,12 +793,6 @@ dnl which to use...
 AC_SEARCH_LIBS(finite, m, CFLAGS="-Disfinite=finite $CFLAGS")
 
 dnl Define what has to be built
-AM_CONDITIONAL(BUILD_FOOMATIC, test x${BUILD_FOOMATIC} = xyes)
-
-AM_CONDITIONAL(BUILD_FOOMATIC_3, test x${BUILD_FOOMATIC_3} = xyes)
-
-AM_CONDITIONAL(BUILD_GHOSTSCRIPT, test x${BUILD_GHOSTSCRIPT} = xyes)
-
 AM_CONDITIONAL(BUILD_CUPS, test x${BUILD_CUPS} = xyes)
 
 AM_CONDITIONAL(BUILD_CUPS_1_2, test x${BUILD_CUPS_1_2} = xyes)
@@ -909,6 +849,7 @@ if test -n "$HAVE_DLFCN_H"; then
     DLOPEN_POSSIBLE="true"
   fi
 fi
+
 # define what the user chose to build, if possible.
 # Prefer dlopen over ltdl.
 if test x$WITH_MODULES = xyes; then
@@ -926,21 +867,41 @@ elif test x$WITH_MODULES = xdlopen; then
     USE_DLOPEN="true"
   fi
 fi
+
+# The current backends can use dlopen or libltdl
+if test x$BUILD_LIBUSB_BACKENDS = xyes; then
+  if test x$DLOPEN_POSSIBLE = xtrue; then
+    USE_DLOPEN="true"
+  elif test x$LDTL_POSSIBLE = xtrue; then
+    USE_LTDL="true"
+  fi
+fi
+
 # define what module system is to be used
 AC_MSG_CHECKING([which module system will be used])
 if test x$USE_LTDL = xtrue; then
-  MODULE="true"
-  AC_DEFINE(MODULE, "1", [Build a modular libgutenprint])
+  if test -z "$WITH_MODULES" -o x$WITH_MODULES = xno -o x$WITH_MODULES = xstatic ; then
+    MODULE="false"
+  else
+    MODULE="true"
+    AC_DEFINE(MODULE, "1", [Build a modular libgutenprint])
+    GUTENPRINT_LIBDEPS="${GUTENPRINT_LIBDEPS} ${LTDL_LIBS}"
+    gutenprint_libdeps="${gutenprint_libdeps} ${LTDL_LIBS}"
+  fi
+  LIBUSB_BACKEND_LIBDEPS="${LIBUSB_BACKEND_LIBDEPS} ${LTDL_LIBS}"  
   AC_DEFINE(USE_LTDL, "1", [Use GNU libltdl as module loader])
-  GUTENPRINT_LIBDEPS="${GUTENPRINT_LIBDEPS} ${LTDL_LIBS}"
-  gutenprint_libdeps="${gutenprint_libdeps} ${LTDL_LIBS}"
   AC_MSG_RESULT([ltdl])
 elif test x$USE_DLOPEN = xtrue; then
-  MODULE="true"
-  AC_DEFINE(MODULE, "1", [Build a modular libgutenprint])
+  if test -z "$WITH_MODULES" -o x$WITH_MODULES = xno -o x$WITH_MODULES = xstatic ; then
+    MODULE="false"
+  else
+    MODULE="true"
+    AC_DEFINE(MODULE, "1", [Build a modular libgutenprint])
+    GUTENPRINT_LIBDEPS="${GUTENPRINT_LIBDEPS} ${DLOPEN_LIBS}"
+    gutenprint_libdeps="${gutenprint_libdeps} ${DLOPEN_LIBS}"    
+  fi
+  LIBUSB_BACKEND_LIBDEPS="${LIBUSB_BACKEND_LIBDEPS} ${DLOPEN_LIBS}"
   AC_DEFINE(USE_DLOPEN, "1", [Use libdl/dlopen as module loader])
-  GUTENPRINT_LIBDEPS="${GUTENPRINT_LIBDEPS} ${DLOPEN_LIBS}"
-  gutenprint_libdeps="${gutenprint_libdeps} ${DLOPEN_LIBS}"
   AC_MSG_RESULT([dlopen])
 else
   MODULE="false"
@@ -995,10 +956,7 @@ AC_SUBST(cups_conf_serverroot)
 AC_SUBST(CUPS_CFLAGS)
 AC_SUBST(CUPS_LIBS)
 AC_SUBST(CUPS_PPD_PS_LEVEL)
-AC_SUBST(FOOMATIC_KITLOAD)
 AC_SUBST(GENPPD_LIBS)
-AC_SUBST(IJS_CFLAGS)
-AC_SUBST(IJS_LIBS)
 AC_SUBST(RM)
 AC_SUBST(GIMP2_CFLAGS)
 AC_SUBST(GIMP2_LIBS)
@@ -1027,6 +985,7 @@ AC_SUBST(WHICH_PPDS)
 AC_SUBST(BUILD_CUPS_PPDS)
 AC_SUBST(GUTENPRINT_BASE_VERSION)
 AC_SUBST(GUTENPRINT_RELEASE_VERSION)
+AC_SUBST(LIBUSB_BACKEND_LIBDEPS)
 
 dnl Optional architecture options to be applied after all autoconf tests
 dnl are done...
@@ -1050,7 +1009,6 @@ AC_CONFIG_FILES([man/cups-calibrate.8])
 AC_CONFIG_FILES([man/cups-genppd.8])
 AC_CONFIG_FILES([man/cups-genppdupdate.8])
 AC_CONFIG_FILES([man/escputil.1])
-AC_CONFIG_FILES([man/ijsgutenprint.1])
 AC_CONFIG_FILES([po/Makefile.in])
 AC_CONFIG_FILES([samples/Makefile])
 AC_CONFIG_FILES([src/Makefile])
@@ -1059,18 +1017,16 @@ AC_CONFIG_FILES([src/cups/Info.plist])
 AC_CONFIG_FILES([src/cups/cups-genppdupdate],
                 [chmod +x src/cups/cups-genppdupdate])
 AC_CONFIG_FILES([src/escputil/Makefile])
-AC_CONFIG_FILES([src/foomatic/Makefile])
-AC_CONFIG_FILES([src/foomatic/foomatic-generator],
-                [chmod +x src/foomatic/foomatic-generator])
-AC_CONFIG_FILES([src/foomatic/mk_printerlist],
-                [chmod +x src/foomatic/mk_printerlist])
 AC_CONFIG_FILES([src/testpattern/run-testpattern-2],
                 [chmod +x src/testpattern/run-testpattern-2])
 AC_CONFIG_FILES([src/testpattern/compare-checksums],
                 [chmod +x src/testpattern/compare-checksums])
+AC_CONFIG_FILES([src/testpattern/compress-checksums],
+                [chmod +x src/testpattern/compress-checksums])
+AC_CONFIG_FILES([src/testpattern/uncompress-checksums],
+                [chmod +x src/testpattern/uncompress-checksums])
 AC_CONFIG_FILES([src/cups/test-rastertogutenprint],
                 [chmod +x src/cups/test-rastertogutenprint])
-AC_CONFIG_FILES([src/ghost/Makefile])
 AC_CONFIG_FILES([src/testpattern/Makefile])
 AC_CONFIG_FILES([src/gimp2/Makefile])
 AC_CONFIG_FILES([src/main/Makefile])
@@ -1088,6 +1044,8 @@ AC_CONFIG_FILES([src/gutenprintui2/Makefile])
 AC_CONFIG_FILES([src/gutenprintui2/gutenprintui2.pc])
 AC_CONFIG_FILES([test/Makefile])
 AC_CONFIG_FILES([scripts/Makefile])
+AC_CONFIG_FILES([scripts/mkgitlog],
+		[chmod +x scripts/mkgitlog])
 AC_CONFIG_COMMANDS([default], [
 echo
 ],
@@ -1147,11 +1105,6 @@ if test "$BUILD_GIMP2" != "no" ; then
     echo "        Install plugin(s) in home directory:    $USER_INSTALL"
 else
     echo "    Build enhanced Print plugin for GIMP:       no"
-fi
-echo "    Build Ghostscript IJS driver:               $BUILD_GHOSTSCRIPT"
-echo "    Build Foomatic data:                        $BUILD_FOOMATIC"
-if test "$BUILD_FOOMATIC" != "no" ; then
-    echo "        Build Foomatic 3.x data:                $BUILD_FOOMATIC_3"
 fi
 echo "    Build test programs:                        $BUILD_TEST"
 echo "    Build testpattern generator:                $BUILD_TESTPATTERN"

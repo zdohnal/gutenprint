@@ -1,6 +1,4 @@
 /*
- * "$Id: commandtoepson.c,v 1.4 2011/08/13 16:24:17 rlk Exp $"
- *
  *   EPSON ESC/P2 command filter for the Common UNIX Printing System.
  *
  *   Copyright 1993-2000 by Easy Software Products.
@@ -33,6 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <strings.h>
 
 /*
  * Macros...
@@ -227,8 +226,3 @@ main(int  argc,		/* I - Number of command-line arguments */
 
   return (0);
 }
-
-
-/*
- * End of "$Id: commandtoepson.c,v 1.4 2011/08/13 16:24:17 rlk Exp $".
- */

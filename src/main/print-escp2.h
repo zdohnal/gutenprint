@@ -1,6 +1,4 @@
 /*
- * "$Id: print-escp2.h,v 1.140 2014/01/23 13:22:41 rlk Exp $"
- *
  *   Print plug-in EPSON ESC/P2 driver for the GIMP.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
@@ -623,6 +621,3 @@ extern void stpi_escp2_terminate_page(stp_vars_t *v);
 #endif
 
 #endif /* GUTENPRINT_INTERNAL_ESCP2_H */
-/*
- * End of "$Id: print-escp2.h,v 1.140 2014/01/23 13:22:41 rlk Exp $".
- */

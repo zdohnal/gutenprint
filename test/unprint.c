@@ -1,4 +1,3 @@
-/* $Id: unprint.c,v 1.46 2011/04/01 02:20:09 rlk Exp $ */
 /*
  * Generate PPM files from printer output
  *

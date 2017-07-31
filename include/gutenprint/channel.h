@@ -1,5 +1,4 @@
 /*
- * "$Id: channel.h,v 1.6 2005/07/03 22:13:36 rlk Exp $"
  *
  *   libgimpprint header.
  *

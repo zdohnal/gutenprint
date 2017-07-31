@@ -1,5 +1,4 @@
 ## Process this file with automake to produce Makefile.in
-## $Id: Makefile.am,v 1.155 2008/10/24 00:37:13 rleigh Exp $
 ## Copyright (C) 2000-2004 Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -50,43 +49,15 @@ install-data-local: NEWS AUTHORS COPYING README
 	$(INSTALL_DATA) $(srcdir)/COPYING $(DESTDIR)$(docdir)
 	$(INSTALL_DATA) $(srcdir)/README $(DESTDIR)$(docdir)
 
-# This rather strange-looking code ensures that the change log is only
-# rebuilt if any of the CVS/Entries files have changed since the change log
-# was last built.
+# git log is local, so it's fast enough that we don't need to
+# engage in any subterfuge like we did with CVS.  It's really fast
+# when we use a static file from the pre-Git era (since there are no
+# live branches from that time) to save a lot of diffs.
 
-ChangeLogPhony:
-	@cd $(top_srcdir) ; \
-	for f in `find . -name Entries -print | grep CVS` ; do \
-	  if @TEST@ ! -f ChangeLogStamp -o ChangeLogStamp -ot $$f ; then \
-	    rm -f ChangeLogStamp ; \
-	    touch ChangeLogStamp ; \
-	  fi ; \
-	done
-
-ChangeLogStamp: ChangeLogPhony
-	@@TRUE@
-
-ChangeLog: ChangeLogStamp
-	@cd $(top_srcdir) ; \
-	if test -f $(top_builddir)/.noupdate ; then \
-	  echo "$@: .noupdate found: NOT updating $@ from CVS" ; \
-	elif test -d CVS ; then \
-	  echo "$@: Updating $@ from CVS" ; \
-	  cvs log | $(PERL) scripts/mkchlog -e @sourceforge.net -X src/xml/escp2/resolutions -s '^(guten|gimp-|)print-[0-9]+_' > $@.tmp ; \
-	  if test -s $@.tmp ; then \
-	    mv $@.tmp $@ ; \
-	  else \
-	    echo "$@: Failed to update $@ ['touch .noupdate' to skip]" ; \
-	    $(RM) $@.tmp ; \
-	    exit 1 ; \
-	  fi \
-	elif test -s $@ ; then \
-	  echo "$@: This is not a CVS version of Gutenprint" ; \
-	  echo "$@: Not updating $@ from CVS!" ; \
-	else \
-	  echo "$@: No $@ or $@ of zero size found!" ; \
-	  echo "$@: Failed to update $@ ['touch .noupdate' to skip]" ; \
-	  exit 1 ; \
+ChangeLog:
+	if [ -d .git -a -f ChangeLog.pre-5.2.11 ] ; then \
+	  $(MAKE) -C scripts mkgitlog; \
+	  scripts/mkgitlog -i ChangeLog.pre-5.2.11 -r gutenprint-5_2_11 > ChangeLog; \
 	fi
 
 configure.in:
@@ -121,10 +92,6 @@ dist-hook: dist-time-check
 
 install-cups: all
 	cd src/cups ; \
-	$(MAKE) install
-
-install-ghost: all
-	cd src/ghost ; \
 	$(MAKE) install
 
 install-gimp: all
@@ -189,10 +156,11 @@ CLEANPO = \
 	po/remove-potcdate.sin \
 	po/Rules-quot
 
-CLEANFILES = .noupdate ChangeLog.tmp
+CLEANFILES = .noupdate
 
 MAINTAINERCLEANFILES = \
 	ABOUT-NLS \
+	ChangeLog \
 	INSTALL \
 	aclocal.m4 \
 	config.h.in \
@@ -208,7 +176,7 @@ MAINTAINERCLEANFILES = \
 	$(CLEANMFOUR) \
 	$(CLEANPO)
 
-EXTRA_DIST = autogen.sh ChangeLogStamp README.package
+EXTRA_DIST = autogen.sh README.package
 
-.PHONY: deb html install-cups install-gimp install-ghost snapshot ChangeLog Phony dist-time-check
+.PHONY: deb html install-cups install-gimp snapshot ChangeLog Phony dist-time-check
 

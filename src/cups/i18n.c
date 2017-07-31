@@ -1,6 +1,4 @@
 /*
- * "$Id: i18n.c,v 1.9 2013/12/14 19:23:58 rlk Exp $"
- *
  *   Internationalization functions for CUPS drivers.
  *
  *   Copyright 2008 Michael Sweet (mike@easysw.com)
@@ -41,6 +39,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <iconv.h>
+#include <strings.h>
 
 
 /*
@@ -476,8 +475,3 @@ stpi_unquote(char *s)		/* IO - Original string */
 
   *d = '\0';
 }
-
-
-/*
- * End of "$Id: i18n.c,v 1.9 2013/12/14 19:23:58 rlk Exp $".
- */

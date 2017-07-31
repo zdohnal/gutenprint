@@ -1,6 +1,4 @@
 /*
- * "$Id: dither.h,v 1.1 2004/09/17 18:38:01 rleigh Exp $"
- *
  *   libgimpprint dither header.
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com) and
@@ -199,6 +197,3 @@ extern void stp_dither_internal(stp_vars_t *v, int row,
 #endif
 
 #endif /* GUTENPRINT_DITHER_H */
-/*
- * End of "$Id: dither.h,v 1.1 2004/09/17 18:38:01 rleigh Exp $".
- */

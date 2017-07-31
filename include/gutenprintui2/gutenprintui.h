@@ -1,5 +1,4 @@
 /*
- * "$Id: gutenprintui.h,v 1.4 2016/01/14 02:42:13 rlk Exp $"
  *
  *   Print plug-in for the GIMP.
  *
@@ -43,7 +42,7 @@ extern "C" {
 #pragma GCC diagnostic ignored "-Wredundant-decls"
 #pragma GCC diagnostic ignored "-Wunused-function"
 #pragma GCC diagnostic ignored "-Wcast-qual"
-#pragma GCC diagnostic ignored "-pedantic"
+#pragma GCC diagnostic ignored "-Wpedantic"
 #include <gtk/gtk.h>
 #pragma GCC diagnostic pop
 

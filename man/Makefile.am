@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.23 2008/04/01 00:53:41 rlk Exp $
 ## Copyright (C) 2000 Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -37,18 +36,13 @@ if BUILD_ESCPUTIL
 ESCPUTIL_MAN = escputil.1
 endif
 
-if BUILD_GHOSTSCRIPT
-GHOSTSCRIPT_MAN = ijsgutenprint.1
-endif
-
-man_MANS = $(CUPS_MAN) $(ESCPUTIL_MAN) $(GHOSTSCRIPT_MAN)
+man_MANS = $(CUPS_MAN) $(ESCPUTIL_MAN)
 
 EXTRA_man_MANS = \
 	cups-calibrate.8 \
 	cups-genppd.8 \
 	cups-genppdupdate.8 \
-	escputil.1 \
-	ijsgutenprint.1
+	escputil.1
 
 
 ## Clean

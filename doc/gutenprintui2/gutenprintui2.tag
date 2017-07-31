@@ -2,7 +2,7 @@
 <tagfile>
   <compound kind="file">
     <name>curve.h</name>
-    <path>/home/rlk/sandbox/print-5.1/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
     <filename>curve_8h</filename>
     <class kind="struct">_StpuiCurve</class>
     <class kind="struct">_StpuiCurveClass</class>
@@ -17,36 +17,36 @@
       <type>#define</type>
       <name>STPUI_CURVE</name>
       <anchorfile>curve_8h.html</anchorfile>
-      <anchor>a442f8215d2359e8661e2651925ba7471</anchor>
-      <arglist>(obj)                                </arglist>
+      <anchor>a03272c56621cf16c2caa378231c7fa43</anchor>
+      <arglist>(obj)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>STPUI_CURVE_CLASS</name>
       <anchorfile>curve_8h.html</anchorfile>
-      <anchor>a2fc0e4f3d33fe947b707889fbf8d31f1</anchor>
-      <arglist>(klass)                </arglist>
+      <anchor>ad788bc4e6a85701756b28d972a64b7f8</anchor>
+      <arglist>(klass)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>STPUI_IS_CURVE</name>
       <anchorfile>curve_8h.html</anchorfile>
-      <anchor>aa3405636ab6701d26a67fc1d73aab795</anchor>
-      <arglist>(obj)                          </arglist>
+      <anchor>a92f2038dd52d2b3af7c03bdeb5918567</anchor>
+      <arglist>(obj)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>STPUI_IS_CURVE_CLASS</name>
       <anchorfile>curve_8h.html</anchorfile>
-      <anchor>a256ddc0ab7385854896b3ada2950432a</anchor>
-      <arglist>(klass)          </arglist>
+      <anchor>aee626496df16d25159b91982478b0df9</anchor>
+      <arglist>(klass)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>STPUI_CURVE_GET_CLASS</name>
       <anchorfile>curve_8h.html</anchorfile>
-      <anchor>ae835c9645bacb7502b738bb6f63634e3</anchor>
-      <arglist>(obj)            </arglist>
+      <anchor>a41b32938b1bfc087ca93b3655ef03ab6</anchor>
+      <arglist>(obj)</arglist>
     </member>
     <member kind="typedef">
       <type>struct _StpuiCurve</type>
@@ -146,7 +146,7 @@
   </compound>
   <compound kind="file">
     <name>gammacurve.h</name>
-    <path>/home/rlk/sandbox/print-5.1/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
     <filename>gammacurve_8h</filename>
     <class kind="struct">_StpuiGammaCurve</class>
     <class kind="struct">_StpuiGammaCurveClass</class>
@@ -161,22 +161,22 @@
       <type>#define</type>
       <name>STPUI_GAMMA_CURVE</name>
       <anchorfile>gammacurve_8h.html</anchorfile>
-      <anchor>a5fb979c4c2104df2b57c1740ffe0940d</anchor>
-      <arglist>(obj)                    </arglist>
+      <anchor>a1799655d0ba34bbf0f856411399f222e</anchor>
+      <arglist>(obj)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>STPUI_GAMMA_CURVE_CLASS</name>
       <anchorfile>gammacurve_8h.html</anchorfile>
-      <anchor>a347906d7906c9e1e774fef68e0f31a1c</anchor>
-      <arglist>(klass)    </arglist>
+      <anchor>a45aa6ff6c9db14c6de371c1c9662483b</anchor>
+      <arglist>(klass)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>STPUI_IS_GAMMA_CURVE</name>
       <anchorfile>gammacurve_8h.html</anchorfile>
-      <anchor>a9a3235b14c588ad59919cecd0530b835</anchor>
-      <arglist>(obj)              </arglist>
+      <anchor>a9a10e0a1241d9f042e2e1a2cf14b70c3</anchor>
+      <arglist>(obj)</arglist>
     </member>
     <member kind="define">
       <type>#define</type>
@@ -223,7 +223,7 @@
   </compound>
   <compound kind="file">
     <name>gutenprintui.h</name>
-    <path>/home/rlk/sandbox/print-5.1/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
     <filename>gutenprintui_8h</filename>
     <includes id="curve_8h" name="curve.h" local="no" imported="no">gutenprintui2/curve.h</includes>
     <includes id="gammacurve_8h" name="gammacurve.h" local="no" imported="no">gutenprintui2/gammacurve.h</includes>
@@ -672,55 +672,8 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>t.h</name>
-    <path>/home/rlk/sandbox/print-5.1/include/gutenprintui2/</path>
-    <filename>t_8h</filename>
-    <member kind="define">
-      <type>#define</type>
-      <name>STPUI_TYPE_ORIENT_T</name>
-      <anchorfile>t_8h.html</anchorfile>
-      <anchor>a7c68a632b60b65d497e2933fa1b78a77</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>STPUI_TYPE_COMMAND_T</name>
-      <anchorfile>t_8h.html</anchorfile>
-      <anchor>ab213314f887b8b4f48f9aa1531673a9c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>STPUI_TYPE_CURVE_TYPE</name>
-      <anchorfile>t_8h.html</anchorfile>
-      <anchor>af0561b03a3bfb203b40c37f9bb373ffb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type>G_BEGIN_DECLS GType</type>
-      <name>orient_t_orient_t_get_type</name>
-      <anchorfile>t_8h.html</anchorfile>
-      <anchor>ab05fb37a6c79f2b6b417ff107d9bb881</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>GType</type>
-      <name>command_t_command_t_get_type</name>
-      <anchorfile>t_8h.html</anchorfile>
-      <anchor>a5e6b50173b88263be23734e76f4a39f2</anchor>
-      <arglist>(void)</arglist>
-    </member>
-    <member kind="function">
-      <type>GType</type>
-      <name>stpui_curve_type_get_type</name>
-      <anchorfile>t_8h.html</anchorfile>
-      <anchor>a1252245c3967f9e655de3d62c3999230</anchor>
-      <arglist>(void)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>typebuiltins.h</name>
-    <path>/home/rlk/sandbox/print-5.1/include/gutenprintui2/</path>
+    <path>/home/rlk/sandbox/gimp-print-source/include/gutenprintui2/</path>
     <filename>typebuiltins_8h</filename>
     <member kind="define">
       <type>#define</type>

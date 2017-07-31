@@ -1,6 +1,4 @@
 /*
- * "$Id: mxml-search.c,v 1.7 2004/09/17 18:38:21 rleigh Exp $"
- *
  * Search/navigation functions for mini-XML, a small XML-like file
  * parsing library.
  *
@@ -192,8 +190,3 @@ stp_mxmlWalkPrev(stp_mxml_node_t *node,		/* I - Current node */
   else
     return (NULL);
 }
-
-
-/*
- * End of "$Id: mxml-search.c,v 1.7 2004/09/17 18:38:21 rleigh Exp $".
- */

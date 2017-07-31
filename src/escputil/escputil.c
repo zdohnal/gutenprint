@@ -1,5 +1,4 @@
 /*
- * "$Id: escputil.c,v 1.110 2014/02/21 01:56:24 rlk Exp $"
  *
  *   Printer maintenance utility for EPSON Stylus (R) printers
  *
@@ -27,11 +26,13 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <strings.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <signal.h>
 #include <sys/wait.h>
 #include <ctype.h>
+#include <time.h>
 #if defined(HAVE_VARARGS_H) && !defined(HAVE_STDARG_H)
 #include <varargs.h>
 #else
@@ -578,7 +579,8 @@ read_from_printer(int fd, char *buf, int bufsize, int quiet)
       status = read(fd, buf, bufsize - 1);
       if (status == 0 || (status < 0 && errno == EAGAIN))
 	{
-	  usleep(2000);
+	  struct timespec tm = {0, 2000000};
+	  nanosleep(&tm, &tm);
 	  status = 0; /* not an error (read would have blocked) */
 	}
     }

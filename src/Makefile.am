@@ -1,4 +1,3 @@
-## $Id: Makefile.am,v 1.22 2008/06/14 02:45:19 rlk Exp $
 ## Copyright (C) 2000 Roger Leigh
 ##
 ## This program is free software; you can redistribute it and/or modify
@@ -28,8 +27,6 @@ SUBDIRS = 					\
 	escputil				\
 	gimp2					\
 	cups					\
-	foomatic				\
-	ghost					\
 	testpattern
 
 

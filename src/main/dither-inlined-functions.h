@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-inlined-functions.h,v 1.6 2004/09/17 18:38:18 rleigh Exp $"
  *
  *   Performance-critical functions that should be inlined, based on
  *   measurements.

@@ -1,5 +1,4 @@
 /*
- * "$Id: list.h,v 1.2 2004/11/28 15:59:29 rleigh Exp $"
  *
  *   libgimpprint generic list type
  *

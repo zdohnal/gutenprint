@@ -1,7 +1,7 @@
 /*
  *   CUPS Backend common code
  *
- *   Copyright (c) 2007-2015 Solomon Peachy <pizza@shaftnet.org>
+ *   Copyright (c) 2007-2016 Solomon Peachy <pizza@shaftnet.org>
  *
  *   The latest version of this program can be found at:
  *
@@ -27,7 +27,7 @@
 
 #include "backend_common.h"
 
-#define BACKEND_VERSION "0.63G"
+#define BACKEND_VERSION "0.70G"
 #ifndef URI_PREFIX
 #error "Must Define URI_PREFIX"
 #endif
@@ -42,8 +42,6 @@ int extra_vid = -1;
 int extra_pid = -1;
 int extra_type = -1;
 int copies = 1;
-char *use_serno = NULL;
-int current_page = 0;
 
 /* Support Functions */
 static int backend_claim_interface(struct libusb_device_handle *dev, int iface)
@@ -54,6 +52,8 @@ static int backend_claim_interface(struct libusb_device_handle *dev, int iface)
 		ret = libusb_claim_interface(dev, iface);
 		if (!ret)
 			break;
+		if (ret != LIBUSB_ERROR_BUSY)
+			break;
 		sleep(1);
 	} while (--attempts > 0);
 
@@ -63,23 +63,17 @@ static int backend_claim_interface(struct libusb_device_handle *dev, int iface)
 	return ret;
 }
 
+/* Interface **MUST** already be claimed! */
 #define ID_BUF_SIZE 2048
-static char *get_device_id(struct libusb_device_handle *dev)
+static char *get_device_id(struct libusb_device_handle *dev, int iface)
 {
 	int length;
-	int iface = 0;
 	char *buf = malloc(ID_BUF_SIZE + 1);
 
 	if (!buf) {
 		ERROR("Memory allocation failure (%d bytes)\n", ID_BUF_SIZE+1);
 		return NULL;
 	}
-	
-	if (libusb_kernel_driver_active(dev, iface))
-		libusb_detach_kernel_driver(dev, iface);
-
-	if (backend_claim_interface(dev, iface))
-		return NULL;
 
 	if (libusb_control_transfer(dev,
 				    LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_ENDPOINT_IN |
@@ -100,10 +94,10 @@ static char *get_device_id(struct libusb_device_handle *dev)
 	if (length > ID_BUF_SIZE || length < 14)
 		length = (((unsigned)buf[1] & 255) << 8) |
 			((unsigned)buf[0] & 255);
-	
+
 	if (length > ID_BUF_SIZE)
 		length = ID_BUF_SIZE;
-	
+
 	if (length < 14) {
 		*buf = '\0';
 		goto done;
@@ -114,8 +108,6 @@ static char *get_device_id(struct libusb_device_handle *dev)
 	buf[length] = '\0';
 
 done:
-	libusb_release_interface(dev, iface);
-
 	return buf;
 }
 
@@ -212,7 +204,7 @@ int read_data(struct libusb_device_handle *dev, uint8_t endp,
 	if (dyesub_debug) {
 		DEBUG("Received %d bytes from printer\n", *readlen);
 	}
-	
+
 	if ((dyesub_debug > 1 && buflen < 4096) ||
 	    dyesub_debug > 2) {
 		int i = *readlen;
@@ -295,7 +287,7 @@ static char *sanitize_string(char *str) {
 	return str;
 }
 
-/* 
+/*
 
    These functions are Public Domain code obtained from:
 
@@ -318,13 +310,13 @@ static char *url_encode(char *str) {
 		ERROR("Memory allocation failure (%d bytes)\n", (int) strlen(str)*3 + 1);
 		return NULL;
 	}
-		
+
 	while (*pstr) {
 		if (isalnum(*pstr) || *pstr == '-' || *pstr == '_' || *pstr == '.' || *pstr == '~') 
 			*pbuf++ = *pstr;
-		else if (*pstr == ' ') 
+		else if (*pstr == ' ')
 			*pbuf++ = '+';
-		else 
+		else
 			*pbuf++ = '%', *pbuf++ = to_hex(*pstr >> 4), *pbuf++ = to_hex(*pstr & 15);
 		pstr++;
 	}
@@ -345,7 +337,7 @@ static char *url_decode(char *str) {
 				*pbuf++ = from_hex(pstr[1]) << 4 | from_hex(pstr[2]);
 				pstr += 2;
 			}
-		} else if (*pstr == '+') { 
+		} else if (*pstr == '+') {
 			*pbuf++ = ' ';
 		} else {
 			*pbuf++ = *pstr;
@@ -368,10 +360,17 @@ static int print_scan_output(struct libusb_device *device,
 	struct libusb_device_handle *dev;
 	char buf[256];
 	char *product = NULL, *serial = NULL, *manuf = NULL, *descr = NULL;
-
+	int iface = 0; // XXX loop through interfaces
+	int altset = 0; // XXX loop through altsetting
+	struct libusb_config_descriptor *config = NULL;
 	int dlen = 0;
 	struct deviceid_dict dict[MAX_DICT];
 	char *ieee_id = NULL;
+	int i;
+
+	uint8_t endp_up = 0, endp_down = 0;
+
+	DEBUG("Probing VID: %04X PID: %04x\n", desc->idVendor, desc->idProduct);
 
 	if (libusb_open(device, &dev)) {
 		ERROR("Could not open device %04x:%04x (need to be root?)\n", desc->idVendor, desc->idProduct);
@@ -379,10 +378,38 @@ static int print_scan_output(struct libusb_device *device,
 		goto abort;
 	}
 
-	ieee_id = get_device_id(dev);
+	if (libusb_kernel_driver_active(dev, iface))
+		libusb_detach_kernel_driver(dev, iface);
 
-	/* Get IEEE1284 info */
-	dlen = parse1284_data(ieee_id, dict);
+	if (backend_claim_interface(dev, iface)) {
+		found = -1;
+		goto abort_close;
+	}
+
+	if (libusb_get_active_config_descriptor(device, &config)) {
+		found  = -1;
+		goto abort_release;
+	}
+
+	/* Find the endpoints */
+	for (i = 0 ; i < config->interface[iface].altsetting[altset].bNumEndpoints ; i++) {
+		if ((config->interface[iface].altsetting[altset].endpoint[i].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) == LIBUSB_TRANSFER_TYPE_BULK) {
+			if (config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress & LIBUSB_ENDPOINT_IN)
+				endp_up = config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress;
+			else
+				endp_down = config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress;
+		}
+		if (endp_up && endp_down)
+			break;
+	}
+
+	/* Query IEEE1284 info only if it's a PRINTER class */	
+	if (desc->bDeviceClass == LIBUSB_CLASS_PRINTER ||
+	    (desc->bDeviceClass == LIBUSB_CLASS_PER_INTERFACE &&
+	     config->interface[iface].altsetting[altset].bInterfaceClass == LIBUSB_CLASS_PRINTER)) {
+		ieee_id = get_device_id(dev, iface);
+		dlen = parse1284_data(ieee_id, dict);
+	}
 
 	/* Look up mfg string. */
 	if (manuf2 && strlen(manuf2)) {
@@ -439,7 +466,7 @@ static int print_scan_output(struct libusb_device *device,
 				free(product2);
 			return -1;
 		}
-		
+
 		sprintf(descr, "%s %s", manuf3, product2);
 		free(product2);
 		free(manuf3);
@@ -459,32 +486,9 @@ static int print_scan_output(struct libusb_device *device,
 		sanitize_string(buf);
 		serial = url_encode(buf);
 	} else if (backend->query_serno) { /* Get from backend hook */
-		int iface = 0;
-
-		struct libusb_config_descriptor *config;
-
-		if (libusb_kernel_driver_active(dev, iface))
-			libusb_detach_kernel_driver(dev, iface);
-
-		/* Try to claim the printer, and handle transient failures */
-		if (!backend_claim_interface(dev, iface)) {
-			int i;
-			uint8_t endp_up = 0, endp_down = 0;
-			libusb_get_active_config_descriptor(device, &config);
-			for (i = 0 ; i < config->interface[0].altsetting[0].bNumEndpoints ; i++) {
-				if ((config->interface[0].altsetting[0].endpoint[i].bmAttributes & 3) == LIBUSB_TRANSFER_TYPE_BULK) {
-					if (config->interface[0].altsetting[0].endpoint[i].bEndpointAddress & LIBUSB_ENDPOINT_IN)
-						endp_up = config->interface[0].altsetting[0].endpoint[i].bEndpointAddress;
-					else
-						endp_down = config->interface[0].altsetting[0].endpoint[i].bEndpointAddress;				
-				}
-			}
-
-			buf[0] = 0;
-			/* Ignore result since a failure isn't critical here */
-			backend->query_serno(dev, endp_up, endp_down, buf, STR_LEN_MAX);
-			libusb_release_interface(dev, iface);
-		}
+		buf[0] = 0;
+		/* Ignore result since a failure isn't critical here */
+		backend->query_serno(dev, endp_up, endp_down, buf, STR_LEN_MAX);
 		serial = url_encode(buf);
 	}
 
@@ -496,10 +500,6 @@ static int print_scan_output(struct libusb_device *device,
 		serial = strdup("NONE_UNKNOWN");
 	}
 
-	if (dyesub_debug)
-		DEBUG("VID: %04X PID: %04X Manuf: '%s' Product: '%s' Serial: '%s'\n",
-		      desc->idVendor, desc->idProduct, manuf, product, serial);
-	
 	if (scan_only) {
 		int k = 0;
 
@@ -515,13 +515,16 @@ static int print_scan_output(struct libusb_device *device,
 			prefix, buf, serial, backend->uri_prefix, 
 			descr, descr,
 			ieee_id? ieee_id : "");
-		
 	}
-	
+
 	/* If a serial number was passed down, use it. */
 	if (match_serno && strcmp(match_serno, (char*)serial)) {
 		found = -1;
 	}
+
+	if (dyesub_debug)
+		DEBUG("VID: %04X PID: %04X Manuf: '%s' Product: '%s' Serial: '%s' found: %d\n",
+		      desc->idVendor, desc->idProduct, manuf, product, serial, found);
 
 	/* Free things up */
 	if(serial) free(serial);
@@ -530,9 +533,16 @@ static int print_scan_output(struct libusb_device *device,
 	if(descr) free(descr);
 	if(ieee_id) free(ieee_id);
 
+	if (config) libusb_free_config_descriptor(config);
+
+abort_release:
+
+	libusb_release_interface(dev, iface);
+
+abort_close:
+
 	libusb_close(dev);
 abort:
-
 	/* Clean up the dictionary */
 	while (dlen--) {
 		free (dict[dlen].key);
@@ -551,13 +561,16 @@ extern struct dyesub_backend shinkos2145_backend;
 extern struct dyesub_backend shinkos6145_backend;
 extern struct dyesub_backend shinkos6245_backend;
 extern struct dyesub_backend canonselphy_backend;
+extern struct dyesub_backend canonselphyneo_backend;
 extern struct dyesub_backend mitsu70x_backend;
 extern struct dyesub_backend mitsu9550_backend;
+extern struct dyesub_backend mitsup95d_backend;
 extern struct dyesub_backend dnpds40_backend;
 extern struct dyesub_backend cw01_backend;
 
 static struct dyesub_backend *backends[] = {
 	&canonselphy_backend,
+	&canonselphyneo_backend,	
 	&kodak6800_backend,
 	&kodak605_backend,
 	&kodak1400_backend,
@@ -568,6 +581,7 @@ static struct dyesub_backend *backends[] = {
 	&updr150_backend,
 	&mitsu70x_backend,
 	&mitsu9550_backend,
+	&mitsup95d_backend,	
 	&dnpds40_backend,
 	&cw01_backend,
 	NULL,
@@ -631,7 +645,6 @@ static int find_and_enumerate(struct libusb_context *ctx,
 static struct dyesub_backend *find_backend(char *uri_prefix)
 {
 	int i;
-	
 
 	if (!uri_prefix)
 		return NULL;
@@ -649,7 +662,7 @@ static struct dyesub_backend *find_backend(char *uri_prefix)
 void print_license_blurb(void)
 {
 	const char *license = "\n\
-Copyright 2007-2015 Solomon Peachy <pizza AT shaftnet DOT org>\n\
+Copyright 2007-2016 Solomon Peachy <pizza AT shaftnet DOT org>\n\
 \n\
 This program is free software; you can redistribute it and/or modify it\n\
 under the terms of the GNU General Public License as published by the Free\n\
@@ -683,7 +696,7 @@ void print_help(char *argv0, struct dyesub_backend *backend)
 
 	if (!backend)
 		backend = find_backend(ptr);
-	
+
 	if (!backend) {
 		int i;
 		DEBUG("Environment variables:\n");
@@ -694,8 +707,6 @@ void print_help(char *argv0, struct dyesub_backend *backend)
 		DEBUG("Standalone Usage:\n");
 		DEBUG("\t%s\n", URI_PREFIX);
 		DEBUG("  [ -D ] [ -G ] [ -f ]\n");
-		DEBUG("  [ -S serialnum ] \n");
-		DEBUG("  [ -V extra_vid ] [ -P extra_pid ] [ -T extra_type ] \n");
 		DEBUG("  [ backend_specific_args ] \n");
 		DEBUG("  [ -d copies ] \n");
 		DEBUG("  [ - | infile ] \n");
@@ -712,8 +723,7 @@ void print_help(char *argv0, struct dyesub_backend *backend)
 		DEBUG("Standalone %s backend version %s\n",
 		      backend->name, backend->version);
 		DEBUG("\t%s\n", backend->uri_prefix);
-		DEBUG("\t[ -D ] [ -G ] [ -S serialnum ] \n");
-		DEBUG("\t[ -V extra_vid ] [ -P extra_pid ] [ -T extra_type ] \n");
+		DEBUG("\t[ -D ] [ -G ] [ -f ]\n");
 		if (backend->cmdline_usage)
 			backend->cmdline_usage();
 		DEBUG("\t[ -d copies ] [ infile | - ]\n");
@@ -730,12 +740,12 @@ void print_help(char *argv0, struct dyesub_backend *backend)
 	libusb_exit(ctx);
 }
 
-int main (int argc, char **argv) 
+int main (int argc, char **argv)
 {
 	struct libusb_context *ctx = NULL;
 	struct libusb_device **list = NULL;
 	struct libusb_device_handle *dev;
-	struct libusb_config_descriptor *config;
+	struct libusb_config_descriptor *config = NULL;
 
 	struct dyesub_backend *backend = NULL;
 	void * backend_ctx = NULL;
@@ -743,22 +753,27 @@ int main (int argc, char **argv)
 	uint8_t endp_up = 0;
 	uint8_t endp_down = 0;
 
+	int iface = 0; // XXX loop through interfaces
+	int altset = 0; // XXX loop through altsetting
+
 	int data_fd = fileno(stdin);
 
 	int i;
 	int claimed;
 
 	int ret = CUPS_BACKEND_OK;
-	int iface = 0;
+
 	int found = -1;
 	int jobid = 0;
+	int current_page = 0;
 
 	char *uri;
 	char *fname = NULL;
+	char *use_serno = NULL;
 
 	DEBUG("Multi-Call Dye-sublimation CUPS Backend version %s\n",
 	      BACKEND_VERSION);
-	DEBUG("Copyright 2007-2015 Solomon Peachy\n");
+	DEBUG("Copyright 2007-2016 Solomon Peachy\n");
 	DEBUG("This free software comes with ABSOLUTELY NO WARRANTY! \n");
 	DEBUG("Licensed under the GNU GPL.  Run with '-G' for more details.\n");
 	DEBUG("\n");
@@ -831,7 +846,7 @@ int main (int argc, char **argv)
 		/* Always enable fast return in CUPS mode */
 		fast_return++;
 	} else {
-		/* Standalone mode */		
+		/* Standalone mode */
 
 		/* Try to guess backend from executable name */
 		if (!backend) {
@@ -842,7 +857,7 @@ int main (int argc, char **argv)
 				ptr = argv[0];
 			backend = find_backend(ptr);
 		}
-	
+
 		srand(getpid());
 		jobid = rand();
 	}
@@ -918,14 +933,19 @@ int main (int argc, char **argv)
 		goto done_close;
 	}
 
-	for (i = 0 ; i < config->interface[0].altsetting[0].bNumEndpoints ; i++) {
-		if ((config->interface[0].altsetting[0].endpoint[i].bmAttributes & 3) == LIBUSB_TRANSFER_TYPE_BULK) {
-			if (config->interface[0].altsetting[0].endpoint[i].bEndpointAddress & LIBUSB_ENDPOINT_IN)
-				endp_up = config->interface[0].altsetting[0].endpoint[i].bEndpointAddress;
+	for (i = 0 ; i < config->interface[iface].altsetting[altset].bNumEndpoints ; i++) {
+		if ((config->interface[iface].altsetting[altset].endpoint[i].bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) == LIBUSB_TRANSFER_TYPE_BULK) {
+			if (config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress & LIBUSB_ENDPOINT_IN)
+				endp_up = config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress;
 			else
-				endp_down = config->interface[0].altsetting[0].endpoint[i].bEndpointAddress;				
+				endp_down = config->interface[iface].altsetting[altset].endpoint[i].bEndpointAddress;
 		}
+		if (endp_up && endp_down)
+			break;		
 	}
+
+	if (config)
+		libusb_free_config_descriptor(config);
 
 	/* Initialize backend */
 	DEBUG("Initializing '%s' backend (version %s)\n",
@@ -994,6 +1014,9 @@ newpage:
 	if (ret)
 		goto done_claimed;
 
+	/* Log the completed page */
+	PAGE("%d %d\n", current_page, copies);
+
 	/* Since we have no way of telling if there's more data remaining
 	   to be read (without actually trying to read it), always assume
 	   multiple print jobs. */
@@ -1002,8 +1025,8 @@ newpage:
 done_multiple:
 	close(data_fd);
 
-	/* Done printing */
-	INFO("All printing done (%d pages * %d copies)\n", current_page, copies);
+	/* Done printing, log the total number of pages */
+	PAGE("total %d\n", current_page * copies);
 	ret = CUPS_BACKEND_OK;
 
 done_claimed:
@@ -1071,4 +1094,18 @@ uint16_t uint16_to_packed_bcd(uint16_t val)
         bcd |= (i << 12);
 
         return bcd;
+}
+
+uint32_t packed_bcd_to_uint32(char *in, int len)
+{
+	uint32_t out = 0;
+
+	while (len--) {
+		out *= 10;
+		out += (*in >> 4);
+		out *= 10;
+		out += (*in & 0xf);
+		in++;
+	}
+        return out;
 }

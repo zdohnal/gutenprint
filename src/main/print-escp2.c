@@ -1,5 +1,4 @@
 /*
- * "$Id: print-escp2.c,v 1.444 2015/09/09 23:57:32 speachy Exp $"
  *
  *   Print plug-in EPSON ESC/P2 driver for the GIMP.
  *
@@ -2249,7 +2248,7 @@ escp2_parameters(const stp_vars_t *v, const char *name,
 				 _("Full Manual Control"));
       stp_string_list_add_string(description->bounds.str, "Auto",
 				 _("Automatic Setting Control"));
-      description->deflt.str = "None"; /* so CUPS and Foomatic don't break */
+      description->deflt.str = "None"; /* so CUPS doesn't break */
     }
   else if (strcmp(name, "PageSize") == 0)
     {
@@ -3431,6 +3430,7 @@ setup_inks(stp_vars_t *v)
       if (drops->dropsizes[2] > 0 && drops->numdropsizes < 3)
 	drops->numdropsizes = 3;
     }
+  STPI_ASSERT(drops->numdropsizes < (1 << escp2_bits(v)), v);
   for (i = drops->numdropsizes - 1; i >= 0; i--)
     {
       if (drops->dropsizes[i] > 0)

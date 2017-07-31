@@ -1,5 +1,4 @@
 /*
- * "$Id: sequence.c,v 1.30 2014/01/04 00:31:38 rlk Exp $"
  *
  *   Sequence data type.  This type is designed to be derived from by
  *   the curve and dither matrix types.

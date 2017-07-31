@@ -4,10 +4,12 @@ use Getopt::Long;
 Getopt::Long::Configure("bundling", "no_ignore_case", "pass_through");
 
 use strict;
+use POSIX ":sys_wait_h";
 
 my $valgrind = 0;
 my $callgrind = 0;
 my $gdb_attach = 0;
+my $compress_checksums = 0;
 my $csum_file = undef;
 my $csum_dir = undef;
 my $csum_type = 'sha512';
@@ -65,6 +67,7 @@ my $list_printers = 0;
 my $list_options = 0;
 my $verbose = 0;
 my $use_unused_options = 0;
+my $proc_count = 1;
 
 my @default_options = ();
 my %base_settings = ("DitherAlgorithm" => "Fast");
@@ -75,6 +78,13 @@ my %param_levels;
 my %stp_float_values;
 my %stp_int_values;
 my %rerun_cases;
+
+if (defined $ENV{"STP_PARALLEL"}) {
+    $proc_count = $ENV{"STP_PARALLEL"};
+    if ($proc_count > 1) {
+	$quiet = 1;
+    }
+}
 
 GetOptions("C=s" => \$csum_type,
 	   "G=s" => \$geometry,
@@ -105,7 +115,8 @@ GetOptions("C=s" => \$csum_type,
 	   "N!"  => \$use_unused_options,
 	   "v+"  => \$valgrind,
 	   "x=s" => \@exclude_list,
-	   "y=s" => \@exclude_patterns);
+	   "y=s" => \@exclude_patterns,
+	   "t:i" => \$proc_count);
 
 sub print_help_and_exit() {
     my $options = join("\n                        ", sort @standard_options);
@@ -571,6 +582,7 @@ sub do_printer($$) {
     my $min_res_value = 0;
     my $first_time = 1;
     my $key;
+    my $skip_resolutions_local = $skip_resolutions;
     my %opt_vals = {};
     $tmp = $stpdata{$printer}{'Resolution'};
     my (@resolutions) = grep {$_ ne 'None' } keys %$tmp;
@@ -589,6 +601,10 @@ sub do_printer($$) {
     }
 
     foreach $key (@special_options) {
+	my (@subkeys) = split(/,/, $key);
+	if (grep { /^Resolution$/ } @subkeys) {
+	    $skip_resolutions_local = 1;
+	}
 	my $nkey = build_key($key, $printer);
 	if ($nkey ne "") {
 	    my (@vals) = build_list($nkey, $printer);
@@ -612,7 +628,7 @@ sub do_printer($$) {
     foreach $pmode (sort @printing_modes) {
 	my ($resolution);
 	$pages = $std_pages;
-	if (! $skip_resolutions) {
+	if (! $skip_resolutions_local) {
 	    foreach $resolution (sort @resolutions) {
 		@extras = ();
 		@job_extras = ();
@@ -643,6 +659,8 @@ sub do_printer($$) {
 	foreach $key (sort keys %opt_vals) {
 	    next if ($key eq "RawChannels" && $pmode ne "Color");
 	    my (@subkeys) = split (/,/, $key);
+	    my (%subkeys);
+	    map {$subkeys{$_} = 1} @subkeys;
 	    $tmp = $opt_vals{$key};
 	    if (defined $tmp && $tmp >= 1) {
 		my (@opts) = sort @$tmp;
@@ -656,7 +674,7 @@ sub do_printer($$) {
 		    @messages = ();
 		    @global_messages = ();
 		    set_opt("PrintingMode", $pmode, $printer);
-		    if ($use_min_res) {
+		    if ($use_min_res && ! grep { /^Resolution$/ } @subkeys) {
 			set_opt("Resolution", $min_res_name, $printer);
 		    }
 		    my (@mvals);
@@ -696,7 +714,9 @@ sub do_printer($$) {
 				$pages = $duplex_pages;
 			    }
 			}
-		    }  grep { $use_unused_options || defined $stpdata{$printer}{$_}} (keys %base_settings);
+		    } grep { ! defined $subkeys{$_} &&
+			     ($use_unused_options || 
+			      defined $stpdata{$printer}{$_})} (keys %base_settings);
 		    my ($mstring) = join "_", @mvals;
 		    my ($ostring) = join "+", @ovals;
 		    my $case;
@@ -748,9 +768,11 @@ foreach my $printer (@printer_list) {
 sub restart_testpattern {
     my ($silent) = @_;
     if (! $silent) {
-	$error = 1;
 	close($global_fh);
 	my ($err) = $? & 255;
+	if ($err > 0) {
+	    $error++;
+	}
 	if ($single > 1) {
 	    warn("\n***TESTPATTERN CRASHED*** ($global_case) ($err)!\n");
 	} else {
@@ -819,6 +841,9 @@ if ($list_options) {
 } else {
     my $valgrind_command;
     my $valopts;
+    if ($gdb_attach) {
+	$proc_count = 1;
+    }
     if ($callgrind) {
 	$valopts = '--tool=callgrind --dump-instr=yes --trace-jump=yes';
 	$valgrind = 4;
@@ -859,27 +884,58 @@ if ($list_options) {
     }
     my ($qopt) = $quiet ? "-q" : "";
     my ($Hopt) = $halt_on_error ? "-H" : "";
-    $testpattern_command = "$valgrind_command ./testpattern -y $suppress $qopt $Hopt";
-    if ($single > 1) {
-	$SIG{TERM} = sub() { stopit() };
-	$SIG{HUP} = sub() { stopit() };
-	$SIG{INT} = sub() { stopit() };
-	foreach my $printer (@printer_list) {
-	    do_printer($printer, undef);
+    my (@children);
+    my ($child_no);
+    my ($kid);
+    if ($proc_count > 1) {
+	for ($child_no = 0; $child_no < $proc_count; $child_no++) {
+	    $kid = fork();
+	    if ($kid == 0) {
+		last;
+	    } else {
+		push @children, $kid;
+	    }
 	}
-    } elsif ($single) {
-	$SIG{PIPE} = sub() { restart_testpattern() };
-	foreach my $printer (@printer_list) {
-	    restart_testpattern(1);
-	    do_printer($printer, $global_fh);
-	    $status |= close $global_fh;
-	    $status |= ($? & 255);
+	if ($kid == 0) {
+	    my (@xprinter_list);
+	    foreach my $i (0..$#printer_list) {
+		if ($i % $proc_count == $child_no) {
+		    push @xprinter_list, $printer_list[$i];
+		}
+	    }
+	    @printer_list = @xprinter_list;
+	}
+    }
+    if ($proc_count > 1 && $kid > 0) {
+	while ($proc_count > 0 && $kid > 0) {
+	    $kid = waitpid(-1, 0);
+	    if ($kid > 0 && $? > 0) {
+		$error++;
+	    }
 	}
     } else {
-	$SIG{PIPE} = sub() { restart_testpattern() };
-	restart_testpattern(1);
-	map { do_printer($_, $global_fh) } @printer_list;
-	$status = close $global_fh;
+	$testpattern_command = "$valgrind_command ./testpattern -y $suppress $qopt $Hopt";
+	if ($single > 1) {
+	    $SIG{TERM} = sub() { stopit() };
+	    $SIG{HUP} = sub() { stopit() };
+	    $SIG{INT} = sub() { stopit() };
+	    foreach my $printer (@printer_list) {
+		do_printer($printer, undef);
+	    }
+	} elsif ($single) {
+	    $SIG{PIPE} = sub() { restart_testpattern() };
+	    foreach my $printer (@printer_list) {
+		restart_testpattern(1);
+		do_printer($printer, $global_fh);
+		$status |= close $global_fh;
+		$status |= ($? & 255);
+	    }
+	} else {
+	    $SIG{PIPE} = sub() { restart_testpattern() };
+	    restart_testpattern(1);
+	    map { do_printer($_, $global_fh) } @printer_list;
+	    $status = close $global_fh;
+	}
     }
     if ($quiet == 2) {
 	print STDERR "\n";
@@ -891,7 +947,8 @@ if ($list_options) {
 	    if ($single > 1) {
 		print STDERR "$error cases failed\n";
 	    } else {
-		print STDERR "Failures noted.\n";
+		my ($plural) = ($error > 1 ? "ES" : "");
+		print STDERR "*** $error CRASH${plural} NOTED***\n";
 	    }
 	}
 	exit 1;

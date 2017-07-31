@@ -1,6 +1,4 @@
 /*
- * "$Id: path.h,v 1.2 2008/06/01 14:41:03 rlk Exp $"
- *
  *   libgimpprint path functions header
  *
  *   Copyright 1997-2000 Michael Sweet (mike@easysw.com),
@@ -58,6 +56,3 @@ extern char *stpi_path_merge(const char *path, const char *file);
 #endif
 
 #endif /* GUTENPRINT_PATH_H */
-/*
- * End of "$Id: path.h,v 1.2 2008/06/01 14:41:03 rlk Exp $".
- */

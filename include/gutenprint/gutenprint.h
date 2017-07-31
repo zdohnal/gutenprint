@@ -1,5 +1,4 @@
 /*		-*- Mode: C -*-
- *  $Id: gutenprint.h,v 1.1 2004/09/17 18:38:01 rleigh Exp $
  *
  *   Gimp-Print header file
  *
@@ -62,6 +61,3 @@ extern "C" {
 #endif
 
 #endif /* GUTENPRINT_H */
-/*
- * End of $Id: gutenprint.h,v 1.1 2004/09/17 18:38:01 rleigh Exp $
- */

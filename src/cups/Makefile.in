@@ -84,8 +84,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(top_srcdir)/scripts/global.mk $(srcdir)/Makefile.in \
-	$(srcdir)/Makefile.am $(top_srcdir)/scripts/mkinstalldirs \
-	$(srcdir)/Info.plist.in $(srcdir)/cups-genppdupdate.in \
+	$(srcdir)/Makefile.am $(srcdir)/Info.plist.in \
+	$(srcdir)/cups-genppdupdate.in \
 	$(srcdir)/test-rastertogutenprint.in \
 	$(top_srcdir)/scripts/depcomp \
 	$(top_srcdir)/scripts/test-driver COPYING README
@@ -99,19 +99,18 @@ DIST_COMMON = $(top_srcdir)/scripts/global.mk $(srcdir)/Makefile.in \
 subdir = src/cups
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
-	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/isc-posix.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
-	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/m4/stp.m4 \
-	$(top_srcdir)/m4/stp_cups.m4 $(top_srcdir)/m4/stp_gimp.m4 \
-	$(top_srcdir)/m4/stp_option.m4 $(top_srcdir)/m4/stp_release.m4 \
-	$(top_srcdir)/configure.ac
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/nls.m4 \
+	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
+	$(top_srcdir)/m4/stp.m4 $(top_srcdir)/m4/stp_cups.m4 \
+	$(top_srcdir)/m4/stp_gimp.m4 $(top_srcdir)/m4/stp_option.m4 \
+	$(top_srcdir)/m4/stp_release.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-mkinstalldirs = $(SHELL) $(top_srcdir)/scripts/mkinstalldirs
+mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES = Info.plist cups-genppdupdate \
 	test-rastertogutenprint
@@ -125,29 +124,33 @@ am__installdirs = "$(DESTDIR)$(bindir)" \
 PROGRAMS = $(bin_PROGRAMS) $(cupsexec_backend_PROGRAMS) \
 	$(cupsexec_driver_PROGRAMS) $(cupsexec_filter_PROGRAMS) \
 	$(sbin_PROGRAMS)
-am__backend_gutenprint_SOURCES_DIST = selphy_print.c kodak1400_print.c \
-	kodak6800_print.c kodak605_print.c shinko_s2145_print.c \
-	sony_updr150_print.c dnpds40_print.c mitsu70x_print.c \
-	citizencw01_print.c mitsu9550_print.c backend_common.c \
-	backend_common.h shinko_s1245_print.c shinko_s6145_print.c \
-	shinko_s6245_print.c
-@BUILD_LIBUSB_BACKENDS_TRUE@am_backend_gutenprint_OBJECTS = backend_gutenprint-selphy_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-kodak1400_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-kodak6800_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-kodak605_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-shinko_s2145_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-sony_updr150_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-dnpds40_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-mitsu70x_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-citizencw01_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-mitsu9550_print.$(OBJEXT) \
+am__backend_gutenprint_SOURCES_DIST = backend_canonselphy.c \
+	backend_canonselphyneo.c backend_kodak1400.c \
+	backend_kodak6800.c backend_kodak605.c backend_shinkos2145.c \
+	backend_sonyupdr150.c backend_dnpds40.c backend_mitsu70x.c \
+	backend_citizencw01.c backend_mitsu9550.c backend_common.c \
+	backend_common.h backend_shinkos1245.c backend_shinkos6145.c \
+	backend_shinkos6245.c backend_mitsup95d.c
+@BUILD_LIBUSB_BACKENDS_TRUE@am_backend_gutenprint_OBJECTS = backend_gutenprint-backend_canonselphy.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_canonselphyneo.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_kodak1400.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_kodak6800.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_kodak605.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_shinkos2145.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_sonyupdr150.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_dnpds40.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_mitsu70x.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_citizencw01.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_mitsu9550.$(OBJEXT) \
 @BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_common.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-shinko_s1245_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-shinko_s6145_print.$(OBJEXT) \
-@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-shinko_s6245_print.$(OBJEXT)
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_shinkos1245.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_shinkos6145.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_shinkos6245.$(OBJEXT) \
+@BUILD_LIBUSB_BACKENDS_TRUE@	backend_gutenprint-backend_mitsup95d.$(OBJEXT)
 backend_gutenprint_OBJECTS = $(am_backend_gutenprint_OBJECTS)
 am__DEPENDENCIES_1 =
 @BUILD_LIBUSB_BACKENDS_TRUE@backend_gutenprint_DEPENDENCIES =  \
+@BUILD_LIBUSB_BACKENDS_TRUE@	$(am__DEPENDENCIES_1) \
 @BUILD_LIBUSB_BACKENDS_TRUE@	$(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -485,6 +488,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BUILD_CUPS_PPDS = @BUILD_CUPS_PPDS@
+BZIP2 = @BZIP2@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -517,9 +521,6 @@ ENABLE_STATIC = @ENABLE_STATIC@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 FIND = @FIND@
-FOOMATIC_CONFIGURE = @FOOMATIC_CONFIGURE@
-FOOMATIC_KITLOAD = @FOOMATIC_KITLOAD@
-FOOMATIC_PPDFILE = @FOOMATIC_PPDFILE@
 GENPPD_LIBS = @GENPPD_LIBS@
 GIMP2_CFLAGS = @GIMP2_CFLAGS@
 GIMP2_LIBS = @GIMP2_LIBS@
@@ -552,9 +553,6 @@ GUTENPRINT_MICRO_VERSION = @GUTENPRINT_MICRO_VERSION@
 GUTENPRINT_MINOR_VERSION = @GUTENPRINT_MINOR_VERSION@
 GUTENPRINT_RELEASE_VERSION = @GUTENPRINT_RELEASE_VERSION@
 GUTENPRINT_VERSION = @GUTENPRINT_VERSION@
-IJS_CFLAGS = @IJS_CFLAGS@
-IJS_CONFIG = @IJS_CONFIG@
-IJS_LIBS = @IJS_LIBS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -575,6 +573,7 @@ LIBREADLINE_DEPS = @LIBREADLINE_DEPS@
 LIBS = $(INTLLIBS) @LIBS@
 LIBTOOL = @LIBTOOL@
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
+LIBUSB_BACKEND_LIBDEPS = @LIBUSB_BACKEND_LIBDEPS@
 LIBUSB_CFLAGS = @LIBUSB_CFLAGS@
 LIBUSB_LIBS = @LIBUSB_LIBS@
 LIPO = @LIPO@
@@ -706,7 +705,7 @@ cupsexec_filterdir = $(pkglibdir)/filter
 @CUPS_PPDS_AT_TOP_LEVEL_FALSE@cups_modeldir = $(pkgdatadir)/model/gutenprint/@GUTENPRINT_RELEASE_VERSION@/
 @CUPS_PPDS_AT_TOP_LEVEL_TRUE@cups_modeldir = $(pkgdatadir)/model/
 @CUPS_PPDS_AT_TOP_LEVEL_TRUE@DONT_UNINSTALL_PPDS = true
-LOCAL_CPPFLAGS = $(GUTENPRINT_CFLAGS) $(CUPS_CFLAGS) -DBASE_VERSION=$(BASE_VERSION)
+LOCAL_CPPFLAGS = $(GUTENPRINT_CFLAGS) $(CUPS_CFLAGS) -DBASE_VERSION=$(BASE_VERSION) -DSBINDIR=\"$(sbindir)/\"
 STP_NONLS_ENV = STP_MODULE_PATH=$(top_builddir)/src/main/.libs:$(top_builddir)/src/main STP_DATA_PATH=$(top_srcdir)/src/xml
 STP_ENV = $(STP_NONLS_ENV) STP_LOCALEDIR=$(top_srcdir)/src/cups/catalog
 @BUILD_GLOBALIZED_CUPS_PPDS_FALSE@@BUILD_TRANSLATED_CUPS_PPDS_TRUE@PPD = $(PPD_NLS_1)
@@ -725,8 +724,8 @@ commandtocanon_SOURCES = commandtocanon.c
 commandtocanon_LDADD = $(CUPS_LIBS)
 commandtoepson_SOURCES = commandtoepson.c
 commandtoepson_LDADD = $(CUPS_LIBS)
-@BUILD_LIBUSB_BACKENDS_TRUE@backend_gutenprint_SOURCES = selphy_print.c kodak1400_print.c kodak6800_print.c kodak605_print.c shinko_s2145_print.c sony_updr150_print.c dnpds40_print.c mitsu70x_print.c citizencw01_print.c mitsu9550_print.c backend_common.c backend_common.h shinko_s1245_print.c shinko_s6145_print.c shinko_s6245_print.c
-@BUILD_LIBUSB_BACKENDS_TRUE@backend_gutenprint_LDADD = $(LIBUSB_LIBS)
+@BUILD_LIBUSB_BACKENDS_TRUE@backend_gutenprint_SOURCES = backend_canonselphy.c backend_canonselphyneo.c backend_kodak1400.c backend_kodak6800.c backend_kodak605.c backend_shinkos2145.c backend_sonyupdr150.c backend_dnpds40.c backend_mitsu70x.c backend_citizencw01.c backend_mitsu9550.c backend_common.c backend_common.h backend_shinkos1245.c backend_shinkos6145.c backend_shinkos6245.c backend_mitsup95d.c
+@BUILD_LIBUSB_BACKENDS_TRUE@backend_gutenprint_LDADD = $(LIBUSB_LIBS) $(LIBUSB_BACKEND_LIBDEPS)
 @BUILD_LIBUSB_BACKENDS_TRUE@backend_gutenprint_CPPFLAGS = $(LIBUSB_CFLAGS) -DURI_PREFIX=\"gutenprint$(GUTENPRINT_MAJOR_VERSION)$(GUTENPRINT_MINOR_VERSION)+usb\" -DLIBUSB_PRE_1_0_10
 cups_genppd_@GUTENPRINT_RELEASE_VERSION@_SOURCES = genppd.c i18n.c i18n.h
 cups_genppd_@GUTENPRINT_RELEASE_VERSION@_CFLAGS = -DALL_LINGUAS='"$(ALL_LINGUAS)"' $(BUILD_SIMPLE_PPDS) $(TRANSLATE_PPDS)
@@ -1114,20 +1113,22 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_canonselphy.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_citizencw01.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_common.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-citizencw01_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-dnpds40_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-kodak1400_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-kodak605_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-kodak6800_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-mitsu70x_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-mitsu9550_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-selphy_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-shinko_s1245_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-shinko_s2145_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-shinko_s6145_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-shinko_s6245_print.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-sony_updr150_print.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_dnpds40.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_kodak1400.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_kodak605.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_kodak6800.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_mitsu70x.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_mitsu9550.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_mitsup95d.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_shinkos1245.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_shinkos2145.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_shinkos6145.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_shinkos6245.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/commandtocanon.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/commandtoepson.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cups-calibrate.Po@am__quote@
@@ -1159,145 +1160,159 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
-backend_gutenprint-selphy_print.o: selphy_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-selphy_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-selphy_print.Tpo -c -o backend_gutenprint-selphy_print.o `test -f 'selphy_print.c' || echo '$(srcdir)/'`selphy_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-selphy_print.Tpo $(DEPDIR)/backend_gutenprint-selphy_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='selphy_print.c' object='backend_gutenprint-selphy_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_canonselphy.o: backend_canonselphy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_canonselphy.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_canonselphy.Tpo -c -o backend_gutenprint-backend_canonselphy.o `test -f 'backend_canonselphy.c' || echo '$(srcdir)/'`backend_canonselphy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_canonselphy.Tpo $(DEPDIR)/backend_gutenprint-backend_canonselphy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_canonselphy.c' object='backend_gutenprint-backend_canonselphy.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-selphy_print.o `test -f 'selphy_print.c' || echo '$(srcdir)/'`selphy_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_canonselphy.o `test -f 'backend_canonselphy.c' || echo '$(srcdir)/'`backend_canonselphy.c
 
-backend_gutenprint-selphy_print.obj: selphy_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-selphy_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-selphy_print.Tpo -c -o backend_gutenprint-selphy_print.obj `if test -f 'selphy_print.c'; then $(CYGPATH_W) 'selphy_print.c'; else $(CYGPATH_W) '$(srcdir)/selphy_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-selphy_print.Tpo $(DEPDIR)/backend_gutenprint-selphy_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='selphy_print.c' object='backend_gutenprint-selphy_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_canonselphy.obj: backend_canonselphy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_canonselphy.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_canonselphy.Tpo -c -o backend_gutenprint-backend_canonselphy.obj `if test -f 'backend_canonselphy.c'; then $(CYGPATH_W) 'backend_canonselphy.c'; else $(CYGPATH_W) '$(srcdir)/backend_canonselphy.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_canonselphy.Tpo $(DEPDIR)/backend_gutenprint-backend_canonselphy.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_canonselphy.c' object='backend_gutenprint-backend_canonselphy.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-selphy_print.obj `if test -f 'selphy_print.c'; then $(CYGPATH_W) 'selphy_print.c'; else $(CYGPATH_W) '$(srcdir)/selphy_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_canonselphy.obj `if test -f 'backend_canonselphy.c'; then $(CYGPATH_W) 'backend_canonselphy.c'; else $(CYGPATH_W) '$(srcdir)/backend_canonselphy.c'; fi`
 
-backend_gutenprint-kodak1400_print.o: kodak1400_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-kodak1400_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-kodak1400_print.Tpo -c -o backend_gutenprint-kodak1400_print.o `test -f 'kodak1400_print.c' || echo '$(srcdir)/'`kodak1400_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-kodak1400_print.Tpo $(DEPDIR)/backend_gutenprint-kodak1400_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='kodak1400_print.c' object='backend_gutenprint-kodak1400_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_canonselphyneo.o: backend_canonselphyneo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_canonselphyneo.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Tpo -c -o backend_gutenprint-backend_canonselphyneo.o `test -f 'backend_canonselphyneo.c' || echo '$(srcdir)/'`backend_canonselphyneo.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Tpo $(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_canonselphyneo.c' object='backend_gutenprint-backend_canonselphyneo.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-kodak1400_print.o `test -f 'kodak1400_print.c' || echo '$(srcdir)/'`kodak1400_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_canonselphyneo.o `test -f 'backend_canonselphyneo.c' || echo '$(srcdir)/'`backend_canonselphyneo.c
 
-backend_gutenprint-kodak1400_print.obj: kodak1400_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-kodak1400_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-kodak1400_print.Tpo -c -o backend_gutenprint-kodak1400_print.obj `if test -f 'kodak1400_print.c'; then $(CYGPATH_W) 'kodak1400_print.c'; else $(CYGPATH_W) '$(srcdir)/kodak1400_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-kodak1400_print.Tpo $(DEPDIR)/backend_gutenprint-kodak1400_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='kodak1400_print.c' object='backend_gutenprint-kodak1400_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_canonselphyneo.obj: backend_canonselphyneo.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_canonselphyneo.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Tpo -c -o backend_gutenprint-backend_canonselphyneo.obj `if test -f 'backend_canonselphyneo.c'; then $(CYGPATH_W) 'backend_canonselphyneo.c'; else $(CYGPATH_W) '$(srcdir)/backend_canonselphyneo.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Tpo $(DEPDIR)/backend_gutenprint-backend_canonselphyneo.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_canonselphyneo.c' object='backend_gutenprint-backend_canonselphyneo.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-kodak1400_print.obj `if test -f 'kodak1400_print.c'; then $(CYGPATH_W) 'kodak1400_print.c'; else $(CYGPATH_W) '$(srcdir)/kodak1400_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_canonselphyneo.obj `if test -f 'backend_canonselphyneo.c'; then $(CYGPATH_W) 'backend_canonselphyneo.c'; else $(CYGPATH_W) '$(srcdir)/backend_canonselphyneo.c'; fi`
 
-backend_gutenprint-kodak6800_print.o: kodak6800_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-kodak6800_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-kodak6800_print.Tpo -c -o backend_gutenprint-kodak6800_print.o `test -f 'kodak6800_print.c' || echo '$(srcdir)/'`kodak6800_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-kodak6800_print.Tpo $(DEPDIR)/backend_gutenprint-kodak6800_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='kodak6800_print.c' object='backend_gutenprint-kodak6800_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_kodak1400.o: backend_kodak1400.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_kodak1400.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_kodak1400.Tpo -c -o backend_gutenprint-backend_kodak1400.o `test -f 'backend_kodak1400.c' || echo '$(srcdir)/'`backend_kodak1400.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_kodak1400.Tpo $(DEPDIR)/backend_gutenprint-backend_kodak1400.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_kodak1400.c' object='backend_gutenprint-backend_kodak1400.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-kodak6800_print.o `test -f 'kodak6800_print.c' || echo '$(srcdir)/'`kodak6800_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_kodak1400.o `test -f 'backend_kodak1400.c' || echo '$(srcdir)/'`backend_kodak1400.c
 
-backend_gutenprint-kodak6800_print.obj: kodak6800_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-kodak6800_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-kodak6800_print.Tpo -c -o backend_gutenprint-kodak6800_print.obj `if test -f 'kodak6800_print.c'; then $(CYGPATH_W) 'kodak6800_print.c'; else $(CYGPATH_W) '$(srcdir)/kodak6800_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-kodak6800_print.Tpo $(DEPDIR)/backend_gutenprint-kodak6800_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='kodak6800_print.c' object='backend_gutenprint-kodak6800_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_kodak1400.obj: backend_kodak1400.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_kodak1400.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_kodak1400.Tpo -c -o backend_gutenprint-backend_kodak1400.obj `if test -f 'backend_kodak1400.c'; then $(CYGPATH_W) 'backend_kodak1400.c'; else $(CYGPATH_W) '$(srcdir)/backend_kodak1400.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_kodak1400.Tpo $(DEPDIR)/backend_gutenprint-backend_kodak1400.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_kodak1400.c' object='backend_gutenprint-backend_kodak1400.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-kodak6800_print.obj `if test -f 'kodak6800_print.c'; then $(CYGPATH_W) 'kodak6800_print.c'; else $(CYGPATH_W) '$(srcdir)/kodak6800_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_kodak1400.obj `if test -f 'backend_kodak1400.c'; then $(CYGPATH_W) 'backend_kodak1400.c'; else $(CYGPATH_W) '$(srcdir)/backend_kodak1400.c'; fi`
 
-backend_gutenprint-kodak605_print.o: kodak605_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-kodak605_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-kodak605_print.Tpo -c -o backend_gutenprint-kodak605_print.o `test -f 'kodak605_print.c' || echo '$(srcdir)/'`kodak605_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-kodak605_print.Tpo $(DEPDIR)/backend_gutenprint-kodak605_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='kodak605_print.c' object='backend_gutenprint-kodak605_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_kodak6800.o: backend_kodak6800.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_kodak6800.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_kodak6800.Tpo -c -o backend_gutenprint-backend_kodak6800.o `test -f 'backend_kodak6800.c' || echo '$(srcdir)/'`backend_kodak6800.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_kodak6800.Tpo $(DEPDIR)/backend_gutenprint-backend_kodak6800.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_kodak6800.c' object='backend_gutenprint-backend_kodak6800.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-kodak605_print.o `test -f 'kodak605_print.c' || echo '$(srcdir)/'`kodak605_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_kodak6800.o `test -f 'backend_kodak6800.c' || echo '$(srcdir)/'`backend_kodak6800.c
 
-backend_gutenprint-kodak605_print.obj: kodak605_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-kodak605_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-kodak605_print.Tpo -c -o backend_gutenprint-kodak605_print.obj `if test -f 'kodak605_print.c'; then $(CYGPATH_W) 'kodak605_print.c'; else $(CYGPATH_W) '$(srcdir)/kodak605_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-kodak605_print.Tpo $(DEPDIR)/backend_gutenprint-kodak605_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='kodak605_print.c' object='backend_gutenprint-kodak605_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_kodak6800.obj: backend_kodak6800.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_kodak6800.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_kodak6800.Tpo -c -o backend_gutenprint-backend_kodak6800.obj `if test -f 'backend_kodak6800.c'; then $(CYGPATH_W) 'backend_kodak6800.c'; else $(CYGPATH_W) '$(srcdir)/backend_kodak6800.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_kodak6800.Tpo $(DEPDIR)/backend_gutenprint-backend_kodak6800.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_kodak6800.c' object='backend_gutenprint-backend_kodak6800.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-kodak605_print.obj `if test -f 'kodak605_print.c'; then $(CYGPATH_W) 'kodak605_print.c'; else $(CYGPATH_W) '$(srcdir)/kodak605_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_kodak6800.obj `if test -f 'backend_kodak6800.c'; then $(CYGPATH_W) 'backend_kodak6800.c'; else $(CYGPATH_W) '$(srcdir)/backend_kodak6800.c'; fi`
 
-backend_gutenprint-shinko_s2145_print.o: shinko_s2145_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s2145_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s2145_print.Tpo -c -o backend_gutenprint-shinko_s2145_print.o `test -f 'shinko_s2145_print.c' || echo '$(srcdir)/'`shinko_s2145_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s2145_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s2145_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s2145_print.c' object='backend_gutenprint-shinko_s2145_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_kodak605.o: backend_kodak605.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_kodak605.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_kodak605.Tpo -c -o backend_gutenprint-backend_kodak605.o `test -f 'backend_kodak605.c' || echo '$(srcdir)/'`backend_kodak605.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_kodak605.Tpo $(DEPDIR)/backend_gutenprint-backend_kodak605.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_kodak605.c' object='backend_gutenprint-backend_kodak605.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s2145_print.o `test -f 'shinko_s2145_print.c' || echo '$(srcdir)/'`shinko_s2145_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_kodak605.o `test -f 'backend_kodak605.c' || echo '$(srcdir)/'`backend_kodak605.c
 
-backend_gutenprint-shinko_s2145_print.obj: shinko_s2145_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s2145_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s2145_print.Tpo -c -o backend_gutenprint-shinko_s2145_print.obj `if test -f 'shinko_s2145_print.c'; then $(CYGPATH_W) 'shinko_s2145_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s2145_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s2145_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s2145_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s2145_print.c' object='backend_gutenprint-shinko_s2145_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_kodak605.obj: backend_kodak605.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_kodak605.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_kodak605.Tpo -c -o backend_gutenprint-backend_kodak605.obj `if test -f 'backend_kodak605.c'; then $(CYGPATH_W) 'backend_kodak605.c'; else $(CYGPATH_W) '$(srcdir)/backend_kodak605.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_kodak605.Tpo $(DEPDIR)/backend_gutenprint-backend_kodak605.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_kodak605.c' object='backend_gutenprint-backend_kodak605.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s2145_print.obj `if test -f 'shinko_s2145_print.c'; then $(CYGPATH_W) 'shinko_s2145_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s2145_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_kodak605.obj `if test -f 'backend_kodak605.c'; then $(CYGPATH_W) 'backend_kodak605.c'; else $(CYGPATH_W) '$(srcdir)/backend_kodak605.c'; fi`
 
-backend_gutenprint-sony_updr150_print.o: sony_updr150_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-sony_updr150_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-sony_updr150_print.Tpo -c -o backend_gutenprint-sony_updr150_print.o `test -f 'sony_updr150_print.c' || echo '$(srcdir)/'`sony_updr150_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-sony_updr150_print.Tpo $(DEPDIR)/backend_gutenprint-sony_updr150_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sony_updr150_print.c' object='backend_gutenprint-sony_updr150_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos2145.o: backend_shinkos2145.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos2145.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos2145.Tpo -c -o backend_gutenprint-backend_shinkos2145.o `test -f 'backend_shinkos2145.c' || echo '$(srcdir)/'`backend_shinkos2145.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos2145.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos2145.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos2145.c' object='backend_gutenprint-backend_shinkos2145.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-sony_updr150_print.o `test -f 'sony_updr150_print.c' || echo '$(srcdir)/'`sony_updr150_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos2145.o `test -f 'backend_shinkos2145.c' || echo '$(srcdir)/'`backend_shinkos2145.c
 
-backend_gutenprint-sony_updr150_print.obj: sony_updr150_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-sony_updr150_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-sony_updr150_print.Tpo -c -o backend_gutenprint-sony_updr150_print.obj `if test -f 'sony_updr150_print.c'; then $(CYGPATH_W) 'sony_updr150_print.c'; else $(CYGPATH_W) '$(srcdir)/sony_updr150_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-sony_updr150_print.Tpo $(DEPDIR)/backend_gutenprint-sony_updr150_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='sony_updr150_print.c' object='backend_gutenprint-sony_updr150_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos2145.obj: backend_shinkos2145.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos2145.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos2145.Tpo -c -o backend_gutenprint-backend_shinkos2145.obj `if test -f 'backend_shinkos2145.c'; then $(CYGPATH_W) 'backend_shinkos2145.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos2145.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos2145.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos2145.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos2145.c' object='backend_gutenprint-backend_shinkos2145.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-sony_updr150_print.obj `if test -f 'sony_updr150_print.c'; then $(CYGPATH_W) 'sony_updr150_print.c'; else $(CYGPATH_W) '$(srcdir)/sony_updr150_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos2145.obj `if test -f 'backend_shinkos2145.c'; then $(CYGPATH_W) 'backend_shinkos2145.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos2145.c'; fi`
 
-backend_gutenprint-dnpds40_print.o: dnpds40_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-dnpds40_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-dnpds40_print.Tpo -c -o backend_gutenprint-dnpds40_print.o `test -f 'dnpds40_print.c' || echo '$(srcdir)/'`dnpds40_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-dnpds40_print.Tpo $(DEPDIR)/backend_gutenprint-dnpds40_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='dnpds40_print.c' object='backend_gutenprint-dnpds40_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_sonyupdr150.o: backend_sonyupdr150.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_sonyupdr150.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Tpo -c -o backend_gutenprint-backend_sonyupdr150.o `test -f 'backend_sonyupdr150.c' || echo '$(srcdir)/'`backend_sonyupdr150.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Tpo $(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_sonyupdr150.c' object='backend_gutenprint-backend_sonyupdr150.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-dnpds40_print.o `test -f 'dnpds40_print.c' || echo '$(srcdir)/'`dnpds40_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_sonyupdr150.o `test -f 'backend_sonyupdr150.c' || echo '$(srcdir)/'`backend_sonyupdr150.c
 
-backend_gutenprint-dnpds40_print.obj: dnpds40_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-dnpds40_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-dnpds40_print.Tpo -c -o backend_gutenprint-dnpds40_print.obj `if test -f 'dnpds40_print.c'; then $(CYGPATH_W) 'dnpds40_print.c'; else $(CYGPATH_W) '$(srcdir)/dnpds40_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-dnpds40_print.Tpo $(DEPDIR)/backend_gutenprint-dnpds40_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='dnpds40_print.c' object='backend_gutenprint-dnpds40_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_sonyupdr150.obj: backend_sonyupdr150.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_sonyupdr150.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Tpo -c -o backend_gutenprint-backend_sonyupdr150.obj `if test -f 'backend_sonyupdr150.c'; then $(CYGPATH_W) 'backend_sonyupdr150.c'; else $(CYGPATH_W) '$(srcdir)/backend_sonyupdr150.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Tpo $(DEPDIR)/backend_gutenprint-backend_sonyupdr150.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_sonyupdr150.c' object='backend_gutenprint-backend_sonyupdr150.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-dnpds40_print.obj `if test -f 'dnpds40_print.c'; then $(CYGPATH_W) 'dnpds40_print.c'; else $(CYGPATH_W) '$(srcdir)/dnpds40_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_sonyupdr150.obj `if test -f 'backend_sonyupdr150.c'; then $(CYGPATH_W) 'backend_sonyupdr150.c'; else $(CYGPATH_W) '$(srcdir)/backend_sonyupdr150.c'; fi`
 
-backend_gutenprint-mitsu70x_print.o: mitsu70x_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-mitsu70x_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-mitsu70x_print.Tpo -c -o backend_gutenprint-mitsu70x_print.o `test -f 'mitsu70x_print.c' || echo '$(srcdir)/'`mitsu70x_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-mitsu70x_print.Tpo $(DEPDIR)/backend_gutenprint-mitsu70x_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='mitsu70x_print.c' object='backend_gutenprint-mitsu70x_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_dnpds40.o: backend_dnpds40.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_dnpds40.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_dnpds40.Tpo -c -o backend_gutenprint-backend_dnpds40.o `test -f 'backend_dnpds40.c' || echo '$(srcdir)/'`backend_dnpds40.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_dnpds40.Tpo $(DEPDIR)/backend_gutenprint-backend_dnpds40.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_dnpds40.c' object='backend_gutenprint-backend_dnpds40.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-mitsu70x_print.o `test -f 'mitsu70x_print.c' || echo '$(srcdir)/'`mitsu70x_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_dnpds40.o `test -f 'backend_dnpds40.c' || echo '$(srcdir)/'`backend_dnpds40.c
 
-backend_gutenprint-mitsu70x_print.obj: mitsu70x_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-mitsu70x_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-mitsu70x_print.Tpo -c -o backend_gutenprint-mitsu70x_print.obj `if test -f 'mitsu70x_print.c'; then $(CYGPATH_W) 'mitsu70x_print.c'; else $(CYGPATH_W) '$(srcdir)/mitsu70x_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-mitsu70x_print.Tpo $(DEPDIR)/backend_gutenprint-mitsu70x_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='mitsu70x_print.c' object='backend_gutenprint-mitsu70x_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_dnpds40.obj: backend_dnpds40.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_dnpds40.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_dnpds40.Tpo -c -o backend_gutenprint-backend_dnpds40.obj `if test -f 'backend_dnpds40.c'; then $(CYGPATH_W) 'backend_dnpds40.c'; else $(CYGPATH_W) '$(srcdir)/backend_dnpds40.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_dnpds40.Tpo $(DEPDIR)/backend_gutenprint-backend_dnpds40.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_dnpds40.c' object='backend_gutenprint-backend_dnpds40.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-mitsu70x_print.obj `if test -f 'mitsu70x_print.c'; then $(CYGPATH_W) 'mitsu70x_print.c'; else $(CYGPATH_W) '$(srcdir)/mitsu70x_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_dnpds40.obj `if test -f 'backend_dnpds40.c'; then $(CYGPATH_W) 'backend_dnpds40.c'; else $(CYGPATH_W) '$(srcdir)/backend_dnpds40.c'; fi`
 
-backend_gutenprint-citizencw01_print.o: citizencw01_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-citizencw01_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-citizencw01_print.Tpo -c -o backend_gutenprint-citizencw01_print.o `test -f 'citizencw01_print.c' || echo '$(srcdir)/'`citizencw01_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-citizencw01_print.Tpo $(DEPDIR)/backend_gutenprint-citizencw01_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='citizencw01_print.c' object='backend_gutenprint-citizencw01_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_mitsu70x.o: backend_mitsu70x.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_mitsu70x.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_mitsu70x.Tpo -c -o backend_gutenprint-backend_mitsu70x.o `test -f 'backend_mitsu70x.c' || echo '$(srcdir)/'`backend_mitsu70x.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_mitsu70x.Tpo $(DEPDIR)/backend_gutenprint-backend_mitsu70x.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_mitsu70x.c' object='backend_gutenprint-backend_mitsu70x.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-citizencw01_print.o `test -f 'citizencw01_print.c' || echo '$(srcdir)/'`citizencw01_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_mitsu70x.o `test -f 'backend_mitsu70x.c' || echo '$(srcdir)/'`backend_mitsu70x.c
 
-backend_gutenprint-citizencw01_print.obj: citizencw01_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-citizencw01_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-citizencw01_print.Tpo -c -o backend_gutenprint-citizencw01_print.obj `if test -f 'citizencw01_print.c'; then $(CYGPATH_W) 'citizencw01_print.c'; else $(CYGPATH_W) '$(srcdir)/citizencw01_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-citizencw01_print.Tpo $(DEPDIR)/backend_gutenprint-citizencw01_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='citizencw01_print.c' object='backend_gutenprint-citizencw01_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_mitsu70x.obj: backend_mitsu70x.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_mitsu70x.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_mitsu70x.Tpo -c -o backend_gutenprint-backend_mitsu70x.obj `if test -f 'backend_mitsu70x.c'; then $(CYGPATH_W) 'backend_mitsu70x.c'; else $(CYGPATH_W) '$(srcdir)/backend_mitsu70x.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_mitsu70x.Tpo $(DEPDIR)/backend_gutenprint-backend_mitsu70x.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_mitsu70x.c' object='backend_gutenprint-backend_mitsu70x.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-citizencw01_print.obj `if test -f 'citizencw01_print.c'; then $(CYGPATH_W) 'citizencw01_print.c'; else $(CYGPATH_W) '$(srcdir)/citizencw01_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_mitsu70x.obj `if test -f 'backend_mitsu70x.c'; then $(CYGPATH_W) 'backend_mitsu70x.c'; else $(CYGPATH_W) '$(srcdir)/backend_mitsu70x.c'; fi`
 
-backend_gutenprint-mitsu9550_print.o: mitsu9550_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-mitsu9550_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-mitsu9550_print.Tpo -c -o backend_gutenprint-mitsu9550_print.o `test -f 'mitsu9550_print.c' || echo '$(srcdir)/'`mitsu9550_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-mitsu9550_print.Tpo $(DEPDIR)/backend_gutenprint-mitsu9550_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='mitsu9550_print.c' object='backend_gutenprint-mitsu9550_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_citizencw01.o: backend_citizencw01.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_citizencw01.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_citizencw01.Tpo -c -o backend_gutenprint-backend_citizencw01.o `test -f 'backend_citizencw01.c' || echo '$(srcdir)/'`backend_citizencw01.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_citizencw01.Tpo $(DEPDIR)/backend_gutenprint-backend_citizencw01.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_citizencw01.c' object='backend_gutenprint-backend_citizencw01.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-mitsu9550_print.o `test -f 'mitsu9550_print.c' || echo '$(srcdir)/'`mitsu9550_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_citizencw01.o `test -f 'backend_citizencw01.c' || echo '$(srcdir)/'`backend_citizencw01.c
 
-backend_gutenprint-mitsu9550_print.obj: mitsu9550_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-mitsu9550_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-mitsu9550_print.Tpo -c -o backend_gutenprint-mitsu9550_print.obj `if test -f 'mitsu9550_print.c'; then $(CYGPATH_W) 'mitsu9550_print.c'; else $(CYGPATH_W) '$(srcdir)/mitsu9550_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-mitsu9550_print.Tpo $(DEPDIR)/backend_gutenprint-mitsu9550_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='mitsu9550_print.c' object='backend_gutenprint-mitsu9550_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_citizencw01.obj: backend_citizencw01.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_citizencw01.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_citizencw01.Tpo -c -o backend_gutenprint-backend_citizencw01.obj `if test -f 'backend_citizencw01.c'; then $(CYGPATH_W) 'backend_citizencw01.c'; else $(CYGPATH_W) '$(srcdir)/backend_citizencw01.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_citizencw01.Tpo $(DEPDIR)/backend_gutenprint-backend_citizencw01.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_citizencw01.c' object='backend_gutenprint-backend_citizencw01.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-mitsu9550_print.obj `if test -f 'mitsu9550_print.c'; then $(CYGPATH_W) 'mitsu9550_print.c'; else $(CYGPATH_W) '$(srcdir)/mitsu9550_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_citizencw01.obj `if test -f 'backend_citizencw01.c'; then $(CYGPATH_W) 'backend_citizencw01.c'; else $(CYGPATH_W) '$(srcdir)/backend_citizencw01.c'; fi`
+
+backend_gutenprint-backend_mitsu9550.o: backend_mitsu9550.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_mitsu9550.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_mitsu9550.Tpo -c -o backend_gutenprint-backend_mitsu9550.o `test -f 'backend_mitsu9550.c' || echo '$(srcdir)/'`backend_mitsu9550.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_mitsu9550.Tpo $(DEPDIR)/backend_gutenprint-backend_mitsu9550.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_mitsu9550.c' object='backend_gutenprint-backend_mitsu9550.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_mitsu9550.o `test -f 'backend_mitsu9550.c' || echo '$(srcdir)/'`backend_mitsu9550.c
+
+backend_gutenprint-backend_mitsu9550.obj: backend_mitsu9550.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_mitsu9550.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_mitsu9550.Tpo -c -o backend_gutenprint-backend_mitsu9550.obj `if test -f 'backend_mitsu9550.c'; then $(CYGPATH_W) 'backend_mitsu9550.c'; else $(CYGPATH_W) '$(srcdir)/backend_mitsu9550.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_mitsu9550.Tpo $(DEPDIR)/backend_gutenprint-backend_mitsu9550.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_mitsu9550.c' object='backend_gutenprint-backend_mitsu9550.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_mitsu9550.obj `if test -f 'backend_mitsu9550.c'; then $(CYGPATH_W) 'backend_mitsu9550.c'; else $(CYGPATH_W) '$(srcdir)/backend_mitsu9550.c'; fi`
 
 backend_gutenprint-backend_common.o: backend_common.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_common.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_common.Tpo -c -o backend_gutenprint-backend_common.o `test -f 'backend_common.c' || echo '$(srcdir)/'`backend_common.c
@@ -1313,47 +1328,61 @@ backend_gutenprint-backend_common.obj: backend_common.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_common.obj `if test -f 'backend_common.c'; then $(CYGPATH_W) 'backend_common.c'; else $(CYGPATH_W) '$(srcdir)/backend_common.c'; fi`
 
-backend_gutenprint-shinko_s1245_print.o: shinko_s1245_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s1245_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s1245_print.Tpo -c -o backend_gutenprint-shinko_s1245_print.o `test -f 'shinko_s1245_print.c' || echo '$(srcdir)/'`shinko_s1245_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s1245_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s1245_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s1245_print.c' object='backend_gutenprint-shinko_s1245_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos1245.o: backend_shinkos1245.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos1245.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos1245.Tpo -c -o backend_gutenprint-backend_shinkos1245.o `test -f 'backend_shinkos1245.c' || echo '$(srcdir)/'`backend_shinkos1245.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos1245.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos1245.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos1245.c' object='backend_gutenprint-backend_shinkos1245.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s1245_print.o `test -f 'shinko_s1245_print.c' || echo '$(srcdir)/'`shinko_s1245_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos1245.o `test -f 'backend_shinkos1245.c' || echo '$(srcdir)/'`backend_shinkos1245.c
 
-backend_gutenprint-shinko_s1245_print.obj: shinko_s1245_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s1245_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s1245_print.Tpo -c -o backend_gutenprint-shinko_s1245_print.obj `if test -f 'shinko_s1245_print.c'; then $(CYGPATH_W) 'shinko_s1245_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s1245_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s1245_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s1245_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s1245_print.c' object='backend_gutenprint-shinko_s1245_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos1245.obj: backend_shinkos1245.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos1245.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos1245.Tpo -c -o backend_gutenprint-backend_shinkos1245.obj `if test -f 'backend_shinkos1245.c'; then $(CYGPATH_W) 'backend_shinkos1245.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos1245.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos1245.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos1245.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos1245.c' object='backend_gutenprint-backend_shinkos1245.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s1245_print.obj `if test -f 'shinko_s1245_print.c'; then $(CYGPATH_W) 'shinko_s1245_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s1245_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos1245.obj `if test -f 'backend_shinkos1245.c'; then $(CYGPATH_W) 'backend_shinkos1245.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos1245.c'; fi`
 
-backend_gutenprint-shinko_s6145_print.o: shinko_s6145_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s6145_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s6145_print.Tpo -c -o backend_gutenprint-shinko_s6145_print.o `test -f 'shinko_s6145_print.c' || echo '$(srcdir)/'`shinko_s6145_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s6145_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s6145_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s6145_print.c' object='backend_gutenprint-shinko_s6145_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos6145.o: backend_shinkos6145.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos6145.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos6145.Tpo -c -o backend_gutenprint-backend_shinkos6145.o `test -f 'backend_shinkos6145.c' || echo '$(srcdir)/'`backend_shinkos6145.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos6145.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos6145.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos6145.c' object='backend_gutenprint-backend_shinkos6145.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s6145_print.o `test -f 'shinko_s6145_print.c' || echo '$(srcdir)/'`shinko_s6145_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos6145.o `test -f 'backend_shinkos6145.c' || echo '$(srcdir)/'`backend_shinkos6145.c
 
-backend_gutenprint-shinko_s6145_print.obj: shinko_s6145_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s6145_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s6145_print.Tpo -c -o backend_gutenprint-shinko_s6145_print.obj `if test -f 'shinko_s6145_print.c'; then $(CYGPATH_W) 'shinko_s6145_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s6145_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s6145_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s6145_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s6145_print.c' object='backend_gutenprint-shinko_s6145_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos6145.obj: backend_shinkos6145.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos6145.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos6145.Tpo -c -o backend_gutenprint-backend_shinkos6145.obj `if test -f 'backend_shinkos6145.c'; then $(CYGPATH_W) 'backend_shinkos6145.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos6145.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos6145.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos6145.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos6145.c' object='backend_gutenprint-backend_shinkos6145.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s6145_print.obj `if test -f 'shinko_s6145_print.c'; then $(CYGPATH_W) 'shinko_s6145_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s6145_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos6145.obj `if test -f 'backend_shinkos6145.c'; then $(CYGPATH_W) 'backend_shinkos6145.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos6145.c'; fi`
 
-backend_gutenprint-shinko_s6245_print.o: shinko_s6245_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s6245_print.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s6245_print.Tpo -c -o backend_gutenprint-shinko_s6245_print.o `test -f 'shinko_s6245_print.c' || echo '$(srcdir)/'`shinko_s6245_print.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s6245_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s6245_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s6245_print.c' object='backend_gutenprint-shinko_s6245_print.o' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos6245.o: backend_shinkos6245.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos6245.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos6245.Tpo -c -o backend_gutenprint-backend_shinkos6245.o `test -f 'backend_shinkos6245.c' || echo '$(srcdir)/'`backend_shinkos6245.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos6245.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos6245.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos6245.c' object='backend_gutenprint-backend_shinkos6245.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s6245_print.o `test -f 'shinko_s6245_print.c' || echo '$(srcdir)/'`shinko_s6245_print.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos6245.o `test -f 'backend_shinkos6245.c' || echo '$(srcdir)/'`backend_shinkos6245.c
 
-backend_gutenprint-shinko_s6245_print.obj: shinko_s6245_print.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-shinko_s6245_print.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-shinko_s6245_print.Tpo -c -o backend_gutenprint-shinko_s6245_print.obj `if test -f 'shinko_s6245_print.c'; then $(CYGPATH_W) 'shinko_s6245_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s6245_print.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-shinko_s6245_print.Tpo $(DEPDIR)/backend_gutenprint-shinko_s6245_print.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='shinko_s6245_print.c' object='backend_gutenprint-shinko_s6245_print.obj' libtool=no @AMDEPBACKSLASH@
+backend_gutenprint-backend_shinkos6245.obj: backend_shinkos6245.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_shinkos6245.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_shinkos6245.Tpo -c -o backend_gutenprint-backend_shinkos6245.obj `if test -f 'backend_shinkos6245.c'; then $(CYGPATH_W) 'backend_shinkos6245.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos6245.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_shinkos6245.Tpo $(DEPDIR)/backend_gutenprint-backend_shinkos6245.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_shinkos6245.c' object='backend_gutenprint-backend_shinkos6245.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-shinko_s6245_print.obj `if test -f 'shinko_s6245_print.c'; then $(CYGPATH_W) 'shinko_s6245_print.c'; else $(CYGPATH_W) '$(srcdir)/shinko_s6245_print.c'; fi`
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_shinkos6245.obj `if test -f 'backend_shinkos6245.c'; then $(CYGPATH_W) 'backend_shinkos6245.c'; else $(CYGPATH_W) '$(srcdir)/backend_shinkos6245.c'; fi`
+
+backend_gutenprint-backend_mitsup95d.o: backend_mitsup95d.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_mitsup95d.o -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_mitsup95d.Tpo -c -o backend_gutenprint-backend_mitsup95d.o `test -f 'backend_mitsup95d.c' || echo '$(srcdir)/'`backend_mitsup95d.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_mitsup95d.Tpo $(DEPDIR)/backend_gutenprint-backend_mitsup95d.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_mitsup95d.c' object='backend_gutenprint-backend_mitsup95d.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_mitsup95d.o `test -f 'backend_mitsup95d.c' || echo '$(srcdir)/'`backend_mitsup95d.c
+
+backend_gutenprint-backend_mitsup95d.obj: backend_mitsup95d.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT backend_gutenprint-backend_mitsup95d.obj -MD -MP -MF $(DEPDIR)/backend_gutenprint-backend_mitsup95d.Tpo -c -o backend_gutenprint-backend_mitsup95d.obj `if test -f 'backend_mitsup95d.c'; then $(CYGPATH_W) 'backend_mitsup95d.c'; else $(CYGPATH_W) '$(srcdir)/backend_mitsup95d.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/backend_gutenprint-backend_mitsup95d.Tpo $(DEPDIR)/backend_gutenprint-backend_mitsup95d.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='backend_mitsup95d.c' object='backend_gutenprint-backend_mitsup95d.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(backend_gutenprint_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o backend_gutenprint-backend_mitsup95d.obj `if test -f 'backend_mitsup95d.c'; then $(CYGPATH_W) 'backend_mitsup95d.c'; else $(CYGPATH_W) '$(srcdir)/backend_mitsup95d.c'; fi`
 
 cups_genppd_@GUTENPRINT_RELEASE_VERSION@-genppd.o: genppd.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cups_genppd_@GUTENPRINT_RELEASE_VERSION@_CFLAGS) $(CFLAGS) -MT cups_genppd_@GUTENPRINT_RELEASE_VERSION@-genppd.o -MD -MP -MF $(DEPDIR)/cups_genppd_@GUTENPRINT_RELEASE_VERSION@-genppd.Tpo -c -o cups_genppd_@GUTENPRINT_RELEASE_VERSION@-genppd.o `test -f 'genppd.c' || echo '$(srcdir)/'`genppd.c

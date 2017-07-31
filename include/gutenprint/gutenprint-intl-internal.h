@@ -1,5 +1,4 @@
 /*
- * "$Id: gutenprint-intl-internal.h,v 1.4 2008/08/13 07:35:51 easysw Exp $"
  *
  *   I18N header file for the gimp-print.
  *

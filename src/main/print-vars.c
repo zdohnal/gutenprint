@@ -1,5 +1,4 @@
 /*
- * "$Id: print-vars.c,v 1.95 2014/01/04 00:31:38 rlk Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *

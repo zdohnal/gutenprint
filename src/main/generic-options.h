@@ -1,5 +1,4 @@
 /*
- * "$Id: generic-options.h,v 1.5 2004/09/17 18:38:20 rleigh Exp $"
  *
  *   Copyright 2003 Robert Krawitz (rlk@alum.mit.edu)
  *

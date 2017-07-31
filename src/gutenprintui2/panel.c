@@ -1,5 +1,4 @@
 /*
- * "$Id: panel.c,v 1.23 2015/09/09 23:57:32 speachy Exp $"
  *
  *   Main window code for Print plug-in for the GIMP.
  *

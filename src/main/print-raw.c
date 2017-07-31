@@ -1,5 +1,4 @@
 /*
- * "$Id: print-raw.c,v 1.47 2015/09/09 23:57:32 speachy Exp $"
  *
  *   Print plug-in RAW driver for the GIMP.
  *

@@ -1,5 +1,4 @@
 /*
- * "$Id: extract-strings.c,v 1.3 2013/12/14 19:30:45 rlk Exp $"
  *
  * Extract translation strings
  *

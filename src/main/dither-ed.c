@@ -1,5 +1,4 @@
 /*
- * "$Id: dither-ed.c,v 1.18 2004/09/17 18:38:17 rleigh Exp $"
  *
  *   Error diffusion and closely related adaptive hybrid dither algorithm
  *

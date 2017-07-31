@@ -1,5 +1,4 @@
 /*
- * "$Id: string-list.c,v 1.21 2014/01/04 00:31:38 rlk Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *

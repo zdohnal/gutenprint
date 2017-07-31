@@ -1,5 +1,4 @@
 /*
- * "$Id: curve.c,v 1.56 2014/01/04 00:31:37 rlk Exp $"
  *
  *   Print plug-in driver utility functions for the GIMP.
  *
@@ -37,6 +36,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <strings.h>
 
 #ifdef __GNUC__
 #define inline __inline__
@@ -84,9 +84,6 @@ static const char *const stpi_wrap_mode_names[] =
     "nowrap",
     "wrap"
   };
-
-static const int stpi_wrap_mode_count =
-(sizeof(stpi_wrap_mode_names) / sizeof(const char *));
 
 /*
  * Get the total number of points in the base sequence class

@@ -1,5 +1,4 @@
 /*
- * "$Id: xmlppd.h,v 1.2 2007/12/24 03:05:52 rlk Exp $"
  *
  *   Copyright 2007 by Michael R Sweet and Robert Krawitz
  *
